@@ -1,4 +1,7 @@
 Appbeta8::Application.routes.draw do
+  resources :eventtypes
+
+
   resources :event_types
 
 
