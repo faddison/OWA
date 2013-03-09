@@ -23,6 +23,10 @@
     <%= f.label :language %><br />
     <%= f.text_field :language %>
   </div>
+  <div class="field">
+	<%= f.label "test" %><br />
+  	<%= collection_select(:Poop , :color, Poop.all , :id, :color) %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>

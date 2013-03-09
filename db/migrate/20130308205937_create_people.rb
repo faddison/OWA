@@ -4,6 +4,7 @@ class CreatePeople < ActiveRecord::Migration
       t.string :fname
       t.string :lname
       t.string :language
+      t.string :poop
 
       t.timestamps
     end
