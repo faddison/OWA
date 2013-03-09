@@ -1,4 +1,7 @@
 Appbeta8::Application.routes.draw do
+  resources :event_types
+
+
   get "home/index"
 
   resources :people
