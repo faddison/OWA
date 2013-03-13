@@ -1,4 +1,7 @@
 Appbeta11::Application.routes.draw do
+  resources :facilities
+
+
   resources :eventtypes
 
 
