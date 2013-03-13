@@ -23,6 +23,10 @@
     <%= f.label :facility %><br />
     <%= f.text_field :facility %>
   </div>
+  <div class="field">
+	<%=f.label "test" %><br/>
+	<%=collection_select(:Brochure,:brochures,Brochure.all,:id,:name)%>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>
