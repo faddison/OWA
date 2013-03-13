@@ -23,6 +23,12 @@
     <%= f.label :facility %><br />
     <%= f.text_field :facility %>
   </div>
+
+<div class="field">
+	<%=f.label "leos" %><br/>
+	<%=collection_select(:Referral,:referrals,Referral.all,:id,:name)%>
+  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>
