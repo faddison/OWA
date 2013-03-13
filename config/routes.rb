@@ -1,4 +1,10 @@
 Appbeta11::Application.routes.draw do
+  resources :eventtypes
+
+
+  resources :programs
+
+
   resources :people
 
 
