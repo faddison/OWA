@@ -1980,3 +1980,355 @@ Load path: Sass::Rails::Importer(/Users/patriciojeri/Desktop/OWA/OWA/app/assets/
   Rendered /Users/patriciojeri/.rvm/gems/ruby-1.9.3-p392/gems/actionpack-3.2.12/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.8ms)
   Rendered /Users/patriciojeri/.rvm/gems/ruby-1.9.3-p392/gems/actionpack-3.2.12/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (1.1ms)
   Rendered /Users/patriciojeri/.rvm/gems/ruby-1.9.3-p392/gems/actionpack-3.2.12/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (10.9ms)
+Connecting to database specified by database.yml
+  [1m[36m (0.0ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations" [0m
+Migrating to CreatePeople (20130313212412)
+Migrating to CreatePrograms (20130313212937)
+Migrating to CreateEventtypes (20130313213115)
+Migrating to CreateFacilities (20130313221813)
+  [1m[35m (0.0ms)[0m  select sqlite_version(*)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (2.0ms)[0m  CREATE TABLE "facilities" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "address" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (1.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130313221813')[0m
+  [1m[35m (209.0ms)[0m  commit transaction
+Migrating to CreateBrochurelogs (20130313222121)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  CREATE TABLE "brochurelogs" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "date" varchar(255), "count" integer, "facility_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.0ms)[0m  [1mCREATE INDEX "index_brochurelogs_on_facility_id" ON "brochurelogs" ("facility_id")[0m
+  [1m[35m (0.0ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130313222121')
+  [1m[36m (138.0ms)[0m  [1mcommit transaction[0m
+Migrating to CreateBrochures (20130313222321)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (2.0ms)[0m  [1mCREATE TABLE "brochures" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "brochurelog_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (1.0ms)[0m  CREATE INDEX "index_brochures_on_brochurelog_id" ON "brochures" ("brochurelog_id")
+  [1m[36m (0.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130313222321')[0m
+  [1m[35m (157.0ms)[0m  commit transaction
+Migrating to CreateReferrallogs (20130313222715)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  CREATE TABLE "referrallogs" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "date" varchar(255), "count" integer, "facility_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.0ms)[0m  [1mCREATE INDEX "index_referrallogs_on_facility_id" ON "referrallogs" ("facility_id")[0m
+  [1m[35m (0.0ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130313222715')
+  [1m[36m (129.0ms)[0m  [1mcommit transaction[0m
+Migrating to CreateReferrals (20130313222942)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (1.0ms)[0m  [1mCREATE TABLE "referrals" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "referrallog_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.0ms)[0m  CREATE INDEX "index_referrals_on_referrallog_id" ON "referrals" ("referrallog_id")
+  [1m[36m (1.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130313222942')[0m
+  [1m[35m (158.0ms)[0m  commit transaction
+  [1m[36m (0.0ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations" [0m
+
+
+Started GET "/brochurelogs" for 127.0.0.1 at 2013-03-13 16:42:03 -0700
+Connecting to database specified by database.yml
+Processing by BrochurelogsController#index as HTML
+  [1m[36mBrochurelog Load (0.0ms)[0m  [1mSELECT "brochurelogs".* FROM "brochurelogs" [0m
+  Rendered brochurelogs/index.html.erb within layouts/application (10.0ms)
+Compiled bootstrap_and_overrides.css  (6287ms)  (pid 5436)
+Compiled brochurelogs.css  (1ms)  (pid 5436)
+Compiled brochures.css  (2ms)  (pid 5436)
+Compiled facilities.css  (2ms)  (pid 5436)
+Compiled home.css  (2ms)  (pid 5436)
+Compiled referrallogs.css  (2ms)  (pid 5436)
+Compiled referrals.css  (2ms)  (pid 5436)
+Compiled scaffolds.css  (12ms)  (pid 5436)
+Compiled application.css  (6644ms)  (pid 5436)
+Compiled jquery.js  (6ms)  (pid 5436)
+Compiled jquery_ujs.js  (2ms)  (pid 5436)
+Compiled brochurelogs.js  (454ms)  (pid 5436)
+Compiled brochures.js  (441ms)  (pid 5436)
+Compiled facilities.js  (410ms)  (pid 5436)
+Compiled home.js  (411ms)  (pid 5436)
+Compiled people.js  (455ms)  (pid 5436)
+Compiled referrallogs.js  (410ms)  (pid 5436)
+Compiled referrals.js  (410ms)  (pid 5436)
+Compiled bootstrap-transition.js  (2ms)  (pid 5436)
+Compiled bootstrap-affix.js  (2ms)  (pid 5436)
+Compiled bootstrap-alert.js  (3ms)  (pid 5436)
+Compiled bootstrap-button.js  (3ms)  (pid 5436)
+Compiled bootstrap-carousel.js  (2ms)  (pid 5436)
+Compiled bootstrap-collapse.js  (2ms)  (pid 5436)
+Compiled bootstrap-dropdown.js  (2ms)  (pid 5436)
+Compiled bootstrap-modal.js  (2ms)  (pid 5436)
+Compiled bootstrap-scrollspy.js  (3ms)  (pid 5436)
+Compiled bootstrap-tab.js  (3ms)  (pid 5436)
+Compiled bootstrap-tooltip.js  (2ms)  (pid 5436)
+Compiled bootstrap-popover.js  (1ms)  (pid 5436)
+Compiled bootstrap-typeahead.js  (2ms)  (pid 5436)
+Compiled bootstrap.js  (699ms)  (pid 5436)
+Compiled application.js  (4404ms)  (pid 5436)
+  Rendered layouts/_navigation.html.erb (44.0ms)
+Completed 500 Internal Server Error in 11821ms
+
+ActionView::Template::Error (undefined method `user_signed_in?' for #<#<Class:0x2260638>:0x21d67a0>):
+    1: <%= link_to "Home", root_path, :class => 'brand' %>
+    2: <ul class="nav">
+    3:   <% if user_signed_in? %>
+    4:     <li>
+    5:     <%= link_to('Logout', destroy_user_session_path, :method=>'delete') %>
+    6:     </li>
+  app/views/layouts/_navigation.html.erb:3:in `_app_views_layouts__navigation_html_erb___301925735_29407956'
+  app/views/layouts/application.html.erb:18:in `_app_views_layouts_application_html_erb___41076030_29078244'
+  app/controllers/brochurelogs_controller.rb:7:in `index'
+
+
+  Rendered C:/Ruby/Ruby193/lib/ruby/gems/1.9.1/gems/actionpack-3.2.12/lib/action_dispatch/middleware/templates/rescues/_trace.erb (3.0ms)
+  Rendered C:/Ruby/Ruby193/lib/ruby/gems/1.9.1/gems/actionpack-3.2.12/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (1.0ms)
+  Rendered C:/Ruby/Ruby193/lib/ruby/gems/1.9.1/gems/actionpack-3.2.12/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (35.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-03-13 16:42:15 -0700
+Processing by HomeController#index as HTML
+  Rendered home/index.html.erb within layouts/application (4.0ms)
+  Rendered layouts/_navigation.html.erb (20.0ms)
+Completed 500 Internal Server Error in 119ms
+
+ActionView::Template::Error (undefined method `user_signed_in?' for #<#<Class:0x4122708>:0x41207e8>):
+    1: <%= link_to "Home", root_path, :class => 'brand' %>
+    2: <ul class="nav">
+    3:   <% if user_signed_in? %>
+    4:     <li>
+    5:     <%= link_to('Logout', destroy_user_session_path, :method=>'delete') %>
+    6:     </li>
+  app/views/layouts/_navigation.html.erb:3:in `_app_views_layouts__navigation_html_erb___301925735_29407956'
+  app/views/layouts/application.html.erb:18:in `_app_views_layouts_application_html_erb___41076030_29078244'
+
+
+  Rendered C:/Ruby/Ruby193/lib/ruby/gems/1.9.1/gems/actionpack-3.2.12/lib/action_dispatch/middleware/templates/rescues/_trace.erb (3.0ms)
+  Rendered C:/Ruby/Ruby193/lib/ruby/gems/1.9.1/gems/actionpack-3.2.12/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.0ms)
+  Rendered C:/Ruby/Ruby193/lib/ruby/gems/1.9.1/gems/actionpack-3.2.12/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (36.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-03-13 16:45:18 -0700
+Processing by HomeController#index as HTML
+  Rendered home/index.html.erb within layouts/application (2.0ms)
+  Rendered layouts/_navigation.html.erb (22.0ms)
+Completed 500 Internal Server Error in 89ms
+
+ActionView::Template::Error (undefined method `user_signed_in?' for #<#<Class:0x4122708>:0x2e635d8>):
+    1: <%= link_to "Home", root_path, :class => 'brand' %>
+    2: <ul class="nav">
+    3:   <% if user_signed_in? %>
+    4:     <li>
+    5:     <%= link_to('Logout', destroy_user_session_path, :method=>'delete') %>
+    6:     </li>
+  app/views/layouts/_navigation.html.erb:3:in `_app_views_layouts__navigation_html_erb___301925735_29407956'
+  app/views/layouts/application.html.erb:18:in `_app_views_layouts_application_html_erb___41076030_23343324'
+
+
+  Rendered C:/Ruby/Ruby193/lib/ruby/gems/1.9.1/gems/actionpack-3.2.12/lib/action_dispatch/middleware/templates/rescues/_trace.erb (3.0ms)
+  Rendered C:/Ruby/Ruby193/lib/ruby/gems/1.9.1/gems/actionpack-3.2.12/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.0ms)
+  Rendered C:/Ruby/Ruby193/lib/ruby/gems/1.9.1/gems/actionpack-3.2.12/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (35.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-03-13 16:45:24 -0700
+Processing by HomeController#index as HTML
+  Rendered home/index.html.erb within layouts/application (3.0ms)
+  Rendered layouts/_navigation.html.erb (20.0ms)
+Completed 500 Internal Server Error in 87ms
+
+ActionView::Template::Error (undefined method `user_signed_in?' for #<#<Class:0x4122708>:0x2e5ea48>):
+    1: <%= link_to "Home", root_path, :class => 'brand' %>
+    2: <ul class="nav">
+    3:   <% if user_signed_in? %>
+    4:     <li>
+    5:     <%= link_to('Logout', destroy_user_session_path, :method=>'delete') %>
+    6:     </li>
+  app/views/layouts/_navigation.html.erb:3:in `_app_views_layouts__navigation_html_erb___301925735_29407956'
+  app/views/layouts/application.html.erb:18:in `_app_views_layouts_application_html_erb___41076030_23343324'
+
+
+  Rendered C:/Ruby/Ruby193/lib/ruby/gems/1.9.1/gems/actionpack-3.2.12/lib/action_dispatch/middleware/templates/rescues/_trace.erb (3.0ms)
+  Rendered C:/Ruby/Ruby193/lib/ruby/gems/1.9.1/gems/actionpack-3.2.12/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.0ms)
+  Rendered C:/Ruby/Ruby193/lib/ruby/gems/1.9.1/gems/actionpack-3.2.12/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (34.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-03-13 16:48:04 -0700
+Processing by HomeController#index as HTML
+  Rendered home/index.html.erb within layouts/application (2.0ms)
+  Rendered layouts/_navigation.html.erb (23.0ms)
+Completed 500 Internal Server Error in 91ms
+
+ActionView::Template::Error (undefined method `user_signed_in?' for #<#<Class:0x4122708>:0x2e5f6f0>):
+    1: <%= link_to "Home", root_path, :class => 'brand' %>
+    2: <ul class="nav">
+    3: =begin
+    4:   <% if user_signed_in? %>
+    5:     <li>
+    6:     <%= link_to('Logout', destroy_user_session_path, :method=>'delete') %>
+    7:     </li>
+  app/views/layouts/_navigation.html.erb:4:in `_app_views_layouts__navigation_html_erb___301925735_31420236'
+  app/views/layouts/application.html.erb:18:in `_app_views_layouts_application_html_erb___41076030_23343324'
+
+
+  Rendered C:/Ruby/Ruby193/lib/ruby/gems/1.9.1/gems/actionpack-3.2.12/lib/action_dispatch/middleware/templates/rescues/_trace.erb (3.0ms)
+  Rendered C:/Ruby/Ruby193/lib/ruby/gems/1.9.1/gems/actionpack-3.2.12/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.0ms)
+  Rendered C:/Ruby/Ruby193/lib/ruby/gems/1.9.1/gems/actionpack-3.2.12/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (34.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2013-03-13 16:49:25 -0700
+Processing by HomeController#index as HTML
+  Rendered home/index.html.erb within layouts/application (2.0ms)
+  Rendered layouts/_navigation.html.erb (2.0ms)
+  Rendered layouts/_messages.html.erb (1.0ms)
+Completed 200 OK in 99ms (Views: 99.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/bootstrap_and_overrides.css?body=1" for 127.0.0.1 at 2013-03-13 16:49:25 -0700
+Served asset /bootstrap_and_overrides.css - 200 OK (69ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2013-03-13 16:49:25 -0700
+Served asset /application.css - 200 OK (68ms)
+
+
+Started GET "/assets/brochurelogs.css?body=1" for 127.0.0.1 at 2013-03-13 16:49:25 -0700
+Served asset /brochurelogs.css - 304 Not Modified (7ms)
+
+
+Started GET "/assets/brochures.css?body=1" for 127.0.0.1 at 2013-03-13 16:49:25 -0700
+Served asset /brochures.css - 304 Not Modified (8ms)
+
+
+Started GET "/assets/eventtypes.css?body=1" for 127.0.0.1 at 2013-03-13 16:49:25 -0700
+Served asset /eventtypes.css - 304 Not Modified (4ms)
+
+
+Started GET "/assets/facilities.css?body=1" for 127.0.0.1 at 2013-03-13 16:49:25 -0700
+Served asset /facilities.css - 304 Not Modified (5ms)
+
+
+Started GET "/assets/home.css?body=1" for 127.0.0.1 at 2013-03-13 16:49:25 -0700
+Served asset /home.css - 304 Not Modified (6ms)
+
+
+Started GET "/assets/people.css?body=1" for 127.0.0.1 at 2013-03-13 16:49:25 -0700
+Served asset /people.css - 304 Not Modified (6ms)
+
+
+Started GET "/assets/programs.css?body=1" for 127.0.0.1 at 2013-03-13 16:49:25 -0700
+Served asset /programs.css - 304 Not Modified (6ms)
+
+
+Started GET "/assets/referrallogs.css?body=1" for 127.0.0.1 at 2013-03-13 16:49:25 -0700
+Served asset /referrallogs.css - 304 Not Modified (4ms)
+
+
+Started GET "/assets/referrals.css?body=1" for 127.0.0.1 at 2013-03-13 16:49:25 -0700
+Served asset /referrals.css - 304 Not Modified (5ms)
+
+
+Started GET "/assets/scaffolds.css?body=1" for 127.0.0.1 at 2013-03-13 16:49:25 -0700
+Served asset /scaffolds.css - 304 Not Modified (54ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2013-03-13 16:49:25 -0700
+Served asset /jquery.js - 304 Not Modified (14ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2013-03-13 16:49:25 -0700
+Served asset /jquery_ujs.js - 304 Not Modified (11ms)
+
+
+Started GET "/assets/brochurelogs.js?body=1" for 127.0.0.1 at 2013-03-13 16:49:25 -0700
+Served asset /brochurelogs.js - 304 Not Modified (29ms)
+
+
+Started GET "/assets/brochures.js?body=1" for 127.0.0.1 at 2013-03-13 16:49:25 -0700
+Served asset /brochures.js - 304 Not Modified (4ms)
+
+
+Started GET "/assets/eventtypes.js?body=1" for 127.0.0.1 at 2013-03-13 16:49:25 -0700
+Served asset /eventtypes.js - 304 Not Modified (5ms)
+
+
+Started GET "/assets/facilities.js?body=1" for 127.0.0.1 at 2013-03-13 16:49:26 -0700
+Served asset /facilities.js - 304 Not Modified (5ms)
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2013-03-13 16:49:26 -0700
+Served asset /home.js - 304 Not Modified (5ms)
+
+
+Started GET "/assets/people.js?body=1" for 127.0.0.1 at 2013-03-13 16:49:26 -0700
+Served asset /people.js - 304 Not Modified (88ms)
+
+
+Started GET "/assets/programs.js?body=1" for 127.0.0.1 at 2013-03-13 16:49:26 -0700
+Served asset /programs.js - 304 Not Modified (4ms)
+
+
+Started GET "/assets/referrals.js?body=1" for 127.0.0.1 at 2013-03-13 16:49:26 -0700
+Served asset /referrals.js - 304 Not Modified (5ms)
+
+
+Started GET "/assets/referrallogs.js?body=1" for 127.0.0.1 at 2013-03-13 16:49:26 -0700
+Served asset /referrallogs.js - 304 Not Modified (4ms)
+
+
+Started GET "/assets/bootstrap-transition.js?body=1" for 127.0.0.1 at 2013-03-13 16:49:26 -0700
+Served asset /bootstrap-transition.js - 200 OK (12ms)
+
+
+Started GET "/assets/bootstrap-affix.js?body=1" for 127.0.0.1 at 2013-03-13 16:49:26 -0700
+Served asset /bootstrap-affix.js - 200 OK (10ms)
+
+
+Started GET "/assets/bootstrap-alert.js?body=1" for 127.0.0.1 at 2013-03-13 16:49:26 -0700
+Served asset /bootstrap-alert.js - 200 OK (12ms)
+
+
+Started GET "/assets/bootstrap-button.js?body=1" for 127.0.0.1 at 2013-03-13 16:49:26 -0700
+Served asset /bootstrap-button.js - 200 OK (12ms)
+
+
+Started GET "/assets/bootstrap-carousel.js?body=1" for 127.0.0.1 at 2013-03-13 16:49:26 -0700
+Served asset /bootstrap-carousel.js - 200 OK (39ms)
+
+
+Started GET "/assets/bootstrap-collapse.js?body=1" for 127.0.0.1 at 2013-03-13 16:49:26 -0700
+Served asset /bootstrap-collapse.js - 200 OK (12ms)
+
+
+Started GET "/assets/bootstrap-dropdown.js?body=1" for 127.0.0.1 at 2013-03-13 16:49:26 -0700
+Served asset /bootstrap-dropdown.js - 200 OK (10ms)
+
+
+Started GET "/assets/bootstrap-scrollspy.js?body=1" for 127.0.0.1 at 2013-03-13 16:49:26 -0700
+Served asset /bootstrap-scrollspy.js - 200 OK (16ms)
+
+
+Started GET "/assets/bootstrap-tab.js?body=1" for 127.0.0.1 at 2013-03-13 16:49:26 -0700
+Served asset /bootstrap-tab.js - 200 OK (13ms)
+
+
+Started GET "/assets/bootstrap-tooltip.js?body=1" for 127.0.0.1 at 2013-03-13 16:49:26 -0700
+Served asset /bootstrap-tooltip.js - 200 OK (11ms)
+
+
+Started GET "/assets/bootstrap-popover.js?body=1" for 127.0.0.1 at 2013-03-13 16:49:26 -0700
+Served asset /bootstrap-popover.js - 200 OK (10ms)
+
+
+Started GET "/assets/bootstrap-modal.js?body=1" for 127.0.0.1 at 2013-03-13 16:49:26 -0700
+Served asset /bootstrap-modal.js - 200 OK (10ms)
+
+
+Started GET "/assets/bootstrap-typeahead.js?body=1" for 127.0.0.1 at 2013-03-13 16:49:26 -0700
+Served asset /bootstrap-typeahead.js - 200 OK (14ms)
+
+
+Started GET "/assets/bootstrap.js?body=1" for 127.0.0.1 at 2013-03-13 16:49:26 -0700
+Served asset /bootstrap.js - 200 OK (55ms)
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2013-03-13 16:49:26 -0700
+Served asset /application.js - 200 OK (107ms)
+
+
+Started GET "/brochures" for 127.0.0.1 at 2013-03-13 16:49:44 -0700
+Processing by BrochuresController#index as HTML
+  [1m[35mBrochure Load (0.0ms)[0m  SELECT "brochures".* FROM "brochures" 
+  Rendered brochures/index.html.erb within layouts/application (2.0ms)
+  Rendered layouts/_navigation.html.erb (0.0ms)
+  Rendered layouts/_messages.html.erb (0.0ms)
+Completed 200 OK in 73ms (Views: 69.0ms | ActiveRecord: 2.0ms)
