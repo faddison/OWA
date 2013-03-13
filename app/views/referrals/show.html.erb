@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @referral.name %>
+</p>
+
+<p>
+  <b>Referrallog:</b>
+  <%= @referral.referrallog %>
+</p>
+
+
+<%= link_to 'Edit', edit_referral_path(@referral) %> |
+<%= link_to 'Back', referrals_path %>

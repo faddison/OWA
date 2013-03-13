@@ -1,0 +1,29 @@
+<%= form_for(@brochurelog) do |f| %>
+  <% if @brochurelog.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@brochurelog.errors.count, "error") %> prohibited this brochurelog from being saved:</h2>
+
+      <ul>
+      <% @brochurelog.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :date %><br />
+    <%= f.text_field :date %>
+  </div>
+  <div class="field">
+    <%= f.label :count %><br />
+    <%= f.number_field :count %>
+  </div>
+  <div class="field">
+    <%= f.label :facility %><br />
+    <%= f.text_field :facility %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

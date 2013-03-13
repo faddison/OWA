@@ -1,0 +1,27 @@
+<h1>Listing referrallogs</h1>
+
+<table>
+  <tr>
+    <th>Date</th>
+    <th>Count</th>
+    <th>Facility</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @referrallogs.each do |referrallog| %>
+  <tr>
+    <td><%= referrallog.date %></td>
+    <td><%= referrallog.count %></td>
+    <td><%= referrallog.facility %></td>
+    <td><%= link_to 'Show', referrallog %></td>
+    <td><%= link_to 'Edit', edit_referrallog_path(referrallog) %></td>
+    <td><%= link_to 'Destroy', referrallog, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Referrallog', new_referrallog_path %>

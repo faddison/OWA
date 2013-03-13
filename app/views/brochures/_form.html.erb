@@ -1,10 +1,10 @@
-<%= form_for(@facility) do |f| %>
-  <% if @facility.errors.any? %>
+<%= form_for(@brochure) do |f| %>
+  <% if @brochure.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@facility.errors.count, "error") %> prohibited this facility from being saved:</h2>
+      <h2><%= pluralize(@brochure.errors.count, "error") %> prohibited this brochure from being saved:</h2>
 
       <ul>
-      <% @facility.errors.full_messages.each do |msg| %>
+      <% @brochure.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
@@ -16,8 +16,8 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :address %><br />
-    <%= f.text_field :address %>
+    <%= f.label :brochurelog %><br />
+    <%= f.text_field :brochurelog %>
   </div>
   <div class="actions">
     <%= f.submit %>

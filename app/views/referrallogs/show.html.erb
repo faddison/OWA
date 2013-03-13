@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Date:</b>
+  <%= @referrallog.date %>
+</p>
+
+<p>
+  <b>Count:</b>
+  <%= @referrallog.count %>
+</p>
+
+<p>
+  <b>Facility:</b>
+  <%= @referrallog.facility %>
+</p>
+
+
+<%= link_to 'Edit', edit_referrallog_path(@referrallog) %> |
+<%= link_to 'Back', referrallogs_path %>

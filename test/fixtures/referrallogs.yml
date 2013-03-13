@@ -1,9 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  name: MyString
-  address: MyString
+  date: MyString
+  count: 1
+  facility: 
 
 two:
-  name: MyString
-  address: MyString
+  date: MyString
+  count: 1
+  facility: 

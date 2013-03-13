@@ -1,0 +1,2 @@
+module BrochurelogsHelper
+end

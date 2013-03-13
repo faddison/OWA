@@ -11,7 +11,26 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130313214029) do
+ActiveRecord::Schema.define(:version => 20130313222942) do
+
+  create_table "brochurelogs", :force => true do |t|
+    t.string   "date"
+    t.integer  "count"
+    t.integer  "facility_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "brochurelogs", ["facility_id"], :name => "index_brochurelogs_on_facility_id"
+
+  create_table "brochures", :force => true do |t|
+    t.string   "name"
+    t.integer  "brochurelog_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "brochures", ["brochurelog_id"], :name => "index_brochures_on_brochurelog_id"
 
   create_table "eventtypes", :force => true do |t|
     t.string   "name"
@@ -21,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20130313214029) do
 
   create_table "facilities", :force => true do |t|
     t.string   "name"
+    t.string   "address"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -38,5 +58,24 @@ ActiveRecord::Schema.define(:version => 20130313214029) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "referrallogs", :force => true do |t|
+    t.string   "date"
+    t.integer  "count"
+    t.integer  "facility_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "referrallogs", ["facility_id"], :name => "index_referrallogs_on_facility_id"
+
+  create_table "referrals", :force => true do |t|
+    t.string   "name"
+    t.integer  "referrallog_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "referrals", ["referrallog_id"], :name => "index_referrals_on_referrallog_id"
 
 end

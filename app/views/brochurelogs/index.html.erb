@@ -1,0 +1,27 @@
+<h1>Listing brochurelogs</h1>
+
+<table>
+  <tr>
+    <th>Date</th>
+    <th>Count</th>
+    <th>Facility</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @brochurelogs.each do |brochurelog| %>
+  <tr>
+    <td><%= brochurelog.date %></td>
+    <td><%= brochurelog.count %></td>
+    <td><%= brochurelog.facility %></td>
+    <td><%= link_to 'Show', brochurelog %></td>
+    <td><%= link_to 'Edit', edit_brochurelog_path(brochurelog) %></td>
+    <td><%= link_to 'Destroy', brochurelog, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Brochurelog', new_brochurelog_path %>

@@ -1,10 +1,10 @@
-<%= form_for(@facility) do |f| %>
-  <% if @facility.errors.any? %>
+<%= form_for(@referral) do |f| %>
+  <% if @referral.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@facility.errors.count, "error") %> prohibited this facility from being saved:</h2>
+      <h2><%= pluralize(@referral.errors.count, "error") %> prohibited this referral from being saved:</h2>
 
       <ul>
-      <% @facility.errors.full_messages.each do |msg| %>
+      <% @referral.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
@@ -16,8 +16,8 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :address %><br />
-    <%= f.text_field :address %>
+    <%= f.label :referrallog %><br />
+    <%= f.text_field :referrallog %>
   </div>
   <div class="actions">
     <%= f.submit %>
