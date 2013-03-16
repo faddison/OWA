@@ -1,0 +1,8 @@
+@import 'bootswatch/slate/variables';
+
+// Use Twitter Bootstrap
+@import 'bootstrap';
+@import "bootstrap-responsive";
+
+// And finally Bootswatch style
+@import "bootswatch/slate/bootswatch"
