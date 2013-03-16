@@ -40,16 +40,23 @@ class ReferrallogsController < ApplicationController
   # POST /referrallogs
   # POST /referrallogs.json
   def create
-    @referrallog = Referrallog.new(params[:referrallog])
-
-    respond_to do |format|
-		 if @referrallog.save
+	@referrallog = Referrallog.new(params[:referrallog])
+	@rid = @referrallog.referral_id
+	@fid = @referrallog.facility_id
+	@d = @referrallog.date
+	
+	@check = duplicate(@rid,@fid,@d )
+	respond_to do |format|
+		if @check == -1 && @referrallog.save
 			format.html { redirect_to @referrallog, notice: 'Referrallog was successfully created.' }
 			format.json { render json: @referrallog, status: :created, location: @referrallog }
 		else
+			@reftemp = Referrallog.find(@check)
+			@reftemp.count = @reftemp.count + @referrallog.count
+			@reftemp.save
 			format.html { redirect_to @referrallog, notice: 'Referrallog was not successfully created.' }
 		end
-    end
+	end
   end
 
   # PUT /referrallogs/1
@@ -79,4 +86,16 @@ class ReferrallogsController < ApplicationController
       format.json { head :no_content }
     end
   end
-end
+  
+  private
+	def duplicate(temprid,tempfid,tempdate)
+		Referrallog.all.each do |ref|
+			if temprid == ref.referral_id && tempfid == ref.facility_id && tempdate == ref.date
+				return ref.id
+			end
+		end
+		return -1
+	end
+  end
+  
+  
