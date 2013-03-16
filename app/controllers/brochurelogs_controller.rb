@@ -41,12 +41,19 @@ class BrochurelogsController < ApplicationController
   # POST /brochurelogs.json
   def create
     @brochurelog = Brochurelog.new(params[:brochurelog])
+	@rid = @brochurelog.brochure_id
+	@fid = @brochurelog.facility_id
+	@d = @brochurelog.date
 	
+	@check = duplicate(@rid,@fid,@d )
     respond_to do |format|
-		if @brochurelog.save 
+		if @check == -1 && @brochurelog.save 
 			format.html { redirect_to @brochurelog, notice: 'Brochurelog was successfully created.' }
 			format.json { render json: @brochurelog, status: :created, location: @brochurelog }
       else
+	    @brotemp = Brochurelog.find(@check)
+		@brotemp.count = @brotemp.count + @brochurelog.count
+		@brotemp.save
         format.html { render action: "new" }
         format.json { render json: @brochurelog.errors, status: :unprocessable_entity }
       end
@@ -81,4 +88,17 @@ class BrochurelogsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  private
+	def duplicate(temprid,tempfid,tempdate)
+		Brochurelog.all.each do |bro|
+			if temprid == bro.brochure_id && tempfid == bro.facility_id && tempdate == bro.date
+				return bro.id
+			end
+		end
+		return -1
+	end
+  
+  
+  
 end
