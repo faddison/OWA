@@ -18,7 +18,7 @@ class BrochuresControllerTest < ActionController::TestCase
 
   test "should create brochure" do
     assert_difference('Brochure.count') do
-      post :create, brochure: { logid: @brochure.logid, name: @brochure.name }
+      post :create, brochure: { name: @brochure.name }
     end
 
     assert_redirected_to brochure_path(assigns(:brochure))
@@ -35,7 +35,7 @@ class BrochuresControllerTest < ActionController::TestCase
   end
 
   test "should update brochure" do
-    put :update, id: @brochure, brochure: { logid: @brochure.logid, name: @brochure.name }
+    put :update, id: @brochure, brochure: { name: @brochure.name }
     assert_redirected_to brochure_path(assigns(:brochure))
   end
 

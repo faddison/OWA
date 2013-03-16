@@ -1,14 +1,14 @@
 Appbeta13::Application.routes.draw do
-  resources :referrallogs
+  resources :facilities
+
+
+  resources :brochures
 
 
   resources :referrals
 
 
-  resources :facilities
-
-
-  resources :brochures
+  resources :referrallogs
 
 
   resources :brochurelogs

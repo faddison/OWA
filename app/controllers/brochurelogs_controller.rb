@@ -43,18 +43,9 @@ class BrochurelogsController < ApplicationController
     @brochurelog = Brochurelog.new(params[:brochurelog])
 	
     respond_to do |format|
-	if @brochurelog.brochure.logid == nil && @brochurelog.facility.logid == nil
 		if @brochurelog.save 
 			format.html { redirect_to @brochurelog, notice: 'Brochurelog was successfully created.' }
 			format.json { render json: @brochurelog, status: :created, location: @brochurelog }
-			@brochurelog.brochure.logid = @brochurelog.brochure_id
-			@brochurelog.brochure.save
-			@brochurelog.facility.logid = @brochurelog.brochure_id
-			@brochurelog.facility.save
-		else
-			format.html { render action: "new" }
-			format.json { render json: @brochurelog.errors, status: :unprocessable_entity }
-		end
       else
         format.html { render action: "new" }
         format.json { render json: @brochurelog.errors, status: :unprocessable_entity }
@@ -72,10 +63,6 @@ class BrochurelogsController < ApplicationController
       if @brochurelog.update_attributes(params[:brochurelog])
         format.html { redirect_to @brochurelog, notice: 'Brochurelog was successfully updated.' }
         format.json { head :no_content }
-		@brochurelog.brochure.logid = @brochurelog.brochure_id
-		@brochurelog.brochure.save
-		@brochurelog.facility.logid = @brochurelog.brochure_id
-		@brochurelog.facility.save
       else
         format.html { render action: "edit" }
         format.json { render json: @brochurelog.errors, status: :unprocessable_entity }
@@ -87,10 +74,6 @@ class BrochurelogsController < ApplicationController
   # DELETE /brochurelogs/1.json
   def destroy
     @brochurelog = Brochurelog.find(params[:id])
-	@brochurelog.brochure.logid = nil
-	@brochurelog.brochure.save
-	@brochurelog.facility.logid = nil
-	@brochurelog.facility.save
     @brochurelog.destroy
 	
     respond_to do |format|

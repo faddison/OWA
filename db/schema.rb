@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130316102004) do
+ActiveRecord::Schema.define(:version => 20130316213954) do
 
   create_table "brochurelogs", :force => true do |t|
     t.string   "date"
@@ -27,7 +27,6 @@ ActiveRecord::Schema.define(:version => 20130316102004) do
 
   create_table "brochures", :force => true do |t|
     t.string   "name"
-    t.integer  "logid"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -35,8 +34,6 @@ ActiveRecord::Schema.define(:version => 20130316102004) do
   create_table "facilities", :force => true do |t|
     t.string   "name"
     t.string   "address"
-    t.integer  "logid"
-    t.integer  "rlogid"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -55,7 +52,6 @@ ActiveRecord::Schema.define(:version => 20130316102004) do
 
   create_table "referrals", :force => true do |t|
     t.string   "name"
-    t.integer  "rlogid"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

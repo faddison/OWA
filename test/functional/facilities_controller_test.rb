@@ -18,7 +18,7 @@ class FacilitiesControllerTest < ActionController::TestCase
 
   test "should create facility" do
     assert_difference('Facility.count') do
-      post :create, facility: { address: @facility.address, logid: @facility.logid, name: @facility.name, rlogid: @facility.rlogid }
+      post :create, facility: { address: @facility.address, name: @facility.name }
     end
 
     assert_redirected_to facility_path(assigns(:facility))
@@ -35,7 +35,7 @@ class FacilitiesControllerTest < ActionController::TestCase
   end
 
   test "should update facility" do
-    put :update, id: @facility, facility: { address: @facility.address, logid: @facility.logid, name: @facility.name, rlogid: @facility.rlogid }
+    put :update, id: @facility, facility: { address: @facility.address, name: @facility.name }
     assert_redirected_to facility_path(assigns(:facility))
   end
 

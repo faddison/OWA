@@ -1,3 +1,3 @@
 class Brochure < ActiveRecord::Base
-  attr_accessible :logid, :name
+  attr_accessible :name
 end

@@ -18,7 +18,7 @@ class ReferralsControllerTest < ActionController::TestCase
 
   test "should create referral" do
     assert_difference('Referral.count') do
-      post :create, referral: { name: @referral.name, rlogid: @referral.rlogid }
+      post :create, referral: { name: @referral.name }
     end
 
     assert_redirected_to referral_path(assigns(:referral))
@@ -35,7 +35,7 @@ class ReferralsControllerTest < ActionController::TestCase
   end
 
   test "should update referral" do
-    put :update, id: @referral, referral: { name: @referral.name, rlogid: @referral.rlogid }
+    put :update, id: @referral, referral: { name: @referral.name }
     assert_redirected_to referral_path(assigns(:referral))
   end
 

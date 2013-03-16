@@ -43,18 +43,9 @@ class ReferrallogsController < ApplicationController
     @referrallog = Referrallog.new(params[:referrallog])
 
     respond_to do |format|
-		if	@referrallog.referral.rlogid == nil && @referrallog.facility.rlogid == nil
-		  if @referrallog.save
+		 if @referrallog.save
 			format.html { redirect_to @referrallog, notice: 'Referrallog was successfully created.' }
 			format.json { render json: @referrallog, status: :created, location: @referrallog }
-			@referrallog.referral.rlogid = @referrallog.referral_id
-			@referrallog.referral.save
-			@referrallog.facility.rlogid = @referrallog.facility_id
-			@referrallog.facility.save
-		  else
-			format.html { render action: "new" }
-			format.json { render json: @referrallog.errors, status: :unprocessable_entity }
-		  end
 		else
 			format.html { redirect_to @referrallog, notice: 'Referrallog was not successfully created.' }
 		end
@@ -70,10 +61,6 @@ class ReferrallogsController < ApplicationController
       if @referrallog.update_attributes(params[:referrallog])
         format.html { redirect_to @referrallog, notice: 'Referrallog was successfully updated.' }
         format.json { head :no_content }
-		@referrallog.referral.rlogid = @referrallog.referral_id
-		@referrallog.referral.save
-		@referrallog.facility.rlogid = @referrallog.facility_id
-		@referrallog.facility.save
       else
         format.html { render action: "edit" }
         format.json { render json: @referrallog.errors, status: :unprocessable_entity }
@@ -85,10 +72,6 @@ class ReferrallogsController < ApplicationController
   # DELETE /referrallogs/1.json
   def destroy
     @referrallog = Referrallog.find(params[:id])
-	@referrallog.referral.rlogid = nil
-	@referrallog.referral.save
-	@referrallog.facility.rlogid = nil
-	@referrallog.facility.save
     @referrallog.destroy
 
     respond_to do |format|
