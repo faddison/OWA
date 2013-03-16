@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  date: MyString
+  count: 1
+  facility: 
+  facility_id: 1
+  brochure_id: 1
+  brochure: 
+
+two:
+  date: MyString
+  count: 1
+  facility: 
+  facility_id: 1
+  brochure_id: 1
+  brochure: 

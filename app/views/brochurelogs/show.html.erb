@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Date:</b>
+  <%= @brochurelog.date %>
+</p>
+
+<p>
+  <b>Count:</b>
+  <%= @brochurelog.count %>
+</p>
+
+<p>
+  <b>Facility:</b>
+  <%= @brochurelog.facility.name %>
+</p>
+
+<p>
+  <b>Brochure:</b>
+  <%= @brochurelog.brochure.name %>
+</p>
+
+
+<%= link_to 'Edit', edit_brochurelog_path(@brochurelog) %> |
+<%= link_to 'Back', brochurelogs_path %>
