@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130316213954) do
+ActiveRecord::Schema.define(:version => 20130318034123) do
 
   create_table "brochurelogs", :force => true do |t|
     t.string   "date"
@@ -31,9 +31,56 @@ ActiveRecord::Schema.define(:version => 20130316213954) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "eventlogs", :force => true do |t|
+    t.integer  "event_id"
+    t.integer  "person_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "eventlogs", ["event_id"], :name => "index_eventlogs_on_event_id"
+  add_index "eventlogs", ["person_id"], :name => "index_eventlogs_on_person_id"
+
+  create_table "events", :force => true do |t|
+    t.string   "date"
+    t.string   "title"
+    t.integer  "evettype_id"
+    t.integer  "eventype_id"
+    t.integer  "facility_id"
+    t.integer  "program_id"
+    t.integer  "duration"
+    t.string   "notes"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "events", ["eventype_id"], :name => "index_events_on_eventype_id"
+  add_index "events", ["facility_id"], :name => "index_events_on_facility_id"
+  add_index "events", ["program_id"], :name => "index_events_on_program_id"
+
+  create_table "eventtypes", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "facilities", :force => true do |t|
     t.string   "name"
     t.string   "address"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "people", :force => true do |t|
+    t.string   "fname"
+    t.string   "lname"
+    t.string   "language"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "programs", :force => true do |t|
+    t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

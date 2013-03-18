@@ -1,4 +1,19 @@
 Appbeta13::Application.routes.draw do
+  resources :eventlogs
+
+
+  resources :events
+
+
+  resources :people
+
+
+  resources :eventtypes
+
+
+  resources :programs
+
+
   resources :facilities
 
 
