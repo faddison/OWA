@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Event:</b>
+  <%= @eventlog.event.title %>
+</p>
+
+<p>
+  <b>Event:</b>
+  <%= @eventlog.event_id %>
+</p>
+
+<p>
+  <b>Person:</b>
+  <%= @eventlog.person.name %>
+</p>
+
+
+<%= link_to 'Edit', edit_eventlog_path(@eventlog) %> |
+<%= link_to 'Back', eventlogs_path %>

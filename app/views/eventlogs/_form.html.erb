@@ -1,0 +1,27 @@
+<%= form_for(@eventlog) do |f| %>
+  <% if @eventlog.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@eventlog.errors.count, "error") %> prohibited this eventlog from being saved:</h2>
+
+      <ul>
+      <% @eventlog.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+	<%= f.label "Event" %><br />
+  	<%= collection_select(:Eventlog , :event_id, Event.all , :id, :title) %>
+  </div>
+  
+  <div class="field">
+	<%= f.label "Person" %><br />
+  	<%= collection_select(:Eventlog , :person_id, Person.all , :id, :name) %>
+  </div>
+  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
