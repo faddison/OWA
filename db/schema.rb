@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130319082330) do
+ActiveRecord::Schema.define(:version => 20130319115756) do
 
   create_table "brochurelogs", :force => true do |t|
     t.string   "date"
@@ -30,6 +30,15 @@ ActiveRecord::Schema.define(:version => 20130319082330) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "children", :force => true do |t|
+    t.string   "name"
+    t.integer  "visitor_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "children", ["visitor_id"], :name => "index_children_on_visitor_id"
 
   create_table "eventlogs", :force => true do |t|
     t.integer  "event_id"
@@ -67,14 +76,6 @@ ActiveRecord::Schema.define(:version => 20130319082330) do
   create_table "facilities", :force => true do |t|
     t.string   "name"
     t.string   "address"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "people", :force => true do |t|
-    t.string   "fname"
-    t.string   "lname"
-    t.string   "language"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -120,5 +121,15 @@ ActiveRecord::Schema.define(:version => 20130319082330) do
 
   add_index "staffs", ["email"], :name => "index_staffs_on_email", :unique => true
   add_index "staffs", ["reset_password_token"], :name => "index_staffs_on_reset_password_token", :unique => true
+
+  create_table "visitors", :force => true do |t|
+    t.string   "fname"
+    t.string   "lname"
+    t.string   "language"
+    t.string   "email"
+    t.string   "phone"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
 end

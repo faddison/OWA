@@ -4,8 +4,12 @@ one:
   fname: MyString
   lname: MyString
   language: MyString
+  email: MyString
+  phone: MyString
 
 two:
   fname: MyString
   lname: MyString
   language: MyString
+  email: MyString
+  phone: MyString

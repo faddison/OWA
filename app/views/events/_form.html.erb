@@ -31,8 +31,6 @@
 	<%= f.label "Facility" %><br />
   	<%= collection_select(:Event , :facility_id, Facility.all , :id, :name) %>
   </div>
-
-  
   <div class="field">
     <%= f.label :duration %><br />
     <%= f.number_field :duration %>

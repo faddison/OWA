@@ -1,4 +1,9 @@
 Appbeta13::Application.routes.draw do
+  resources :visitors do
+	resources :children
+  end
+
+
   devise_for :staffs
 
   resources :eventlogs
