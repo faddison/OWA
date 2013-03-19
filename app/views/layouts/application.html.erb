@@ -8,7 +8,28 @@
 </head>
 <body>
 
+
+<div id="staff_nav">
+  <% if staff_signed_in? %>
+    Signed in as <%= current_staff.email %>. Not you?
+    <%= link_to "Sign out", destroy_staff_session_path, :method => :delete %>
+  <% else %>
+    <%= link_to "Sign up", new_staff_registration_path %> or <%= link_to "sign in", new_staff_session_path %>
+  <% end %>
+</div>
+ 
+<% flash.each do |name, msg| %>
+  <%= content_tag :div, msg, :id => "flash_#{name}" %>
+<% end %>
+
 <%= yield %>
+ <p class="notice"><%= notice %></p>
+ <p class="alert"><%= alert %></p>
+ 
+ 
+ 
+ 
+ 
 
 </body>
 </html>

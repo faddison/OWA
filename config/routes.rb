@@ -1,4 +1,6 @@
 Appbeta13::Application.routes.draw do
+  devise_for :staffs
+
   resources :eventlogs
 
 
@@ -28,7 +30,7 @@ Appbeta13::Application.routes.draw do
 
   resources :brochurelogs
 
-
+	resources :dashboard
   get "home/index"
 
   # The priority is based upon order of creation:
