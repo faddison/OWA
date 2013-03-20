@@ -1,5 +1,5 @@
 class Eventlog < ActiveRecord::Base
   belongs_to :event
-  belongs_to :person
-  attr_accessible :event_id, :person_id
+  belongs_to :visitor
+  attr_accessible :event_id, :visitor_id
 end

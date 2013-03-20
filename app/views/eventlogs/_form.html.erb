@@ -17,8 +17,8 @@
   </div>
   
   <div class="field">
-	<%= f.label "Person" %><br />
-  	<%= collection_select(:Eventlog , :person_id, Person.all , :id, :name) %>
+	<%= f.label "Visitor" %><br />
+  	<%= collection_select(:Eventlog , :visitor_id, Visitor.all , :id, :fname) %>
   </div>
   
   <div class="actions">
