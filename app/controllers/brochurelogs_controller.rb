@@ -1,13 +1,19 @@
 class BrochurelogsController < ApplicationController
   # GET /brochurelogs
   # GET /brochurelogs.json 
+  
+  
   def index
-    @brochurelogs = Brochurelog.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @brochurelogs }
-    end
+	if staff_signed_in?
+		@brochurelogs = Brochurelog.all
+		respond_to do |format|
+			format.html # index.html.erb
+			format.json { render json: @brochurelogs }	
+		end
+	else
+		redirect_to :controller=>'home', :action => 'index'
+	end
+	
   end
 
   # GET /brochurelogs/1

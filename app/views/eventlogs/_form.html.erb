@@ -13,13 +13,15 @@
 
   <div class="field">
 	<%= f.label "Event" %><br />
-  	<%= collection_select(:Eventlog , :event_id, Event.all , :id, :title) %>
+  	<%= collection_select(:eventlog , :event_id, Event.all , :id, :title) %>
   </div>
   
   <div class="field">
 	<%= f.label "Visitor" %><br />
-  	<%= collection_select(:Eventlog , :visitor_id, Visitor.all , :id, :fname) %>
+  	<%= collection_select(:eventlog , :visitor_id, Visitor.all , :id, :fname) %>
   </div>
+  
+  
   
   <div class="actions">
     <%= f.submit %>

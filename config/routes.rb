@@ -1,4 +1,7 @@
 Appbeta13::Application.routes.draw do
+  resources :events
+
+
   resources :visitors do
 	resources :children
   end

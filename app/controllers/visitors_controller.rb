@@ -1,6 +1,9 @@
 class VisitorsController < ApplicationController
   # GET /visitors
   # GET /visitors.json
+  
+  http_basic_authenticate_with :name => "dhh", :password => "secret", :only => :destroy
+  
   def index
     @visitors = Visitor.all
     respond_to do |format|

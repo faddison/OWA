@@ -2,12 +2,15 @@ class BrochuresController < ApplicationController
   # GET /brochures
   # GET /brochures.json
   def index
-    @brochures = Brochure.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @brochures }
-    end
+	if staff_signed_in?
+			@brochures = Brochure.all
+			respond_to do |format|
+			  format.html # index.html.erb
+			  format.json { render json: @brochures }
+			end
+	else
+		redirect_to :controller=>'home', :action => 'index'
+	end
   end
 
   # GET /brochures/1

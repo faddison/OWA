@@ -2,12 +2,16 @@ class ProgramsController < ApplicationController
   # GET /programs
   # GET /programs.json
   def index
-    @programs = Program.all
+	if staff_signed_in?
+		@programs = Program.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @programs }
-    end
+		respond_to do |format|
+		  format.html # index.html.erb
+		  format.json { render json: @programs }
+		end
+	else
+		redirect_to :controller=>'home', :action => 'index'
+	end
   end
 
   # GET /programs/1

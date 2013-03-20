@@ -2,12 +2,16 @@ class ReferrallogsController < ApplicationController
   # GET /referrallogs
   # GET /referrallogs.json
   def index
-    @referrallogs = Referrallog.all
+	if staff_signed_in?
+		@referrallogs = Referrallog.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @referrallogs }
-    end
+		respond_to do |format|
+		  format.html # index.html.erb
+		  format.json { render json: @referrallogs }
+		end
+	else
+		redirect_to :controller=>'home', :action => 'index'
+	end
   end
 
   # GET /referrallogs/1

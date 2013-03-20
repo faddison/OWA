@@ -2,12 +2,15 @@ class EventlogsController < ApplicationController
   # GET /eventlogs
   # GET /eventlogs.json
   def index
-    @eventlogs = Eventlog.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @eventlogs }
-    end
+	if staff_signed_in?
+		@eventlogs = Eventlog.all
+		respond_to do |format|
+		  format.html # index.html.erb
+		  format.json { render json: @eventlogs }
+		end
+	else
+		redirect_to :controller=>'home', :action => 'index'
+	end
   end
 
   # GET /eventlogs/1
@@ -41,7 +44,6 @@ class EventlogsController < ApplicationController
   # POST /eventlogs.json
   def create
     @eventlog = Eventlog.new(params[:eventlog])
-
     respond_to do |format|
       if @eventlog.save
         format.html { redirect_to @eventlog, notice: 'Eventlog was successfully created.' }

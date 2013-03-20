@@ -1,23 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Date:</b>
-  <%= @event.date %>
-</p>
-
-<p>
   <b>Title:</b>
   <%= @event.title %>
-</p>
-
-<p>
-  <b>Eventype:</b>
-  <%= @event.eventype.name %>
-</p>
-
-<p>
-  <b>Facility:</b>
-  <%= @event.facility.name %>
 </p>
 
 <p>
@@ -26,13 +11,23 @@
 </p>
 
 <p>
+  <b>Eventtype:</b>
+  <%= @event.eventtype.name %>
+</p>
+
+<p>
+  <b>Facility:</b>
+  <%= @event.facility.name %>
+</p>
+
+<p>
   <b>Duration:</b>
   <%= @event.duration %>
 </p>
 
 <p>
-  <b>Notes:</b>
-  <%= @event.notes %>
+  <b>Date:</b>
+  <%= @event.date %>
 </p>
 
 

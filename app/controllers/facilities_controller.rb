@@ -2,12 +2,16 @@ class FacilitiesController < ApplicationController
   # GET /facilities
   # GET /facilities.json
   def index
-    @facilities = Facility.all
+	if staff_signed_in?
+		@facilities = Facility.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @facilities }
-    end
+		respond_to do |format|
+		  format.html # index.html.erb
+		  format.json { render json: @facilities }
+		end
+	else
+		redirect_to :controller=>'home', :action => 'index'
+	end
   end
 
   # GET /facilities/1

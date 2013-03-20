@@ -12,32 +12,30 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :date %><br />
-    <%= f.text_field :date %>
-  </div>
-  <div class="field">
     <%= f.label :title %><br />
     <%= f.text_field :title %>
   </div>
   <div class="field">
-	<%= f.label "Event type" %><br />
-  	<%= collection_select(:Event , :eventtype_id, Eventtype.all , :id, :name) %>
+	<%= f.label "Facility" %><br />
+  	<%= collection_select(:event , :facility_id, Facility.all , :id, :name) %>
   </div>
   <div class="field">
 	<%= f.label "Program" %><br />
-  	<%= collection_select(:Event , :program_id, Program.all , :id, :name) %>
+  	<%= collection_select(:event , :program_id, Program.all , :id, :name) %>
   </div>
   <div class="field">
-	<%= f.label "Facility" %><br />
-  	<%= collection_select(:Event , :facility_id, Facility.all , :id, :name) %>
+	<%= f.label "Event Type" %><br />
+  	<%= collection_select(:event , :eventtype_id, Eventtype.all , :id, :name) %>
   </div>
+  
+  
   <div class="field">
     <%= f.label :duration %><br />
     <%= f.number_field :duration %>
   </div>
   <div class="field">
-    <%= f.label :notes %><br />
-    <%= f.text_field :notes %>
+    <%= f.label :date %><br />
+    <%= f.text_field :date %>
   </div>
   <div class="actions">
     <%= f.submit %>

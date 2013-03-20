@@ -2,12 +2,16 @@ class EventtypesController < ApplicationController
   # GET /eventtypes
   # GET /eventtypes.json
   def index
-    @eventtypes = Eventtype.all
+	if staff_signed_in?
+		@eventtypes = Eventtype.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @eventtypes }
-    end
+		respond_to do |format|
+		  format.html # index.html.erb
+		  format.json { render json: @eventtypes }
+		end
+	else
+		redirect_to :controller=>'home', :action => 'index'
+	end
   end
 
   # GET /eventtypes/1
