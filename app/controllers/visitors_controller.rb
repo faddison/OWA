@@ -3,10 +3,11 @@ class VisitorsController < ApplicationController
   # GET /visitors.json
   def index
     @visitors = Visitor.all
-
     respond_to do |format|
       format.html # index.html.erb
+	  format.csv  {	export_csv(@visitors)}
       format.json { render json: @visitors }
+	  format.xls  { export_xls(@visitors) }
     end
   end
 
@@ -80,4 +81,19 @@ class VisitorsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  protected
+ 
+  def export_csv(visitors)
+    filename = I18n.l(Time.now, :format => :short) + "- visitors.csv"
+    content = Visitor.to_csv
+    send_data content, :filename => filename
+  end
+  
+  def export_xls(visitors)
+		filename = I18n.l(Time.now, :format => :short) + "- visitors.xls"
+		content = Visitor.to_csv(col_sep: "\t")
+		send_data content, :filename => filename
+  end
+  
 end

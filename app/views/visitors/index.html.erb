@@ -29,3 +29,8 @@
 <br />
 
 <%= link_to 'New Visitor', new_visitor_path %>
+<p>
+  Download:
+  <%= link_to "CSV", visitors_path(format: "csv") %> |
+  <%= link_to "Excel", visitors_path(format: "xls") %>
+</p>
