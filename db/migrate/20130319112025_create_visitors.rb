@@ -6,7 +6,8 @@ class CreateVisitors < ActiveRecord::Migration
       t.string :language
       t.string :email
       t.string :phone
-
+	  t.string :fullname
+		
       t.timestamps
     end
   end

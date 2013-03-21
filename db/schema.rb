@@ -126,6 +126,7 @@ ActiveRecord::Schema.define(:version => 20130320222650) do
     t.string   "language"
     t.string   "email"
     t.string   "phone"
+    t.string   "fullname"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

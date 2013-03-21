@@ -2,10 +2,11 @@ class VisitorsController < ApplicationController
   # GET /visitors
   # GET /visitors.json
   
-  http_basic_authenticate_with :name => "ccunandy@yahoo.com", :password => "ccandy881103", :only => :destroy
+  #http_basic_authenticate_with :name => "ccunandy@yahoo.com", :password => "ccandy881103", :only => :destroy
   
   def index
-    @visitors = Visitor.all
+    @visitors = Visitor.search(params[:search])
+	#@visitors.fullname = Visitor.full_name(@visitors.fname,@visitors.lname)
     respond_to do |format|
       format.html # index.html.erb
 	  format.csv  {	export_csv(@visitors)}
@@ -45,7 +46,7 @@ class VisitorsController < ApplicationController
   # POST /visitors.json
   def create
     @visitor = Visitor.new(params[:visitor])
-
+	@visitor.fullname = Visitor.full_name(@visitor.fname,@visitor.lname)
     respond_to do |format|
       if @visitor.save
         format.html { redirect_to @visitor, notice: 'Visitor was successfully created.' }
@@ -98,5 +99,12 @@ class VisitorsController < ApplicationController
 		content = Visitor.to_csv(col_sep: "\t")
 		send_data content, :filename => filename
   end
+  def search_visitor(search)
+		if search
+			return Visitor.find(:all, :conditions => ['fullname ILIKE ?', "%#{search}%"])
+		else
+			return Visitor.all
+		end
+	end
   
 end

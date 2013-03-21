@@ -1,5 +1,12 @@
 <h1>Listing visitors</h1>
 
+ <%= form_tag visitors_path, :method => 'get' do %>
+      <p>
+        <%= text_field_tag :search, params[:search] %><br/>
+        <%= submit_tag "visitors first name", :name => nil %><br/>
+      </p>
+<% end %>
+
 <table>
   <tr>
     <th>First name</th>
