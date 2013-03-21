@@ -2,7 +2,7 @@ class VisitorsController < ApplicationController
   # GET /visitors
   # GET /visitors.json
   
-  http_basic_authenticate_with :name => "dhh", :password => "secret", :only => :destroy
+  http_basic_authenticate_with :name => "ccunandy@yahoo.com", :password => "ccandy881103", :only => :destroy
   
   def index
     @visitors = Visitor.all
