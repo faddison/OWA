@@ -1,5 +1,10 @@
 <h1>Listing eventtypes</h1>
-
+<%= form_tag eventtypes_path, :method => 'get' do %>
+      <p>
+        <%= text_field_tag :search, params[:search] %><br/>
+        <%= submit_tag "search", :name => nil %><br/>
+      </p>
+<% end %>
 <table>
   <tr>
     <th>Name</th>
@@ -21,3 +26,8 @@
 <br />
 
 <%= link_to 'New Eventtype', new_eventtype_path %>
+<p>
+  Download:
+  <%= link_to "CSV", eventtypes_path(format: "csv") %> |
+  <%= link_to "Excel", eventtypes_path(format: "xls") %>
+</p>

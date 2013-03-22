@@ -18,6 +18,8 @@ ActiveRecord::Schema.define(:version => 20130322091041) do
     t.integer  "count"
     t.integer  "facility_id"
     t.integer  "brochure_id"
+    t.string   "bname"
+    t.string   "fname"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
@@ -103,6 +105,8 @@ ActiveRecord::Schema.define(:version => 20130322091041) do
     t.integer  "count"
     t.integer  "referral_id"
     t.integer  "facility_id"
+    t.string   "fname"
+    t.string   "rname"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end

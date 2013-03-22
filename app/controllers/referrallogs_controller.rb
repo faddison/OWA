@@ -3,11 +3,13 @@ class ReferrallogsController < ApplicationController
   # GET /referrallogs.json
   def index
 	if staff_signed_in?
-		@referrallogs = Referrallog.all
+		@referrallogs = Referrallog.search(params[:search])
 
 		respond_to do |format|
 		  format.html # index.html.erb
+		  format.csv  {	export_csv(@referrallogs)}
 		  format.json { render json: @referrallogs }
+		  format.xls  { export_xls(@referrallogs) }	
 		end
 	else
 		redirect_to :controller=>'home', :action => 'index'
@@ -48,7 +50,8 @@ class ReferrallogsController < ApplicationController
 	@rid = @referrallog.referral_id
 	@fid = @referrallog.facility_id
 	@d = @referrallog.date
-	
+	@referrallog.fname = @referrallog.referral.name
+	@referrallog.rname = @referrallog.facility.name
 	@check = duplicate(@rid,@fid,@d )
 	respond_to do |format|
 		if @check == -1 && @referrallog.save
@@ -90,6 +93,18 @@ class ReferrallogsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  def export_csv(referrallogs)
+    filename = I18n.l(Time.now, :format => :short) + "- referrallogs.csv"
+    content = Referrallog.to_csv
+    send_data content, :filename => filename
+  end
+  
+  def export_xls(referrallogs)
+		filename = I18n.l(Time.now, :format => :short) + "- referrallogs.xls"
+		content = Referrallog.to_csv(col_sep: "\t")
+		send_data content, :filename => filename
+  end
+  
   
   private
 	def duplicate(temprid,tempfid,tempdate)

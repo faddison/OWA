@@ -31,3 +31,8 @@
 <br />
 
 <%= link_to 'New Eventlog', new_eventlog_path %>
+<p>
+  Download:
+  <%= link_to "CSV", eventlogs_path(format: "csv") %> |
+  <%= link_to "Excel", eventlogs_path(format: "xls") %>
+</p>

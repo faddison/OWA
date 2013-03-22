@@ -10,5 +10,13 @@ class Eventlog < ActiveRecord::Base
 			return find(:all)
 		end
   end
+  def self.to_csv(options = {})
+		CSV.generate(options) do |csv|
+			csv << ['event title','visitor.fullname']
+			all.each do |f|
+				csv << [f.event.title,f.visitor.full]
+			end
+		end
+	end
   
 end

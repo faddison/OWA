@@ -3,11 +3,13 @@ class ProgramsController < ApplicationController
   # GET /programs.json
   def index
 	if staff_signed_in?
-		@programs = Program.all
+		@programs = Program.search(params[:search])
 
 		respond_to do |format|
-		  format.html # index.html.erb
+		 format.html # index.html.erb
+		  format.csv  {	export_csv(@programs)}
 		  format.json { render json: @programs }
+		  format.xls  { export_xls(@programs) }	
 		end
 	else
 		redirect_to :controller=>'home', :action => 'index'
@@ -84,4 +86,17 @@ class ProgramsController < ApplicationController
       format.json { head :no_content }
     end
   end
+   def export_csv(eventtypes)
+    filename = I18n.l(Time.now, :format => :short) + "- eventtypes.csv"
+    content = Program.to_csv
+    send_data content, :filename => filename
+  end
+  
+  def export_xls(eventtypes)
+		filename = I18n.l(Time.now, :format => :short) + "- eventtypes.xls"
+		content = Program.to_csv(col_sep: "\t")
+		send_data content, :filename => filename
+  end
+  
+  
 end

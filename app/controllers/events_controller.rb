@@ -3,11 +3,13 @@ class EventsController < ApplicationController
   # GET /events.json
   def index
 	if staff_signed_in?
-		@events = Event.all
+		@events = Event.search(params[:search])
 
 		respond_to do |format|
 		  format.html # index.html.erb
+		  format.csv  {	export_csv(@events)}
 		  format.json { render json: @events }
+		  format.xls  { export_xls(@events) }	
 		end
 	else
 		redirect_to :controller=>'home', :action => 'index'
@@ -84,4 +86,16 @@ class EventsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  def export_csv(events)
+    filename = I18n.l(Time.now, :format => :short) + "- events.csv"
+    content = Event.to_csv
+    send_data content, :filename => filename
+  end
+  
+  def export_xls(events)
+		filename = I18n.l(Time.now, :format => :short) + "- events.xls"
+		content = Event.to_csv(col_sep: "\t")
+		send_data content, :filename => filename
+  end
+  
 end

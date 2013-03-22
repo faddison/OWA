@@ -1,4 +1,10 @@
 <h1>Listing programs</h1>
+<%= form_tag programs_path, :method => 'get' do %>
+      <p>
+        <%= text_field_tag :search, params[:search] %><br/>
+        <%= submit_tag "search", :name => nil %><br/>
+      </p>
+<% end %>
 
 <table>
   <tr>
@@ -21,3 +27,8 @@
 <br />
 
 <%= link_to 'New Program', new_program_path %>
+<p>
+  Download:
+  <%= link_to "CSV", programs_path(format: "csv") %> |
+  <%= link_to "Excel", programs_path(format: "xls") %>
+</p>

@@ -52,7 +52,8 @@ class BrochurelogsController < ApplicationController
 	@rid = @brochurelog.brochure_id
 	@fid = @brochurelog.facility_id
 	@d = @brochurelog.date
-	
+	@brochurelog.bname = @brochurelog.brochure.name
+	@brochurelog.fname = @brochurelog.facility.name
 	@check = duplicate(@rid,@fid,@d )
     respond_to do |format|
 		if @check == -1 && @brochurelog.save 

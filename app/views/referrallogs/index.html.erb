@@ -1,5 +1,12 @@
 <h1>Listing referrallogs</h1>
 
+<%= form_tag referrallogs_path, :method => 'get' do %>
+      <p>
+        <%= text_field_tag :search, params[:search] %><br/>
+        <%= submit_tag "search", :name => nil %><br/>
+      </p>
+<% end %>
+
 <table>
   <tr>
     <th>Date</th>
@@ -27,3 +34,9 @@
 <br />
 
 <%= link_to 'New Referrallog', new_referrallog_path %>
+
+<p>
+  Download:
+  <%= link_to "CSV", referrallogs_path(format: "csv") %> |
+  <%= link_to "Excel", referrallogs_path(format: "xls") %>
+</p>
