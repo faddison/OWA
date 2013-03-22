@@ -129,12 +129,5 @@ class VisitorsController < ApplicationController
 		content = Visitor.to_csv(col_sep: "\t")
 		send_data content, :filename => filename
   end
-  def search_visitor(search)
-		if search
-			return Visitor.find(:all, :conditions => ['fname ILIKE ?', "%#{search}%"])
-		else
-			return Visitor.all
-		end
-	end
   
 end

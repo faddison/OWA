@@ -3,11 +3,13 @@ class FacilitiesController < ApplicationController
   # GET /facilities.json
   def index
 	if staff_signed_in?
-		@facilities = Facility.all
+		@facilities = Facility.search(params[:search])
 
 		respond_to do |format|
 		  format.html # index.html.erb
+		  format.csv  {	export_csv(@facilities)}
 		  format.json { render json: @facilities }
+		  format.xls  { export_xls(@facilities) }
 		end
 	else
 		redirect_to :controller=>'home', :action => 'index'
@@ -84,4 +86,18 @@ class FacilitiesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  def export_csv(facilities)
+    filename = I18n.l(Time.now, :format => :short) + "- facilities.csv"
+    content = Facility.to_csv
+    send_data content, :filename => filename
+  end
+  
+  def export_xls(facilities)
+		filename = I18n.l(Time.now, :format => :short) + "- facilities.xls"
+		content = Facility.to_csv(col_sep: "\t")
+		send_data content, :filename => filename
+  end
+  
+  
+  
 end

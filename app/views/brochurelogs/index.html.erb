@@ -1,5 +1,10 @@
 <h1>Listing brochurelogs</h1>
-
+<%= form_tag brochurelogs_path, :method => 'get' do %>
+      <p>
+        <%= text_field_tag :search, params[:search] %><br/>
+        <%= submit_tag "search", :name => nil %><br/>
+      </p>
+<% end %>
 <table>
   <tr>
     <th>Date</th>
@@ -27,3 +32,9 @@
 <br />
 
 <%= link_to 'New Brochurelog', new_brochurelog_path %>
+<p>
+  Download:
+  <%= link_to "CSV", brochurelogs_path(format: "csv") %> |
+  <%= link_to "Excel", brochurelogs_path(format: "xls") %>
+</p>
+

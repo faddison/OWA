@@ -3,10 +3,12 @@ class BrochuresController < ApplicationController
   # GET /brochures.json
   def index
 	if staff_signed_in?
-			@brochures = Brochure.all
+			@brochures = Brochure.search(params[:search])
 			respond_to do |format|
-			  format.html # index.html.erb
-			  format.json { render json: @brochures }
+				format.html # index.html.erb
+				format.csv  { export_csv(@brochures)}
+				format.json { render json: @brochures }
+				format.xls  { export_xls(@brochures) }
 			end
 	else
 		redirect_to :controller=>'home', :action => 'index'
@@ -83,4 +85,17 @@ class BrochuresController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def export_csv(brochures)
+    filename = I18n.l(Time.now, :format => :short) + "- brochures.csv"
+    content = Brochure.to_csv
+    send_data content, :filename => filename
+  end
+  
+  def export_xls(brochures)
+		filename = I18n.l(Time.now, :format => :short) + "- brochures.xls"
+		content = Brochure.to_csv(col_sep: "\t")
+		send_data content, :filename => filename
+  end
+  
 end

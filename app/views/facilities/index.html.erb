@@ -1,5 +1,10 @@
 <h1>Listing facilities</h1>
-
+ <%= form_tag facilities_path, :method => 'get' do %>
+      <p>
+        <%= text_field_tag :search, params[:search] %><br/>
+        <%= submit_tag "search", :name => nil %><br/>
+      </p>
+<% end %>
 <table>
   <tr>
     <th>Name</th>
@@ -23,3 +28,8 @@
 <br />
 
 <%= link_to 'New Facility', new_facility_path %>
+<p>
+  Download:
+  <%= link_to "CSV", facilities_path(format: "csv") %> |
+  <%= link_to "Excel", facilities_path(format: "xls") %>
+</p>

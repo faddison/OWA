@@ -10,7 +10,13 @@ class Visitor < ActiveRecord::Base
 		CSV.generate(options) do |csv|
 			csv << column_names
 			all.each do |visitor|
-			csv << visitor.attributes.values_at(*column_names)
+				csv << visitor.attributes.values_at(*column_names)
+			end
+			csv << ["child ID","child name","allergies","parents name","parents id"]
+			all.each do |visitor|
+				visitor.children.each do |child|
+					csv << [child.id,child.name,child.allergies,child.visitor.fullname,child.visitor.id]
+				end
 			end
 		end
 	end
