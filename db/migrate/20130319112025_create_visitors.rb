@@ -7,7 +7,12 @@ class CreateVisitors < ActiveRecord::Migration
       t.string :email
       t.string :phone
 	  t.string :fullname
-		
+	  t.string :country
+	  t.string :postcode
+	  t.string :husband
+	  t.string :notes
+	  t.string :ftime
+	  
       t.timestamps
     end
   end

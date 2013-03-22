@@ -25,11 +25,40 @@
   <%= @visitor.phone %>
 </p>
 
+<p>
+  <b>Country:</b>
+  <%= @visitor.country %>
+</p>
+<p>
+  <b>Postcode:</b>
+  <%= @visitor.postcode %>
+</p>
+<p>
+  <b>How did you heard about our program :</b>
+  <%= @visitor.notes %>
+</p>
+<p>
+  <b>When did you first start attending programs at NFRP?:</b>
+  <%= @visitor.ftime %>
+</p>
+<p>
+  <b>[session id]</b>
+  <%= request.session_options[:@visitor] %>
+</p>
+
+
 <h2>Children</h2>
 <%= render @visitor.children %>
 
 <h2>Add a Child:</h2>
 <%= render "children/form" %>
 
+<h2>contacts</h2>
+<%= render @visitor.econtacts %>
+
+<h2>Add a Contact:</h2>
+<%= render "econtacts/form" %>
+
+
 <%= link_to 'Edit', edit_visitor_path(@visitor) %>
-<%= link_to 'Back', visitors_path %>
+<%= link_to 'Back', home_index_path %>

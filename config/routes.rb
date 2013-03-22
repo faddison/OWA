@@ -4,6 +4,7 @@ Appbeta13::Application.routes.draw do
 
   resources :visitors do
 	resources :children
+	resources :econtacts
   end
 
 

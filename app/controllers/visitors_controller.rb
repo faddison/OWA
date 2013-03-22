@@ -5,21 +5,25 @@ class VisitorsController < ApplicationController
   #http_basic_authenticate_with :name => "ccunandy@yahoo.com", :password => "ccandy881103", :only => :destroy
   
   def index
-    @visitors = Visitor.search(params[:search])
-	#@visitors.fullname = Visitor.full_name(@visitors.fname,@visitors.lname)
-    respond_to do |format|
-      format.html # index.html.erb
-	  format.csv  {	export_csv(@visitors)}
-      format.json { render json: @visitors }
-	  format.xls  { export_xls(@visitors) }
-    end
+	if staff_signed_in?
+		@visitors = Visitor.search(params[:search])
+		#@visitors.fullname = Visitor.full_name(@visitors.fname,@visitors.lname)
+		respond_to do |format|
+		  format.html # index.html.erb
+		  format.csv  {	export_csv(@visitors)}
+		  format.json { render json: @visitors }
+		  format.xls  { export_xls(@visitors) }
+		end
+	else
+		redirect_to :controller=>'home'
+	end
   end
 
   # GET /visitors/1
   # GET /visitors/1.json
   def show
     @visitor = Visitor.find(params[:id])
-
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @visitor }
@@ -29,25 +33,17 @@ class VisitorsController < ApplicationController
   # GET /visitors/new
   # GET /visitors/new.json
   def new
-	if staff_signed_in?
 		@visitor = Visitor.new
 
 		respond_to do |format|
 		  format.html # new.html.erb
 		  format.json { render json: @visitor }
 		end
-	else
-		redirect_to :controller=>'visitors'
-	end
   end
 
   # GET /visitors/1/edit
   def edit
-	if staff_signed_in?
 		@visitor = Visitor.find(params[:id])
-	else
-		redirect_to :controller=>'visitors'
-	end
   end
 
   # POST /visitors
@@ -69,7 +65,6 @@ class VisitorsController < ApplicationController
   # PUT /visitors/1
   # PUT /visitors/1.json
   def update
-	if staff_signed_in?
 		@visitor = Visitor.find(params[:id])
 
 		respond_to do |format|
@@ -81,15 +76,11 @@ class VisitorsController < ApplicationController
 			format.json { render json: @visitor.errors, status: :unprocessable_entity }
 		  end
 		end
-	else
-		redirect_to :controller=>'visitors'
-	end
   end
 
   # DELETE /visitors/1
   # DELETE /visitors/1.json
   def destroy
-	if staff_signed_in?
 		@visitor = Visitor.find(params[:id])
 		@visitor.destroy
 
@@ -97,9 +88,6 @@ class VisitorsController < ApplicationController
 		  format.html { redirect_to visitors_url }
 		  format.json { head :no_content }
 		end
-	else
-		redirect_to :controller=>'visitors'
-	end
   end
   
   protected

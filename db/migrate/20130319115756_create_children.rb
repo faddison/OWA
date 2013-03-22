@@ -3,7 +3,8 @@ class CreateChildren < ActiveRecord::Migration
     create_table :children do |t|
       t.string :name
       t.references :visitor
-
+	  t.string :allergies
+	  
       t.timestamps
     end
     add_index :children, :visitor_id

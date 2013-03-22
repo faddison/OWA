@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130320222650) do
+ActiveRecord::Schema.define(:version => 20130322091041) do
 
   create_table "brochurelogs", :force => true do |t|
     t.string   "date"
@@ -34,11 +34,23 @@ ActiveRecord::Schema.define(:version => 20130320222650) do
   create_table "children", :force => true do |t|
     t.string   "name"
     t.integer  "visitor_id"
+    t.string   "allergies"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
   add_index "children", ["visitor_id"], :name => "index_children_on_visitor_id"
+
+  create_table "econtacts", :force => true do |t|
+    t.string   "name"
+    t.string   "phone"
+    t.string   "relationship"
+    t.integer  "visitor_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "econtacts", ["visitor_id"], :name => "index_econtacts_on_visitor_id"
 
   create_table "eventlogs", :force => true do |t|
     t.integer  "event_id"
@@ -129,6 +141,11 @@ ActiveRecord::Schema.define(:version => 20130320222650) do
     t.string   "email"
     t.string   "phone"
     t.string   "fullname"
+    t.string   "country"
+    t.string   "postcode"
+    t.string   "husband"
+    t.string   "notes"
+    t.string   "ftime"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
