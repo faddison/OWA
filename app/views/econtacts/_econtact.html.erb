@@ -1,0 +1,18 @@
+<p>
+  <b>Contact Name:</b>
+  <%= econtact.name %>
+</p>
+<p>
+  <b>Contact Phone:</b>
+  <%= econtact.phone %>
+</p>
+<p>
+  <b>Relationship:</b>
+  <%= econtact.relationship %>
+</p>
+
+<p>
+  <%= link_to 'delete', [econtact.visitor, econtact],
+               :confirm => 'Are you sure?',
+               :method => :delete %>
+</p>

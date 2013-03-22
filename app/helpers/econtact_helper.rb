@@ -1,0 +1,2 @@
+module EcontactHelper
+end
