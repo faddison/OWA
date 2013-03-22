@@ -6,15 +6,14 @@
 </p>
 
 <p>
-  <b>Event:</b>
-  <%= @eventlog.event_id %>
+  <b>Visitor:</b>
+  <%= @eventlog.visitor.fullname %>
 </p>
 
 <p>
-  <b>Visitor:</b>
-  <%= @eventlog.visitor.fname %>
+  <b>Date:</b>
+  <%= @eventlog.event.date %>
 </p>
-
 
 <%= link_to 'Edit', edit_eventlog_path(@eventlog) %> |
 <%= link_to 'Back', eventlogs_path %>
