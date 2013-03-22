@@ -7,6 +7,7 @@ class VisitorsController < ApplicationController
   def index
 	if staff_signed_in?
 		@visitors = Visitor.search(params[:search])
+		Appbeta13::Application.config.current_user_id = -1
 		#@visitors.fullname = Visitor.full_name(@visitors.fname,@visitors.lname)
 		respond_to do |format|
 		  format.html # index.html.erb
@@ -22,12 +23,33 @@ class VisitorsController < ApplicationController
   # GET /visitors/1
   # GET /visitors/1.json
   def show
-    @visitor = Visitor.find(params[:id])
-    
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @visitor }
-    end
+		
+		@visitor = Visitor.find(params[:id])
+		if Appbeta13::Application.config.current_user_id != @visitor.id 
+			if staff_signed_in?
+				Appbeta13::Application.config.current_user_id = -1
+				respond_to do |format|
+					format.html # show.html.erb
+					format.json { render json: @visitor }
+				end
+			else
+				flash[:notice] = "You don't have access to this page!"
+				@i = Appbeta13::Application.config.current_user_id
+				#redirect_to action => "show", :id => 17
+				@visitor.id = @i
+				#@visitor = Visitor.find(session[:@i
+				redirect_to visitors_path(session[:visitor_id])
+				return
+			end
+			
+		else
+			respond_to do |format|
+			format.html # show.html.erb
+			format.json { render json: @visitor }
+		end
+		
+		end
+	
   end
 
   # GET /visitors/new
@@ -55,6 +77,10 @@ class VisitorsController < ApplicationController
 			if @visitor.save
 				format.html { redirect_to @visitor, notice: 'Visitor was successfully created.' }
 				format.json { render json: @visitor, status: :created, location: @visitor }
+				format.json { render json: @visitor}
+				Appbeta13::Application.config.current_user_id = @visitor.id
+				@i = Appbeta13::Application.config.current_user_id
+				session[:@i] = @visitor.id
 			else
 				format.html { render action: "new" }
 				format.json { render json: @visitor.errors, status: :unprocessable_entity }

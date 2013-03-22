@@ -41,10 +41,6 @@
   <b>When did you first start attending programs at NFRP?:</b>
   <%= @visitor.ftime %>
 </p>
-<p>
-  <b>[session id]</b>
-  <%= request.session_options[:@visitor] %>
-</p>
 
 
 <h2>Children</h2>
@@ -61,4 +57,4 @@
 
 
 <%= link_to 'Edit', edit_visitor_path(@visitor) %>
-<%= link_to 'Back', home_index_path %>
+<%= link_to 'Finish', home_index_path %>
