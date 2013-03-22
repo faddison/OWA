@@ -16,7 +16,7 @@ class Visitor < ActiveRecord::Base
 	end
 	def self.search(search)
 		if search
-			return find(:all, :conditions => ['fname LIKE ?', "%#{search}%"])
+			return find(:all, :conditions => ['fullname LIKE ? or email LIKE ? or fname LIKE ? or phone LIKE ? or language LIKE ?', "%#{search}%","#{search}","#{search}","#{search}","#{search}"])
 		else
 			return find(:all)
 		end

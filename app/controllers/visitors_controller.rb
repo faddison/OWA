@@ -29,61 +29,77 @@ class VisitorsController < ApplicationController
   # GET /visitors/new
   # GET /visitors/new.json
   def new
-    @visitor = Visitor.new
+	if staff_signed_in?
+		@visitor = Visitor.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @visitor }
-    end
+		respond_to do |format|
+		  format.html # new.html.erb
+		  format.json { render json: @visitor }
+		end
+	else
+		redirect_to :controller=>'visitors'
+	end
   end
 
   # GET /visitors/1/edit
   def edit
-    @visitor = Visitor.find(params[:id])
+	if staff_signed_in?
+		@visitor = Visitor.find(params[:id])
+	else
+		redirect_to :controller=>'visitors'
+	end
   end
 
   # POST /visitors
   # POST /visitors.json
   def create
-    @visitor = Visitor.new(params[:visitor])
+	@visitor = Visitor.new(params[:visitor])
 	@visitor.fullname = Visitor.full_name(@visitor.fname,@visitor.lname)
-    respond_to do |format|
-      if @visitor.save
-        format.html { redirect_to @visitor, notice: 'Visitor was successfully created.' }
-        format.json { render json: @visitor, status: :created, location: @visitor }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @visitor.errors, status: :unprocessable_entity }
-      end
-    end
+	respond_to do |format|
+			if @visitor.save
+				format.html { redirect_to @visitor, notice: 'Visitor was successfully created.' }
+				format.json { render json: @visitor, status: :created, location: @visitor }
+			else
+				format.html { render action: "new" }
+				format.json { render json: @visitor.errors, status: :unprocessable_entity }
+			end
+		end
   end
 
   # PUT /visitors/1
   # PUT /visitors/1.json
   def update
-    @visitor = Visitor.find(params[:id])
+	if staff_signed_in?
+		@visitor = Visitor.find(params[:id])
 
-    respond_to do |format|
-      if @visitor.update_attributes(params[:visitor])
-        format.html { redirect_to @visitor, notice: 'Visitor was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @visitor.errors, status: :unprocessable_entity }
-      end
-    end
+		respond_to do |format|
+		  if @visitor.update_attributes(params[:visitor])
+			format.html { redirect_to @visitor, notice: 'Visitor was successfully updated.' }
+			format.json { head :no_content }
+		  else
+			format.html { render action: "edit" }
+			format.json { render json: @visitor.errors, status: :unprocessable_entity }
+		  end
+		end
+	else
+		redirect_to :controller=>'visitors'
+	end
   end
 
   # DELETE /visitors/1
   # DELETE /visitors/1.json
   def destroy
-    @visitor = Visitor.find(params[:id])
-    @visitor.destroy
+	if staff_signed_in?
+		@visitor = Visitor.find(params[:id])
+		@visitor.destroy
 
-    respond_to do |format|
-      format.html { redirect_to visitors_url }
-      format.json { head :no_content }
-    end
+		respond_to do |format|
+		  format.html { redirect_to visitors_url }
+		  format.json { head :no_content }
+		end
+	else
+		redirect_to :controller=>'visitors'
+	end
   end
   
   protected
@@ -101,7 +117,7 @@ class VisitorsController < ApplicationController
   end
   def search_visitor(search)
 		if search
-			return Visitor.find(:all, :conditions => ['fullname ILIKE ?', "%#{search}%"])
+			return Visitor.find(:all, :conditions => ['fname ILIKE ?', "%#{search}%"])
 		else
 			return Visitor.all
 		end

@@ -1,5 +1,13 @@
 <h1>Listing eventlogs</h1>
 
+<%= form_tag eventlogs_path, :method => 'get' do %>
+      <p>
+		<th>Search</th>
+		<%= text_field_tag :search, params[:search] %><br/>
+        <%= submit_tag "search", :name => nil %><br/>
+      </p>
+<% end %>
+
 <table>
   <tr>
     <th>Event</th>

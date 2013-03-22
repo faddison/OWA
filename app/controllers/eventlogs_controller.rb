@@ -3,7 +3,7 @@ class EventlogsController < ApplicationController
   # GET /eventlogs.json
   def index
 	if staff_signed_in?
-		@eventlogs = Eventlog.all
+		@eventlogs = Eventlog.search(params[:search])
 		respond_to do |format|
 		  format.html # index.html.erb
 		  format.json { render json: @eventlogs }
@@ -44,6 +44,8 @@ class EventlogsController < ApplicationController
   # POST /eventlogs.json
   def create
     @eventlog = Eventlog.new(params[:eventlog])
+	@eventlog.ename = @eventlog.event.title
+	@eventlog.vname = @eventlog.visitor.fname
     respond_to do |format|
       if @eventlog.save
         format.html { redirect_to @eventlog, notice: 'Eventlog was successfully created.' }
