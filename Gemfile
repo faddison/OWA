@@ -7,6 +7,10 @@ gem 'rails', '3.2.12'
 
 gem 'sqlite3'
 gem 'devise'
+gem 'populator'
+gem 'faker'
+gem 'bootstrap-sass'
+gem 'bootswatch-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.
