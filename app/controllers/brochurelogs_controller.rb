@@ -1,4 +1,5 @@
 class BrochurelogsController < ApplicationController
+load_and_authorize_resource
   # GET /brochurelogs
   # GET /brochurelogs.json
   def index

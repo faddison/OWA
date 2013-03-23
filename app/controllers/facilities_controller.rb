@@ -1,4 +1,5 @@
 class FacilitiesController < ApplicationController
+load_and_authorize_resource
   # GET /facilities
   # GET /facilities.json
   def index

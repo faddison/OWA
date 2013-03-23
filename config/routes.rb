@@ -1,4 +1,10 @@
 Appbeta11::Application.routes.draw do
+
+  # replace devise_for :users with:
+  devise_for :users
+  
+  resources :users
+
   resources :referrals
 
 

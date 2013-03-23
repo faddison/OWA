@@ -1,4 +1,5 @@
 class BrochuresController < ApplicationController
+load_and_authorize_resource
   # GET /brochures
   # GET /brochures.json
   def index
