@@ -41,3 +41,9 @@
   <%= link_to "CSV", events_path(format: "csv") %> |
   <%= link_to "Excel", events_path(format: "xls") %>
 </p>
+
+<p>
+  Download:
+ <%= link_to "CSV", events_path(:params => params, format: "csv") %>
+  <%= link_to "Excel", events_path(:params => params, format: "xls") %>
+</p>

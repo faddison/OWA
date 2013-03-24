@@ -2,11 +2,12 @@ class Brochurelog < ActiveRecord::Base
   belongs_to :facility	
   belongs_to :brochure
   attr_accessible :brochure_id, :count, :date, :facility_id, :bname,:fname
-  def self.to_csv(options = {})
-		CSV.generate(options) do |csv|
-			csv << ['facility_id','facility name','brochure_id','brochure name','count']
-			all.each do |f|
-				csv << [f.facility.id,f.facility.name,f.brochure.id,f.brochure.name,f.count]
+  def self.to_csv(params)
+		@records = Brochurelog.search(params[:search])
+			CSV.generate(col_sep: "\t") do |csv|
+			csv << column_names
+			@records.each do |f|
+				csv << f.attributes.values_at(*column_names)
 			end
 		end
 	end

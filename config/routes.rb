@@ -1,4 +1,6 @@
 Appbeta13::Application.routes.draw do
+
+
   resources :events
 
 

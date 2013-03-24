@@ -29,6 +29,6 @@
 <%= link_to 'New Program', new_program_path %>
 <p>
   Download:
-  <%= link_to "CSV", programs_path(format: "csv") %> |
-  <%= link_to "Excel", programs_path(format: "xls") %>
+ <%= link_to "CSV", programs_path(:params => params, format: "csv") %>
+  <%= link_to "Excel", programs_path(:params => params, format: "xls") %>
 </p>

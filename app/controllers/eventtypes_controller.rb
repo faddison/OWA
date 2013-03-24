@@ -2,18 +2,17 @@ class EventtypesController < ApplicationController
   # GET /eventtypes
   # GET /eventtypes.json
   def index
-	if staff_signed_in?
+	#if staff_signed_in?
 		@eventtypes = Eventtype.search(params[:search])
-
 		respond_to do |format|
 		  format.html # index.html.erb
-		  format.csv  {	export_csv(@eventtypes)}
+		  format.csv  {	export_csv(params)}
 		  format.json { render json: @eventtypes }
-		  format.xls  { export_xls(@eventtypes) }	
+		  format.xls  { export_xls(params) }	
 		end
-	else
-		redirect_to :controller=>'home', :action => 'index'
-	end
+	#else
+		#redirect_to :controller=>'home', :action => 'index'
+	#end
   end
 
   # GET /eventtypes/1
@@ -86,15 +85,15 @@ class EventtypesController < ApplicationController
       format.json { head :no_content }
     end
   end
-  def export_csv(eventtypes)
+  def export_csv(params)
     filename = I18n.l(Time.now, :format => :short) + "- eventtypes.csv"
-    content = Eventtype.to_csv
+    content = Eventtype.to_csv(params)
     send_data content, :filename => filename
   end
   
-  def export_xls(eventtypes)
+  def export_xls(params)
 		filename = I18n.l(Time.now, :format => :short) + "- eventtypes.xls"
-		content = Eventtype.to_csv(col_sep: "\t")
+		content = Eventtype.to_csv(params)
 		send_data content, :filename => filename
   end
   

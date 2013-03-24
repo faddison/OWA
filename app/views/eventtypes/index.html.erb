@@ -28,6 +28,6 @@
 <%= link_to 'New Eventtype', new_eventtype_path %>
 <p>
   Download:
-  <%= link_to "CSV", eventtypes_path(format: "csv") %> |
-  <%= link_to "Excel", eventtypes_path(format: "xls") %>
+ <%= link_to "CSV", eventtypes_path(:params => params, format: "csv") %>
+  <%= link_to "Excel", eventtypes_path(:params => params, format: "xls") %>
 </p>

@@ -8,9 +8,9 @@ class BrochurelogsController < ApplicationController
 		@brochurelogs = Brochurelog.search(params[:search])
 		respond_to do |format|
 		  format.html # index.html.erb
-		  format.csv  {	export_csv(@brochurelogs)}
+		  format.csv  {	export_csv(params)}
 		  format.json { render json: @brochurelogs }
-		  format.xls  { export_xls(@brochurelogs) }	
+		  format.xls  { export_xls(params) }
 		end
 	else
 		redirect_to :controller=>'home', :action => 'index'
@@ -98,15 +98,15 @@ class BrochurelogsController < ApplicationController
     end
   end
   
-  def export_csv(brochurelogs)
+  def export_csv(params)
     filename = I18n.l(Time.now, :format => :short) + "- brochurelogs.csv"
-    content = Brochurelog.to_csv
+    content = Brochurelog.to_csv(params)
     send_data content, :filename => filename
   end
   
-  def export_xls(brochurelogs)
+  def export_xls(params)
 		filename = I18n.l(Time.now, :format => :short) + "- brochurelogs.xls"
-		content = Brochurelog.to_csv(col_sep: "\t")
+		content = Brochurelog.to_csv(params)
 		send_data content, :filename => filename
   end
   

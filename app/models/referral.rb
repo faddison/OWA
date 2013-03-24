@@ -7,10 +7,11 @@ class Referral < ActiveRecord::Base
 			return find(:all)
 		end
 	end
-  def self.to_csv(options = {})
-		CSV.generate(options) do |csv|
+  def self.to_csv(params)
+		@records = Referral.search(params[:search])
+			CSV.generate(col_sep: "\t") do |csv|
 			csv << column_names
-			all.each do |f|
+			@records.each do |f|
 				csv << f.attributes.values_at(*column_names)
 			end
 		end

@@ -11,9 +11,9 @@ class VisitorsController < ApplicationController
 		#@visitors.fullname = Visitor.full_name(@visitors.fname,@visitors.lname)
 		respond_to do |format|
 		  format.html # index.html.erb
-		  format.csv  {	export_csv(@visitors)}
+		  format.csv  {	export_csv(params)}
 		  format.json { render json: @visitors }
-		  format.xls  { export_xls(@visitors) }
+		  format.xls  { export_xls(params) }
 		end
 	else
 		redirect_to :controller=>'home'
@@ -118,15 +118,15 @@ class VisitorsController < ApplicationController
   
   protected
  
-  def export_csv(visitors)
+  def export_csv(params)
     filename = I18n.l(Time.now, :format => :short) + "- visitors.csv"
-    content = Visitor.to_csv
+    content = Visitor.to_csv(params)
     send_data content, :filename => filename
   end
   
-  def export_xls(visitors)
+  def export_xls(params)
 		filename = I18n.l(Time.now, :format => :short) + "- visitors.xls"
-		content = Visitor.to_csv(col_sep: "\t")
+		content = Visitor.to_csv(params)
 		send_data content, :filename => filename
   end
   

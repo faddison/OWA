@@ -6,9 +6,9 @@ class EventlogsController < ApplicationController
 		@eventlogs = Eventlog.search(params[:search])
 		respond_to do |format|
 		  format.html # index.html.erb
-		  format.csv  {	export_csv(@eventlogs)}
+		  format.csv  {	export_csv(params)}
 		  format.json { render json: @eventlogs }
-		  format.xls  { export_xls(@eventlogs) }
+		  format.xls  { export_xls(params) }
 		  
 		end
 	else
@@ -87,15 +87,15 @@ class EventlogsController < ApplicationController
       format.json { head :no_content }
     end
   end
-  def export_csv(eventlogs)
+  def export_csv(params)
     filename = I18n.l(Time.now, :format => :short) + "- eventlogs.csv"
-    content = Event.to_csv
+    content = Event.to_csv(params)
     send_data content, :filename => filename
   end
   
-  def export_xls(eventlog)
+  def export_xls(params)
 		filename = I18n.l(Time.now, :format => :short) + "- eventlogs.xls"
-		content = Event.to_csv(col_sep: "\t")
+		content = Event.to_csv(params)
 		send_data content, :filename => filename
   end
 end

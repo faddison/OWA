@@ -28,6 +28,6 @@
 <%= link_to 'New Brochure', new_brochure_path %>
 <p>
   Download:
-  <%= link_to "CSV", brochures_path(format: "csv") %> |
-  <%= link_to "Excel", brochures_path(format: "xls") %>
+ <%= link_to "CSV", brochures_path(:params => params, format: "csv") %>
+  <%= link_to "Excel", brochures_path(:params => params, format: "xls") %>
 </p>

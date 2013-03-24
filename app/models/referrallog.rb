@@ -2,11 +2,12 @@ class Referrallog < ActiveRecord::Base
   belongs_to :referral
   belongs_to :facility
   attr_accessible :count, :date, :facility_id, :referral_id, :fname, :rname
-   def self.to_csv(options = {})
-		CSV.generate(options) do |csv|
-			csv << ['facility_id','facility name','referral_id','referral name','count']
-			all.each do |f|
-				csv << [f.facility.id,f.facility.name,f.referral.id,f.referral.name,f.count]
+  def self.to_csv(params)
+		@records = Eventtype.search(params[:search])
+			CSV.generate(col_sep: "\t") do |csv|
+			csv << ['event name']
+			@records.each do |f|
+				csv << [f.name]
 			end
 		end
 	end

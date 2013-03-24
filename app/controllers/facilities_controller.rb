@@ -7,9 +7,9 @@ class FacilitiesController < ApplicationController
 
 		respond_to do |format|
 		  format.html # index.html.erb
-		  format.csv  {	export_csv(@facilities)}
+		  format.csv  {	export_csv(params)}
 		  format.json { render json: @facilities }
-		  format.xls  { export_xls(@facilities) }
+		  format.xls  { export_xls(params) }
 		end
 	else
 		redirect_to :controller=>'home', :action => 'index'
@@ -86,15 +86,15 @@ class FacilitiesController < ApplicationController
       format.json { head :no_content }
     end
   end
-  def export_csv(facilities)
+  def export_csv(params)
     filename = I18n.l(Time.now, :format => :short) + "- facilities.csv"
-    content = Facility.to_csv
+    content = Facility.to_csv(params)
     send_data content, :filename => filename
   end
   
-  def export_xls(facilities)
+  def export_xls(params)
 		filename = I18n.l(Time.now, :format => :short) + "- facilities.xls"
-		content = Facility.to_csv(col_sep: "\t")
+		content = Facility.to_csv(params)
 		send_data content, :filename => filename
   end
   

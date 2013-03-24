@@ -30,6 +30,6 @@
 <%= link_to 'New Facility', new_facility_path %>
 <p>
   Download:
-  <%= link_to "CSV", facilities_path(format: "csv") %> |
-  <%= link_to "Excel", facilities_path(format: "xls") %>
+ <%= link_to "CSV", facilities_path(:params => params, format: "csv") %>
+  <%= link_to "Excel", facilities_path(:params => params, format: "xls") %>
 </p>

@@ -28,6 +28,6 @@
 <%= link_to 'New Referral', new_referral_path %>
 <p>
   Download:
-  <%= link_to "CSV", referrals_path(format: "csv") %> |
-  <%= link_to "Excel", referrals_path(format: "xls") %>
+ <%= link_to "CSV", referrals_path(:params => params, format: "csv") %>
+  <%= link_to "Excel", referrals_path(:params => params, format: "xls") %>
 </p>

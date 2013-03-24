@@ -7,9 +7,9 @@ class ReferralsController < ApplicationController
 
 		respond_to do |format|
 		  format.html # index.html.erb
-			format.csv  { export_csv(@referrals)}
-			format.json { render json: @referrals }
-			format.xls  { export_xls(@referrals) }
+		  format.csv  {	export_csv(params)}
+		  format.json { render json: @referrals }
+		  format.xls  { export_xls(params) }
 		end
 	else
 		redirect_to :controller=>'home', :action => 'index'
@@ -86,15 +86,15 @@ class ReferralsController < ApplicationController
       format.json { head :no_content }
     end
   end
-  def export_csv(referrals)
+  def export_csv(params)
     filename = I18n.l(Time.now, :format => :short) + "- referrals.csv"
-    content = Referral.to_csv
+    content = Referral.to_csv(params)
     send_data content, :filename => filename
   end
   
-  def export_xls(referrals)
+  def export_xls(params)
 		filename = I18n.l(Time.now, :format => :short) + "- referrals.xls"
-		content = Referral.to_csv(col_sep: "\t")
+		content = Referral.to_csv(params)
 		send_data content, :filename => filename
   end
   

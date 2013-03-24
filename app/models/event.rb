@@ -3,11 +3,12 @@ class Event < ActiveRecord::Base
   belongs_to :eventtype
   belongs_to :facility
   attr_accessible :date, :duration, :eventtype_id, :facility_id, :program_id, :title
-  def self.to_csv(options = {})
-		CSV.generate(options) do |csv|
-			csv << ['event title','date','duration','eventtype name','facility name','program name']
-			all.each do |f|
-				csv << [f.title,f.date,f.duration,f.eventtype.name,f.facility.name,f.program.name]
+  def self.to_csv(params)
+		@records = Event.search(params[:search])
+			CSV.generate(col_sep: "\t") do |csv|
+			csv << ['event name']
+			@records.each do |f|
+				csv << [f.name]
 			end
 		end
 	end

@@ -37,6 +37,6 @@
 
 <p>
   Download:
-  <%= link_to "CSV", referrallogs_path(format: "csv") %> |
-  <%= link_to "Excel", referrallogs_path(format: "xls") %>
+ <%= link_to "CSV", referrallogs_path(:params => params, format: "csv") %>
+  <%= link_to "Excel", referrallogs_path(:params => params, format: "xls") %>
 </p>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130322091041) do
+ActiveRecord::Schema.define(:version => 20130324035346) do
 
   create_table "brochurelogs", :force => true do |t|
     t.string   "date"
@@ -53,6 +53,12 @@ ActiveRecord::Schema.define(:version => 20130322091041) do
   end
 
   add_index "econtacts", ["visitor_id"], :name => "index_econtacts_on_visitor_id"
+
+  create_table "etresults", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "eventlogs", :force => true do |t|
     t.integer  "event_id"
