@@ -1,7 +1,7 @@
 class CreateReferrallogs < ActiveRecord::Migration
   def change
     create_table :referrallogs do |t|
-      t.string :date
+      t.date :date
       t.integer :count
       t.integer :referral_id
       t.references :referral

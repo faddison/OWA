@@ -9,9 +9,6 @@ Appbeta13::Application.routes.draw do
 	resources :econtacts
   end
 
-
-  devise_for :staffs
-
   resources :eventlogs
 
 
@@ -30,8 +27,11 @@ Appbeta13::Application.routes.draw do
   resources :facilities
 
 
-  resources :brochures
-
+  resources :brochures do
+	 member do
+		get 'approve'
+	end
+  end
 
   resources :referrals
 

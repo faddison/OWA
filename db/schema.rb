@@ -11,10 +11,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130324035346) do
+ActiveRecord::Schema.define(:version => 20130322091041) do
 
   create_table "brochurelogs", :force => true do |t|
-    t.string   "date"
+    t.date     "date"
     t.integer  "count"
     t.integer  "facility_id"
     t.integer  "brochure_id"
@@ -54,12 +54,6 @@ ActiveRecord::Schema.define(:version => 20130324035346) do
 
   add_index "econtacts", ["visitor_id"], :name => "index_econtacts_on_visitor_id"
 
-  create_table "etresults", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "eventlogs", :force => true do |t|
     t.integer  "event_id"
     t.integer  "visitor_id"
@@ -78,7 +72,7 @@ ActiveRecord::Schema.define(:version => 20130324035346) do
     t.integer  "eventtype_id"
     t.integer  "facility_id"
     t.integer  "duration"
-    t.string   "date"
+    t.date     "date"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
@@ -107,7 +101,7 @@ ActiveRecord::Schema.define(:version => 20130324035346) do
   end
 
   create_table "referrallogs", :force => true do |t|
-    t.string   "date"
+    t.date     "date"
     t.integer  "count"
     t.integer  "referral_id"
     t.integer  "facility_id"
@@ -126,24 +120,6 @@ ActiveRecord::Schema.define(:version => 20130324035346) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "staffs", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-  end
-
-  add_index "staffs", ["email"], :name => "index_staffs_on_email", :unique => true
-  add_index "staffs", ["reset_password_token"], :name => "index_staffs_on_reset_password_token", :unique => true
-
   create_table "visitors", :force => true do |t|
     t.string   "fname"
     t.string   "lname"
@@ -159,5 +135,6 @@ ActiveRecord::Schema.define(:version => 20130324035346) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+  
 
 end

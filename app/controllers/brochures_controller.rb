@@ -1,23 +1,23 @@
 class BrochuresController < ApplicationController
   # GET /brochures
   # GET /brochures.json
+
   def index
-	if staff_signed_in?
+			Brochure.connfinal
 			@brochures = Brochure.search(params[:search])
+			
 			respond_to do |format|
 				format.html # index.html.erb
 				format.csv  {	export_csv(params)}
 				format.json { render json: @brochures }
 				format.xls  { export_xls(params) }
 			end
-	else
-		redirect_to :controller=>'home', :action => 'index'
-	end
   end
 
   # GET /brochures/1
   # GET /brochures/1.json
   def show
+  
     @brochure = Brochure.find(params[:id])
 
     respond_to do |format|
@@ -79,11 +79,26 @@ class BrochuresController < ApplicationController
   def destroy
     @brochure = Brochure.find(params[:id])
     @brochure.destroy
+    respond_to do |format|
+      format.html { redirect_to brochures_url }
+      format.json { head :no_content }
+    end
+  end
+  def approve
+    @brochure = Brochure.find(params[:id])
+	Brochure.conndeve
+	@newb = Brochure.new
+	@newb.name = @brochure.name
+	@newb.save
+	Brochure.connfinal
+	#Brochure.connfinal
+    @brochure.destroy
 
     respond_to do |format|
       format.html { redirect_to brochures_url }
       format.json { head :no_content }
     end
+	#Brochure.conndeve
   end
   
   def export_csv(params)

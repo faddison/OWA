@@ -1,7 +1,7 @@
 class CreateBrochurelogs < ActiveRecord::Migration
   def change
     create_table :brochurelogs do |t|
-      t.string :date
+      t.date :date
       t.integer :count
       t.references :facility
       t.integer :facility_id

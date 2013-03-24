@@ -8,17 +8,17 @@ class Referrallog < ActiveRecord::Base
   validates :fname,  :presence => true
   validates :rname,  :presence => true
   def self.to_csv(params)
-		@records = Eventtype.search(params[:search])
+		@records = Referrallog.search(params[:search])
 			CSV.generate(col_sep: "\t") do |csv|
-			csv << ['event name']
+			csv << column_names
 			@records.each do |f|
-				csv << [f.name]
+				csv << f.attributes.values_at(*column_names)
 			end
 		end
 	end
 	def self.search(search)
 		if search
-			return find(:all, :conditions => ['date LIKE ? or count LIKE ? or fname LIKE ? or rname ?', "%#{search}%","#{search}","#{search}","#{search}"])
+			return find(:all, :conditions => ['count LIKE ? or rname LIKE ? or fname LIKE ?', "%#{search}%","#{search}","#{search}"])
 		else
 			return Referrallog.all
 		end

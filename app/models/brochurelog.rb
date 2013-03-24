@@ -13,11 +13,10 @@ class Brochurelog < ActiveRecord::Base
 	end
 	def self.search(search)
 		if search
-			return find(:all, :conditions => ['date LIKE ? or count LIKE ? or bname LIKE ? or fname LIKE ?', "%#{search}%","#{search}","#{search}","#{search}"])
+			return find(:all, :conditions => ['count LIKE ? or bname LIKE ? or fname LIKE ?', "%#{search}%","#{search}","#{search}"])
 		else
 			return Brochurelog.all
 		end
 	end
-	
   
 end

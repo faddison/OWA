@@ -18,7 +18,9 @@
     <td><%= brochure.name %></td>
     <td><%= link_to 'Show', brochure %></td>
     <td><%= link_to 'Edit', edit_brochure_path(brochure) %></td>
-    <td><%= link_to 'Destroy', brochure, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	 <td><%= link_to 'Destory', brochure, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'approve', approve_brochure_path(brochure)%></td>
+	
   </tr>
 <% end %>
 </table>

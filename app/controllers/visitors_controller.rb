@@ -5,7 +5,6 @@ class VisitorsController < ApplicationController
   #http_basic_authenticate_with :name => "ccunandy@yahoo.com", :password => "ccandy881103", :only => :destroy
   
   def index
-	if staff_signed_in?
 		@visitors = Visitor.search(params[:search])
 		Appbeta13::Application.config.current_user_id = -1
 		#@visitors.fullname = Visitor.full_name(@visitors.fname,@visitors.lname)
@@ -15,9 +14,6 @@ class VisitorsController < ApplicationController
 		  format.json { render json: @visitors }
 		  format.xls  { export_xls(params) }
 		end
-	else
-		redirect_to :controller=>'home'
-	end
   end
 
   # GET /visitors/1

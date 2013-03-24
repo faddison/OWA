@@ -2,7 +2,6 @@ class ReferrallogsController < ApplicationController
   # GET /referrallogs
   # GET /referrallogs.json
   def index
-	if staff_signed_in?
 		@referrallogs = Referrallog.search(params[:search])
 
 		respond_to do |format|
@@ -11,9 +10,6 @@ class ReferrallogsController < ApplicationController
 		  format.json { render json: @referrallogs }
 		  format.xls  { export_xls(params) }
 		end
-	else
-		redirect_to :controller=>'home', :action => 'index'
-	end
   end
 
   # GET /referrallogs/1

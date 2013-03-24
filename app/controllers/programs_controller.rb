@@ -2,7 +2,6 @@ class ProgramsController < ApplicationController
   # GET /programs
   # GET /programs.json
   def index
-	if staff_signed_in?
 		@programs = Program.search(params[:search])
 
 		respond_to do |format|
@@ -11,9 +10,6 @@ class ProgramsController < ApplicationController
 		  format.json { render json: @programs }
 		  format.xls  { export_xls(@params) }	
 		end
-	else
-		redirect_to :controller=>'home', :action => 'index'
-	end
   end
 
   # GET /programs/1

@@ -2,7 +2,6 @@ class EventlogsController < ApplicationController
   # GET /eventlogs
   # GET /eventlogs.json
   def index
-	if staff_signed_in?
 		@eventlogs = Eventlog.search(params[:search])
 		respond_to do |format|
 		  format.html # index.html.erb
@@ -11,9 +10,6 @@ class EventlogsController < ApplicationController
 		  format.xls  { export_xls(params) }
 		  
 		end
-	else
-		redirect_to :controller=>'home', :action => 'index'
-	end
   end
 
   # GET /eventlogs/1
