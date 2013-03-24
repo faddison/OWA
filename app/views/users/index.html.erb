@@ -1,0 +1,38 @@
+<h1>Welcome to your admin borad</h1>
+
+<%= form_tag users_path, :method => 'get' do %>
+      <p>
+        <%= text_field_tag :search, params[:search] %><br/>
+        <%= submit_tag "search", :name => nil %><br/>
+      </p>
+<% end %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Role</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @users.each do |user| %>
+  <tr>
+    <td><%= user.email %></td>
+    <td><%= user.role_id %></td>
+	
+    <td><%= link_to 'Edit', edit_user_path(user) %></td>
+	<td><%= link_to 'Destory', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+
+<% end %>
+<%= link_to 'New User', new_user_path %>
+
+
+<p>
+  Download:
+ <%= link_to "CSV", users_path(:params => params, format: "csv") %>
+  <%= link_to "Excel", users_path(:params => params, format: "xls") %>
+</p>
+
+
+</table>

@@ -1,0 +1,20 @@
+<h1>Editing User</h1>
+
+<%= form_for(@user, :html => { :method => :put }) do |f| %>
+ 
+	<p><%= f.label :password %> <i>(leave blank if you don't want to change it)</i></p>
+	<p><%= f.password_field :password %></p>
+ 
+	<p><%= f.label :password_confirmation %></p>
+	<p><%= f.password_field :password_confirmation %></p>
+ 
+	<p><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i></p>
+	<p><%= f.password_field :current_password %></p>
+	
+	<div class="field">
+	<%= f.label "Role" %><br />
+  	<%= collection_select(:user , :role_id, Role.all , :id, :name) %>
+  </div>
+ 
+  <p><%= f.submit "Update" %></p>
+<% end %>
