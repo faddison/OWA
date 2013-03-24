@@ -2,85 +2,121 @@ class ReferralsController < ApplicationController
   # GET /referrals
   # GET /referrals.json
   def index
-		@referrals = Referral.search(params[:search])
+		if user_signed_in?
+			@referrals = Referral.search(params[:search])
 
-		respond_to do |format|
-		  format.html # index.html.erb
-		  format.csv  {	export_csv(params)}
-		  format.json { render json: @referrals }
-		  format.xls  { export_xls(params) }
+			respond_to do |format|
+			  format.html # index.html.erb
+			  format.csv  {	export_csv(params)}
+			  format.json { render json: @referrals }
+			  format.xls  { export_xls(params) }
+			end
+		else
+			redirect_to :controller=>'home', :action => 'index'
 		end
   end
 
   # GET /referrals/1
   # GET /referrals/1.json
   def show
-    @referral = Referral.find(params[:id])
+	if user_signed_in?
+		@referral = Referral.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @referral }
-    end
+		respond_to do |format|
+		  format.html # show.html.erb
+		  format.json { render json: @referral }
+		end
+	else
+		redirect_to :controller=>'home', :action => 'index'
+	end
   end
 
   # GET /referrals/new
   # GET /referrals/new.json
   def new
-    @referral = Referral.new
+	if user_signed_in?
+		@referral = Referral.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @referral }
-    end
+		respond_to do |format|
+		  format.html # new.html.erb
+		  format.json { render json: @referral }
+		end
+	else
+		redirect_to :controller=>'home', :action => 'index'
+	end
   end
 
   # GET /referrals/1/edit
   def edit
-    @referral = Referral.find(params[:id])
+	if user_signed_in?
+		@referral = Referral.find(params[:id])
+	else
+		redirect_to :controller=>'home', :action => 'index'
+	end
   end
 
   # POST /referrals
   # POST /referrals.json
   def create
-    @referral = Referral.new(params[:referral])
+	if user_signed_in?
+		@referral = Referral.new(params[:referral])
 
-    respond_to do |format|
-      if @referral.save
-        format.html { redirect_to @referral, notice: 'Referral was successfully created.' }
-        format.json { render json: @referral, status: :created, location: @referral }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @referral.errors, status: :unprocessable_entity }
-      end
-    end
+		respond_to do |format|
+		  if @referral.save
+			format.html { redirect_to @referral, notice: 'Referral was successfully created.' }
+			format.json { render json: @referral, status: :created, location: @referral }
+		  else
+			format.html { render action: "new" }
+			format.json { render json: @referral.errors, status: :unprocessable_entity }
+		  end
+		end
+	else
+		redirect_to :controller=>'home', :action => 'index'
+	end
   end
 
   # PUT /referrals/1
   # PUT /referrals/1.json
   def update
-    @referral = Referral.find(params[:id])
+	if user_signed_in?
+		if current_role_id == 1 || current_role_id == 2
+			@referral = Referral.find(params[:id])
 
-    respond_to do |format|
-      if @referral.update_attributes(params[:referral])
-        format.html { redirect_to @referral, notice: 'Referral was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @referral.errors, status: :unprocessable_entity }
-      end
-    end
+			respond_to do |format|
+			  if @referral.update_attributes(params[:referral])
+				format.html { redirect_to @referral, notice: 'Referral was successfully updated.' }
+				format.json { head :no_content }
+			  else
+				format.html { render action: "edit" }
+				format.json { render json: @referral.errors, status: :unprocessable_entity }
+			  end
+			end
+		else
+			redirect_to :controller=>'dashboard', :action => 'index'
+		end
+	else
+		redirect_to :controller=>'home', :action => 'index'
+	end
   end
 
   # DELETE /referrals/1
   # DELETE /referrals/1.json
   def destroy
-    @referral = Referral.find(params[:id])
-    @referral.destroy
+	if user_signed_in?
+		if current_role_id == 1 || current_role_id == 2
+			@referral = Referral.find(params[:id])
+			@referral.destroy
 
-    respond_to do |format|
-      format.html { redirect_to referrals_url }
-      format.json { head :no_content }
-    end
+			respond_to do |format|
+			  format.html { redirect_to referrals_url }
+			  format.json { head :no_content }
+			end
+		else
+			redirect_to :controller=>'dashboard', :action => 'index'
+		end
+	else
+		redirect_to :controller=>'home', :action => 'index'
+	end
   end
   def export_csv(params)
     filename = I18n.l(Time.now, :format => :short) + "- referrals.csv"

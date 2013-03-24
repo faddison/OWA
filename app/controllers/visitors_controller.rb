@@ -5,21 +5,25 @@ class VisitorsController < ApplicationController
   #http_basic_authenticate_with :name => "ccunandy@yahoo.com", :password => "ccandy881103", :only => :destroy
   
   def index
-		@visitors = Visitor.search(params[:search])
-		Appbeta13::Application.config.current_user_id = -1
-		#@visitors.fullname = Visitor.full_name(@visitors.fname,@visitors.lname)
-		respond_to do |format|
-		  format.html # index.html.erb
-		  format.csv  {	export_csv(params)}
-		  format.json { render json: @visitors }
-		  format.xls  { export_xls(params) }
+		if user_signed_in? 
+			@visitors = Visitor.search(params[:search])
+			Appbeta13::Application.config.current_user_id = -1
+			#@visitors.fullname = Visitor.full_name(@visitors.fname,@visitors.lname)
+			respond_to do |format|
+			  format.html # index.html.erb
+			  format.csv  {	export_csv(params)}
+			  format.json { render json: @visitors }
+			  format.xls  { export_xls(params) }
+			end
+		else
+			redirect_to :controller=>'home', :action => 'index'
 		end
   end
 
   # GET /visitors/1
   # GET /visitors/1.json
   def show
-		
+	if user_signed_in? 
 		@visitor = Visitor.find(params[:id])
 		if Appbeta13::Application.config.current_user_id != @visitor.id 
 			if staff_signed_in?
@@ -36,80 +40,110 @@ class VisitorsController < ApplicationController
 				#@visitor = Visitor.find(session[:@i
 				redirect_to visitors_path(session[:visitor_id])
 				return
-			end
-			
+			end		
 		else
 			respond_to do |format|
-			format.html # show.html.erb
-			format.json { render json: @visitor }
+				format.html # show.html.erb
+				format.json { render json: @visitor }
+			end
 		end
-		
-		end
+	else
+		redirect_to :controller=>'home', :action => 'index'
+	end
 	
   end
 
   # GET /visitors/new
   # GET /visitors/new.json
   def new
+	if user_signed_in? 
 		@visitor = Visitor.new
 
 		respond_to do |format|
 		  format.html # new.html.erb
 		  format.json { render json: @visitor }
 		end
+	else
+		redirect_to :controller=>'home', :action => 'index'
+	end
   end
 
   # GET /visitors/1/edit
   def edit
+	if user_signed_in? 
 		@visitor = Visitor.find(params[:id])
+	else
+		redirect_to :controller=>'home', :action => 'index'
+	end
   end
 
   # POST /visitors
   # POST /visitors.json
   def create
-	@visitor = Visitor.new(params[:visitor])
-	@visitor.fullname = Visitor.full_name(@visitor.fname,@visitor.lname)
-	respond_to do |format|
-			if @visitor.save
-				format.html { redirect_to @visitor, notice: 'Visitor was successfully created.' }
-				format.json { render json: @visitor, status: :created, location: @visitor }
-				format.json { render json: @visitor}
-				Appbeta13::Application.config.current_user_id = @visitor.id
-				@i = Appbeta13::Application.config.current_user_id
-				session[:@i] = @visitor.id
-			else
-				format.html { render action: "new" }
-				format.json { render json: @visitor.errors, status: :unprocessable_entity }
+	if user_signed_in? 
+		@visitor = Visitor.new(params[:visitor])
+		@visitor.fullname = Visitor.full_name(@visitor.fname,@visitor.lname)
+		respond_to do |format|
+				if @visitor.save
+					format.html { redirect_to @visitor, notice: 'Visitor was successfully created.' }
+					format.json { render json: @visitor, status: :created, location: @visitor }
+					format.json { render json: @visitor}
+					Appbeta13::Application.config.current_user_id = @visitor.id
+					@i = Appbeta13::Application.config.current_user_id
+					session[:@i] = @visitor.id
+				else
+					format.html { render action: "new" }
+					format.json { render json: @visitor.errors, status: :unprocessable_entity }
+				end
 			end
-		end
+	else
+		redirect_to :controller=>'home', :action => 'index'
+	end
   end
 
   # PUT /visitors/1
   # PUT /visitors/1.json
   def update
-		@visitor = Visitor.find(params[:id])
+	if user_signed_in? 
+		if current_role_id == 1 || current_role_id == 2
+			@visitor = Visitor.find(params[:id])
 
-		respond_to do |format|
-		  if @visitor.update_attributes(params[:visitor])
-			format.html { redirect_to @visitor, notice: 'Visitor was successfully updated.' }
-			format.json { head :no_content }
-		  else
-			format.html { render action: "edit" }
-			format.json { render json: @visitor.errors, status: :unprocessable_entity }
-		  end
+			respond_to do |format|
+			  if @visitor.update_attributes(params[:visitor])
+				format.html { redirect_to @visitor, notice: 'Visitor was successfully updated.' }
+				format.json { head :no_content }
+			  else
+				format.html { render action: "edit" }
+				format.json { render json: @visitor.errors, status: :unprocessable_entity }
+			  end
+			end
+		else
+			redirect_to :controller=>'dashboard', :action => 'index'
 		end
+	else
+		redirect_to :controller=>'home', :action => 'index'
+	end
   end
 
   # DELETE /visitors/1
   # DELETE /visitors/1.json
   def destroy
-		@visitor = Visitor.find(params[:id])
-		@visitor.destroy
+	if user_signed_in? 
+		if current_role_id == 1 || current_role_id == 2
+			@visitor = Visitor.find(params[:id])
+			@visitor.destroy
 
-		respond_to do |format|
-		  format.html { redirect_to visitors_url }
-		  format.json { head :no_content }
+			respond_to do |format|
+			  format.html { redirect_to visitors_url }
+			  format.json { head :no_content }
+			end
+		else
+			redirect_to :controller=>'dashboard', :action => 'index'
 		end
+		
+	else
+		redirect_to :controller=>'home', :action => 'index'
+	end
   end
   
   protected

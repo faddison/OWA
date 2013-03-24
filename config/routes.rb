@@ -1,6 +1,12 @@
 Appbeta13::Application.routes.draw do
 
 
+  resources :roles
+
+
+  devise_for :users, :skip => [:registrations]
+  
+	resources :users, :controller => "users"
   resources :events
 
 
@@ -42,6 +48,7 @@ Appbeta13::Application.routes.draw do
   resources :brochurelogs
 
 	resources :dashboard
+	resources :adminboard
   get "home/index"
 	
   # The priority is based upon order of creation:

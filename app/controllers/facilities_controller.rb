@@ -2,6 +2,7 @@ class FacilitiesController < ApplicationController
   # GET /facilities
   # GET /facilities.json
   def index
+	if user_signed_in?
 		@facilities = Facility.search(params[:search])
 
 		respond_to do |format|
@@ -10,77 +11,113 @@ class FacilitiesController < ApplicationController
 		  format.json { render json: @facilities }
 		  format.xls  { export_xls(params) }
 		end
+	else
+		redirect_to :controller=>'home', :action => 'index'
+	end
   end
 
   # GET /facilities/1
   # GET /facilities/1.json
   def show
-    @facility = Facility.find(params[:id])
+	if user_signed_in?
+		@facility = Facility.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @facility }
-    end
+		respond_to do |format|
+		  format.html # show.html.erb
+		  format.json { render json: @facility }
+		end
+	else
+		redirect_to :controller=>'home', :action => 'index'
+	end
   end
 
   # GET /facilities/new
   # GET /facilities/new.json
   def new
-    @facility = Facility.new
+	if user_signed_in?
+		@facility = Facility.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @facility }
-    end
+		respond_to do |format|
+		  format.html # new.html.erb
+		  format.json { render json: @facility }
+		end
+	else
+		redirect_to :controller=>'home', :action => 'index'
+	end
   end
 
   # GET /facilities/1/edit
   def edit
-    @facility = Facility.find(params[:id])
+	if user_signed_in?
+		@facility = Facility.find(params[:id])
+	else
+		redirect_to :controller=>'home', :action => 'index'
+	end
   end
 
   # POST /facilities
   # POST /facilities.json
   def create
-    @facility = Facility.new(params[:facility])
+	if user_signed_in?
+		@facility = Facility.new(params[:facility])
 
-    respond_to do |format|
-      if @facility.save
-        format.html { redirect_to @facility, notice: 'Facility was successfully created.' }
-        format.json { render json: @facility, status: :created, location: @facility }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @facility.errors, status: :unprocessable_entity }
-      end
-    end
+		respond_to do |format|
+		  if @facility.save
+			format.html { redirect_to @facility, notice: 'Facility was successfully created.' }
+			format.json { render json: @facility, status: :created, location: @facility }
+		  else
+			format.html { render action: "new" }
+			format.json { render json: @facility.errors, status: :unprocessable_entity }
+		  end
+		end
+	else
+		redirect_to :controller=>'home', :action => 'index'
+	end
   end
 
   # PUT /facilities/1
   # PUT /facilities/1.json
   def update
-    @facility = Facility.find(params[:id])
+	if  user_signed_in?
+		if current_user.role_id == 1|| current_user.role_id == 2
+			@facility = Facility.find(params[:id])
 
-    respond_to do |format|
-      if @facility.update_attributes(params[:facility])
-        format.html { redirect_to @facility, notice: 'Facility was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @facility.errors, status: :unprocessable_entity }
-      end
-    end
+			respond_to do |format|
+			  if @facility.update_attributes(params[:facility])
+				format.html { redirect_to @facility, notice: 'Facility was successfully updated.' }
+				format.json { head :no_content }
+			  else
+				format.html { render action: "edit" }
+				format.json { render json: @facility.errors, status: :unprocessable_entity }
+			  end
+			end
+		else
+			redirect_to :controller=>'dashboard', :action => 'index'
+		end
+	else
+		redirect_to :controller=>'home', :action => 'index'
+	end
   end
 
   # DELETE /facilities/1
   # DELETE /facilities/1.json
   def destroy
-    @facility = Facility.find(params[:id])
-    @facility.destroy
+	if  user_signed_in?
+		if current_user.role_id == 1|| current_user.role_id == 2
+			@facility = Facility.find(params[:id])
+			@facility.destroy
 
-    respond_to do |format|
-      format.html { redirect_to facilities_url }
-      format.json { head :no_content }
-    end
+			respond_to do |format|
+			  format.html { redirect_to facilities_url }
+			  format.json { head :no_content }
+			end
+		else
+			redirect_to :controller=>'dashboard', :action => 'index'
+		end
+	else
+		redirect_to :controller=>'home', :action => 'index'
+	end
+		
   end
   def export_csv(params)
     filename = I18n.l(Time.now, :format => :short) + "- facilities.csv"
