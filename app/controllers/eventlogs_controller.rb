@@ -12,6 +12,7 @@ class EventlogsController < ApplicationController
 			  
 			end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -27,6 +28,7 @@ class EventlogsController < ApplicationController
 		  format.json { render json: @eventlog }
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -42,6 +44,7 @@ class EventlogsController < ApplicationController
 		  format.json { render json: @eventlog }
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -51,6 +54,7 @@ class EventlogsController < ApplicationController
 	if user_signed_in?
 		@eventlog = Eventlog.find(params[:id])
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -72,6 +76,7 @@ class EventlogsController < ApplicationController
 		  end
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -93,10 +98,32 @@ class EventlogsController < ApplicationController
 			  end
 			end
 		else
+			flash[:notice] = "You don't have access to do that"
 			redirect_to :controller=>'dashboard', :action => 'index'
 		end
 	else
 		redirect_to :controller=>'home', :action => 'index'
+	end
+  end
+  
+  def approve
+	if user_signed_in? &&  current_user.role_id == 1
+		@eventlog = Eventlog.find(params[:id])
+		Eventlog.conndeve
+		@newb = Eventlog.new
+		@newb.name = @Eventlog.name
+		@newb.save
+		Eventlog.connfinal
+		#Brochure.connfinal
+		@Eventlog.destroy
+
+		respond_to do |format|
+		  format.html { redirect_to eventlogs_url }
+		  format.json { head :no_content }
+		end
+	else
+		flash[:notice] = "You don't have access to do that"
+		redirect_to :controller=>'dashboard', :action => 'index'
 	end
   end
 
@@ -113,6 +140,7 @@ class EventlogsController < ApplicationController
 			  format.json { head :no_content }
 			end
 		else
+			flash[:notice] = "You don't have access to do that"
 			redirect_to :controller=>'dashboard', :action => 'index'
 		end
 	else

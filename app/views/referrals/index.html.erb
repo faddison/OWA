@@ -19,6 +19,7 @@
     <td><%= link_to 'Show', referral %></td>
     <td><%= link_to 'Edit', edit_referral_path(referral) %></td>
     <td><%= link_to 'Destroy', referral, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	<td><%= link_to 'approve', approve_referral_path(referral)%></td>
   </tr>
 <% end %>
 </table>

@@ -16,6 +16,7 @@ class VisitorsController < ApplicationController
 			  format.xls  { export_xls(params) }
 			end
 		else
+			flash[:notice] = "You don't have access to do that"
 			redirect_to :controller=>'home', :action => 'index'
 		end
   end
@@ -26,7 +27,7 @@ class VisitorsController < ApplicationController
 	if user_signed_in? 
 		@visitor = Visitor.find(params[:id])
 		if Appbeta13::Application.config.current_user_id != @visitor.id 
-			if staff_signed_in?
+			if user_signed_in?
 				Appbeta13::Application.config.current_user_id = -1
 				respond_to do |format|
 					format.html # show.html.erb
@@ -48,6 +49,7 @@ class VisitorsController < ApplicationController
 			end
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
 	
@@ -64,6 +66,7 @@ class VisitorsController < ApplicationController
 		  format.json { render json: @visitor }
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -97,6 +100,7 @@ class VisitorsController < ApplicationController
 				end
 			end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -105,7 +109,7 @@ class VisitorsController < ApplicationController
   # PUT /visitors/1.json
   def update
 	if user_signed_in? 
-		if current_role_id == 1 || current_role_id == 2
+		if current_user.role_id == 1 || current_user.role_id == 2
 			@visitor = Visitor.find(params[:id])
 
 			respond_to do |format|
@@ -118,9 +122,11 @@ class VisitorsController < ApplicationController
 			  end
 			end
 		else
+			flash[:notice] = "You don't have access to do that"
 			redirect_to :controller=>'dashboard', :action => 'index'
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -129,7 +135,7 @@ class VisitorsController < ApplicationController
   # DELETE /visitors/1.json
   def destroy
 	if user_signed_in? 
-		if current_role_id == 1 || current_role_id == 2
+		if current_user.role_id == 1 || current_user.role_id == 2
 			@visitor = Visitor.find(params[:id])
 			@visitor.destroy
 
@@ -138,11 +144,34 @@ class VisitorsController < ApplicationController
 			  format.json { head :no_content }
 			end
 		else
+			flash[:notice] = "You don't have access to do that"
 			redirect_to :controller=>'dashboard', :action => 'index'
 		end
 		
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
+	end
+  end
+  
+  def approve
+	if user_signed_in? &&  current_user.role_id == 1
+		@visitor = Visitor.find(params[:id])
+		Visitor.conndeve
+		@newb = Visitor.new
+		@newb.name = @visitor.name
+		@newb.save
+		Visitor.connfinal
+		#Brochure.connfinal
+		@visitor.destroy
+
+		respond_to do |format|
+		  format.html { redirect_to visitors_url }
+		  format.json { head :no_content }
+		end
+	else
+		flash[:notice] = "You don't have access to do that"
+		redirect_to :controller=>'dashboard', :action => 'index'
 	end
   end
   

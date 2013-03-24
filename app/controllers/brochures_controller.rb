@@ -14,6 +14,7 @@ class BrochuresController < ApplicationController
 				format.xls  { export_xls(params) }
 			end
 		else
+			flash[:notice] = "You don't have access to do that"
 			redirect_to :controller=>'home', :action => 'index'
 		end
   end
@@ -29,6 +30,7 @@ class BrochuresController < ApplicationController
 		  format.json { render json: @brochure }
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -44,6 +46,7 @@ class BrochuresController < ApplicationController
 		  format.json { render json: @brochure }
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -53,6 +56,7 @@ class BrochuresController < ApplicationController
 	if user_signed_in?
 		@brochure = Brochure.find(params[:id])
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -73,6 +77,7 @@ class BrochuresController < ApplicationController
 		  end
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -94,9 +99,11 @@ class BrochuresController < ApplicationController
 			  end
 			end
 		else
+			flash[:notice] = "You don't have access to do that"
 			redirect_to :controller=>'dashboard', :action => 'index'
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -113,9 +120,11 @@ class BrochuresController < ApplicationController
 			  format.json { head :no_content }
 			end
 		else
+			flash[:notice] = "You don't have access to do that"
 			redirect_to :controller=>'dashboard', :action => 'index'
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -135,7 +144,8 @@ class BrochuresController < ApplicationController
 		  format.json { head :no_content }
 		end
 	else
-		redirect_to :controller=>'home', :action => 'index'
+		flash[:notice] = "You don't have access to do that"
+		redirect_to :controller=>'dashboard', :action => 'index'
 	end
 	#Brochure.conndeve
   end

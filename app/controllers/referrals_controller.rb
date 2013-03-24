@@ -12,6 +12,7 @@ class ReferralsController < ApplicationController
 			  format.xls  { export_xls(params) }
 			end
 		else
+			flash[:notice] = "You don't have access to do that"
 			redirect_to :controller=>'home', :action => 'index'
 		end
   end
@@ -27,6 +28,7 @@ class ReferralsController < ApplicationController
 		  format.json { render json: @referral }
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -42,6 +44,7 @@ class ReferralsController < ApplicationController
 		  format.json { render json: @referral }
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -51,6 +54,7 @@ class ReferralsController < ApplicationController
 	if user_signed_in?
 		@referral = Referral.find(params[:id])
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -71,6 +75,7 @@ class ReferralsController < ApplicationController
 		  end
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -79,7 +84,7 @@ class ReferralsController < ApplicationController
   # PUT /referrals/1.json
   def update
 	if user_signed_in?
-		if current_role_id == 1 || current_role_id == 2
+		if current_user.role_id == 1 || current_user.role_id == 2
 			@referral = Referral.find(params[:id])
 
 			respond_to do |format|
@@ -92,9 +97,11 @@ class ReferralsController < ApplicationController
 			  end
 			end
 		else
+			flash[:notice] = "You don't have access to do that"
 			redirect_to :controller=>'dashboard', :action => 'index'
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -103,7 +110,7 @@ class ReferralsController < ApplicationController
   # DELETE /referrals/1.json
   def destroy
 	if user_signed_in?
-		if current_role_id == 1 || current_role_id == 2
+		if current_user.role_id == 1 || current_user.role_id == 2
 			@referral = Referral.find(params[:id])
 			@referral.destroy
 
@@ -115,9 +122,32 @@ class ReferralsController < ApplicationController
 			redirect_to :controller=>'dashboard', :action => 'index'
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
+  def approve
+	if user_signed_in? &&  current_user.role_id == 1
+		@referral = Referral.find(params[:id])
+		Referral.conndeve
+		@newb = Referral.new
+		@newb.name = @referral.name
+		@newb.save
+		Referral.connfinal
+		#Brochure.connfinal
+		@referral.destroy
+
+		respond_to do |format|
+		  format.html { redirect_to referrals_url }
+		  format.json { head :no_content }
+		end
+	else
+		flash[:notice] = "You don't have access to do that"
+		redirect_to :controller=>'dashboard', :action => 'index'
+	end
+	#Brochure
+  end
+  
   def export_csv(params)
     filename = I18n.l(Time.now, :format => :short) + "- referrals.csv"
     content = Referral.to_csv(params)

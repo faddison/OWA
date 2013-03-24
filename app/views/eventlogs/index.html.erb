@@ -24,6 +24,7 @@
     <td><%= link_to 'Show', eventlog %></td>
     <td><%= link_to 'Edit', edit_eventlog_path(eventlog) %></td>
     <td><%= link_to 'Destroy', eventlog, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	<td><%= link_to 'approve', approve_eventlog_path(eventlog)%></td>
   </tr>
 <% end %>
 </table>

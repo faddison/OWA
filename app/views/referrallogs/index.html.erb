@@ -27,6 +27,7 @@
     <td><%= link_to 'Show', referrallog %></td>
     <td><%= link_to 'Edit', edit_referrallog_path(referrallog) %></td>
     <td><%= link_to 'Destroy', referrallog, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	<td><%= link_to 'approve', approve_referrallog_path(referrallog)%></td>
   </tr>
 <% end %>
 </table>

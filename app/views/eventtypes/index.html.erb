@@ -19,6 +19,7 @@
     <td><%= link_to 'Show', eventtype %></td>
     <td><%= link_to 'Edit', edit_eventtype_path(eventtype) %></td>
     <td><%= link_to 'Destroy', eventtype, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	<td><%= link_to 'approve', approve_eventtype_path(eventtype)%></td>
   </tr>
 <% end %>
 </table>

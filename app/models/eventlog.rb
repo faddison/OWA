@@ -20,4 +20,15 @@ class Eventlog < ActiveRecord::Base
 			end
 		end
 	end
+	def self.connfinal
+		establish_connection('finaldb')
+	end
+	def self.conndeve
+		establish_connection('development')
+	end
+	def approval
+		establish_connection('development')
+		self.save
+		establish_connection('finaldb')
+	end
 end

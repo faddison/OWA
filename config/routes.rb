@@ -7,30 +7,61 @@ Appbeta13::Application.routes.draw do
   devise_for :users, :skip => [:registrations]
   
 	resources :users, :controller => "users"
-  resources :events
+  resources :events do
+	 member do
+		get 'approve'
+	end
+  end
 
 
   resources :visitors do
 	resources :children
 	resources :econtacts
+	 member do
+		get 'approve'
+	end
   end
 
-  resources :eventlogs
+  resources :eventlogs do
+	 member do
+		get 'approve'
+	end
+  end
 
 
-  resources :events
+  resources :events do
+	 member do
+		get 'approve'
+	end
+  end
 
 
-  resources :people
+  resources :people do
+	 member do
+		get 'approve'
+	end
+  end
 
 
-  resources :eventtypes
+  resources :eventtypes do
+	 member do
+		get 'approve'
+	end
+  end
 
 
-  resources :programs
+  resources :programs do
+	 member do
+		get 'approve'
+	end
+  end
 
 
-  resources :facilities
+  resources :facilities do
+	 member do
+		get 'approve'
+	end
+  end
 
 
   resources :brochures do
@@ -39,13 +70,25 @@ Appbeta13::Application.routes.draw do
 	end
   end
 
-  resources :referrals
+  resources :referrals do
+	 member do
+		get 'approve'
+	end
+  end
 
 
-  resources :referrallogs
+  resources :referrallogs do
+	 member do
+		get 'approve'
+	end
+  end
 
 
-  resources :brochurelogs
+  resources :brochurelogs do
+	 member do
+		get 'approve'
+	end
+  end
 
 	resources :dashboard
 	resources :adminboard

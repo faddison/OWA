@@ -12,6 +12,7 @@ class EventsController < ApplicationController
 			  format.xls  { export_xls(params) }
 			end
 		else
+			flash[:notice] = "You don't have access to do that"
 			redirect_to :controller=>'home', :action => 'index'
 		end
   end
@@ -21,12 +22,12 @@ class EventsController < ApplicationController
   def show
 	if user_signed_in?
 		@event = Event.find(params[:id])
-
 		respond_to do |format|
 		  format.html # show.html.erb
 		  format.json { render json: @event }
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -42,6 +43,7 @@ class EventsController < ApplicationController
 		  format.json { render json: @event }
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -51,6 +53,7 @@ class EventsController < ApplicationController
 	if user_signed_in?
 		@event = Event.find(params[:id])
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -71,6 +74,7 @@ class EventsController < ApplicationController
 		  end
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -91,9 +95,11 @@ class EventsController < ApplicationController
 			  end
 			end
 		else
+			flash[:notice] = "You don't have access to do that"
 			redirect_to :controller=>'dashboard', :action => 'index'
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -111,12 +117,36 @@ class EventsController < ApplicationController
 			  format.json { head :no_content }
 			end
 		else
+			flash[:notice] = "You don't have access to do that"
 			redirect_to :controller=>'dashboard', :action => 'index'
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
+  
+  def approve
+	if user_signed_in? &&  current_user.role_id == 1
+		@event = Brochurelog.find(params[:id])
+		Event.conndeve
+		@newb = Event.new
+		@newb.name = @event.name
+		@newb.save
+		Event.connfinal
+		#Brochure.connfinal
+		@event.destroy
+
+		respond_to do |format|
+		  format.html { redirect_to events_url }
+		  format.json { head :no_content }
+		end
+	else
+		flash[:notice] = "You don't have access to do that"
+		redirect_to :controller=>'dashboard', :action => 'index'
+	end
+  end
+  
   def export_csv(params)
     filename = I18n.l(Time.now, :format => :short) + "- events.csv"
     content = Event.to_csv(params)

@@ -12,6 +12,7 @@ class FacilitiesController < ApplicationController
 		  format.xls  { export_xls(params) }
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -27,6 +28,7 @@ class FacilitiesController < ApplicationController
 		  format.json { render json: @facility }
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -42,6 +44,7 @@ class FacilitiesController < ApplicationController
 		  format.json { render json: @facility }
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -51,6 +54,7 @@ class FacilitiesController < ApplicationController
 	if user_signed_in?
 		@facility = Facility.find(params[:id])
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -71,6 +75,7 @@ class FacilitiesController < ApplicationController
 		  end
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -92,9 +97,11 @@ class FacilitiesController < ApplicationController
 			  end
 			end
 		else
+			flash[:notice] = "You don't have access to do that"
 			redirect_to :controller=>'dashboard', :action => 'index'
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -112,13 +119,37 @@ class FacilitiesController < ApplicationController
 			  format.json { head :no_content }
 			end
 		else
+			flash[:notice] = "You don't have access to do that"
 			redirect_to :controller=>'dashboard', :action => 'index'
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
-		
   end
+  
+  def approve
+	if user_signed_in? &&  current_user.role_id == 1
+		@facility = Facility.find(params[:id])
+		Facility.conndeve
+		@newb = Facility.new
+		@newb.name = @facility.name
+		@newb.save
+		Facility.connfinal
+		#Brochure.connfinal
+		@facility.destroy
+
+		respond_to do |format|
+		  format.html { redirect_to facilitys_url }
+		  format.json { head :no_content }
+		end
+	else
+		flash[:notice] = "You don't have access to do that"
+		redirect_to :controller=>'dashboard', :action => 'index'
+	end
+  end
+  
+  
   def export_csv(params)
     filename = I18n.l(Time.now, :format => :short) + "- facilities.csv"
     content = Facility.to_csv(params)

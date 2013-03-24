@@ -11,6 +11,7 @@ class EventtypesController < ApplicationController
 		  format.xls  { export_xls(params) }	
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -26,6 +27,7 @@ class EventtypesController < ApplicationController
 		  format.json { render json: @eventtype }
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -41,6 +43,7 @@ class EventtypesController < ApplicationController
 		  format.json { render json: @eventtype }
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -50,6 +53,7 @@ class EventtypesController < ApplicationController
 	if user_signed_in?
 		@eventtype = Eventtype.find(params[:id])
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -70,6 +74,7 @@ class EventtypesController < ApplicationController
 		  end
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -91,9 +96,11 @@ class EventtypesController < ApplicationController
 			  end
 			end
 		else
+			flash[:notice] = "You don't have access to do that"
 			redirect_to :controller=>'home', :action => 'index'
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -111,9 +118,11 @@ class EventtypesController < ApplicationController
 			  format.json { head :no_content }
 			end
 		else
+			flash[:notice] = "You don't have access to do that"
 			redirect_to :controller=>'home', :action => 'index'
 		end
 	else
+		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -122,6 +131,28 @@ class EventtypesController < ApplicationController
     content = Eventtype.to_csv(params)
     send_data content, :filename => filename
   end
+  
+  def approve
+	if user_signed_in? &&  current_user.role_id == 1
+		@eventtype = Eventtype.find(params[:id])
+		Eventtype.conndeve
+		@newb = Eventtype.new
+		@newb.name = @eventtype.name
+		@newb.save
+		Eventtype.connfinal
+		#Brochure.connfinal
+		@Eventtype.destroy
+
+		respond_to do |format|
+		  format.html { redirect_to eventtypes_url }
+		  format.json { head :no_content }
+		end
+	else
+		flash[:notice] = "You don't have access to do that"
+		redirect_to :controller=>'dashboard', :action => 'index'
+	end
+  end
+  
   
   def export_xls(params)
 		filename = I18n.l(Time.now, :format => :short) + "- eventtypes.xls"

@@ -28,6 +28,7 @@
     <td><%= link_to 'Show', brochurelog %></td>
     <td><%= link_to 'Edit', edit_brochurelog_path(brochurelog) %></td>
     <td><%= link_to 'Destroy', brochurelog, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	<td><%= link_to 'approve', approve_brochurelog_path(brochurelog)%></td>
   </tr>
 <% end %>
 </table>
