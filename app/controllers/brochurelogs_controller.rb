@@ -13,9 +13,9 @@ class BrochurelogsController < ApplicationController
 			  format.xls  { export_xls(params) }
 			end
 		else
-			flash[:notice] = "You don't have access to do that"
 			redirect_to :controller=>'home', :action => 'index'
 		end
+	
   end
 
   # GET /brochurelogs/1
@@ -23,12 +23,12 @@ class BrochurelogsController < ApplicationController
   def show
 	if user_signed_in?
 		@brochurelog = Brochurelog.find(params[:id])
+
 		respond_to do |format|
 		  format.html # show.html.erb
 		  format.json { render json: @brochurelog }
 		end
 	else
-		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -44,17 +44,15 @@ class BrochurelogsController < ApplicationController
 		  format.json { render json: @brochurelog }
 		end
 	else
-		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
 
   # GET /brochurelogs/1/edit
   def edit
-	if user_signed_in?
+	if if user_signed_in?
 		@brochurelog = Brochurelog.find(params[:id])
 	else
-		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
@@ -74,19 +72,19 @@ class BrochurelogsController < ApplicationController
 			if @check == -1 && @brochurelog.save 
 				format.html { redirect_to @brochurelog, notice: 'Brochurelog was successfully created.' }
 				format.json { render json: @brochurelog, status: :created, location: @brochurelog }
-			else
-				@brotemp = Brochurelog.find(@check)
-				@brotemp.count = @brotemp.count + @brochurelog.count
-				@brotemp.save
-				format.html { render action: "new" }
-				format.json { render json: @brochurelog.errors, status: :unprocessable_entity }
-			end
+		  else
+			@brotemp = Brochurelog.find(@check)
+			@brotemp.count = @brotemp.count + @brochurelog.count
+			@brotemp.save
+			format.html { render action: "new" }
+			format.json { render json: @brochurelog.errors, status: :unprocessable_entity }
+		  end
 		  
 		end
 	else
-		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
+	
   end
 
   # PUT /brochurelogs/1
@@ -106,11 +104,9 @@ class BrochurelogsController < ApplicationController
 			  end
 			end
 		else
-			flash[:notice] = "You don't have access to do that"
 			redirect_to :controller=>'dashboard', :action => 'index'
 		end
 	else
-		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
 	end
 	
@@ -129,33 +125,10 @@ class BrochurelogsController < ApplicationController
 			  format.json { head :no_content }
 			end
 		else
-			flash[:notice] = "You don't have access to do that"
 			redirect_to :controller=>'dashboard', :action => 'index'
 		end
 	else
-		flash[:notice] = "You don't have access to do that"
 		redirect_to :controller=>'home', :action => 'index'
-	end
-  end
-  
-  def approve
-	if user_signed_in? &&  current_user.role_id == 1
-		@brochurelog = Brochurelog.find(params[:id])
-		Brochurelog.conndeve
-		@newb = Brochurelog.new
-		@newb.name = @brochurelog.name
-		@newb.save
-		Brochurelog.connfinal
-		#Brochure.connfinal
-		@brochurelog.destroy
-
-		respond_to do |format|
-		  format.html { redirect_to brochurelogs_url }
-		  format.json { head :no_content }
-		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'dashboard', :action => 'index'
 	end
   end
   
@@ -181,4 +154,6 @@ class BrochurelogsController < ApplicationController
 		end
 		return -1
 	end
+end
+end
 end
