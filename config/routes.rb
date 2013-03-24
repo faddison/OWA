@@ -1,6 +1,8 @@
 Appbeta13::Application.routes.draw do
 
 
+  devise_for :users
+
   resources :events
 
 
@@ -8,9 +10,6 @@ Appbeta13::Application.routes.draw do
 	resources :children
 	resources :econtacts
   end
-
-
-  devise_for :staffs
 
   resources :eventlogs
 

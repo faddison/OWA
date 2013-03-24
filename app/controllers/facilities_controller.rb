@@ -2,7 +2,6 @@ class FacilitiesController < ApplicationController
   # GET /facilities
   # GET /facilities.json
   def index
-	if staff_signed_in?
 		@facilities = Facility.search(params[:search])
 
 		respond_to do |format|
@@ -10,10 +9,7 @@ class FacilitiesController < ApplicationController
 		  format.csv  {	export_csv(params)}
 		  format.json { render json: @facilities }
 		  format.xls  { export_xls(params) }
-		end
-	else
-		redirect_to :controller=>'home', :action => 'index'
-	end
+		  end
   end
 
   # GET /facilities/1

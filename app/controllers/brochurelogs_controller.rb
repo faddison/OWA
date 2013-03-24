@@ -4,7 +4,6 @@ class BrochurelogsController < ApplicationController
   
   
   def index
-	if staff_signed_in?
 		@brochurelogs = Brochurelog.search(params[:search])
 		respond_to do |format|
 		  format.html # index.html.erb
@@ -12,10 +11,6 @@ class BrochurelogsController < ApplicationController
 		  format.json { render json: @brochurelogs }
 		  format.xls  { export_xls(params) }
 		end
-	else
-		redirect_to :controller=>'home', :action => 'index'
-	end
-	
   end
 
   # GET /brochurelogs/1

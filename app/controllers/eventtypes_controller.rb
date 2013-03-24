@@ -2,7 +2,6 @@ class EventtypesController < ApplicationController
   # GET /eventtypes
   # GET /eventtypes.json
   def index
-	#if staff_signed_in?
 		@eventtypes = Eventtype.search(params[:search])
 		respond_to do |format|
 		  format.html # index.html.erb
@@ -10,9 +9,6 @@ class EventtypesController < ApplicationController
 		  format.json { render json: @eventtypes }
 		  format.xls  { export_xls(params) }	
 		end
-	#else
-		#redirect_to :controller=>'home', :action => 'index'
-	#end
   end
 
   # GET /eventtypes/1
