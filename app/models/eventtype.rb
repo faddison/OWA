@@ -1,5 +1,6 @@
 class Eventtype < ActiveRecord::Base
   attr_accessible :name
+  validates :name,  :presence => true
     def self.to_csv(params)
 		@records = Eventtype.search(params[:search])
 			CSV.generate(col_sep: "\t") do |csv|

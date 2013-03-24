@@ -1,5 +1,7 @@
 class Facility < ActiveRecord::Base
   attr_accessible :address, :name
+  validates :name,  :presence => true
+  validates :address, :presence => true
 	def self.search(search)
 		if search
 			return find(:all, :conditions => ['name LIKE ? or address LIKE ?', "%#{search}%","%#{search}%"])

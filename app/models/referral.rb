@@ -1,5 +1,6 @@
 class Referral < ActiveRecord::Base
   attr_accessible :name
+  validates :name,  :presence => true
    def self.search(search)
 		if search
 			return find(:all, :conditions => ['name LIKE ? ', "%#{search}%"])

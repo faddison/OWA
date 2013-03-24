@@ -3,6 +3,12 @@ class Event < ActiveRecord::Base
   belongs_to :eventtype
   belongs_to :facility
   attr_accessible :date, :duration, :eventtype_id, :facility_id, :program_id, :title
+  validates :date,  :presence => true
+  validates :duration, :presence => true
+  validates :eventtype_id,  :presence => true
+  validates :facility_id, :presence => true
+  validates :program_id,  :presence => true
+  validates :title,  :presence => true
   def self.to_csv(params)
 		@records = Event.search(params[:search])
 			CSV.generate(col_sep: "\t") do |csv|
