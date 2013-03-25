@@ -5,6 +5,7 @@ class VisitorsController < ApplicationController
   #http_basic_authenticate_with :name => "ccunandy@yahoo.com", :password => "ccandy881103", :only => :destroy
   
   def index
+		if user_signed_in?
 			@visitors = Visitor.search(params[:search])
 			Appbeta13::Application.config.current_user_id = -1
 			#@visitors.fullname = Visitor.full_name(@visitors.fname,@visitors.lname)
@@ -14,27 +15,29 @@ class VisitorsController < ApplicationController
 			  format.json { render json: @visitors }
 			  format.xls  { export_xls(params) }
 			end
+		end
   end
 
   # GET /visitors/1
   # GET /visitors/1.json
   def show
-		@visitor = Visitor.find(params[:id])
-		if Appbeta13::Application.config.current_user_id != @visitor.id 
-				Appbeta13::Application.config.current_user_id = -1
-				respond_to do |format|
-					format.html # show.html.erb
-					format.json { render json: @visitor }
-				end
-		else
-				flash[:notice] = "You don't have access to this page!"
-				@i = Appbeta13::Application.config.current_user_id
-				#redirect_to action => "show", :id => 17
-				@visitor.id = @i
-				#@visitor = Visitor.find(session[:@i
-				redirect_to visitors_path(session[:visitor_id])
-				return
-		end		
+			@visitor = Visitor.find(params[:id])
+			if Appbeta13::Application.config.current_user_id != @visitor.id 
+					Appbeta13::Application.config.current_user_id = -1
+					respond_to do |format|
+						format.html # show.html.erb
+						format.json { render json: @visitor }
+					end
+			else
+					flash[:notice] = "You don't have access to this page!"
+					@i = Appbeta13::Application.config.current_user_id
+					#redirect_to action => "show", :id => 17
+					@visitor.id = @i
+					#@visitor = Visitor.find(session[:@i
+					redirect_to visitors_path(session[:visitor_id])
+					return
+			end	
+			
 	end
 
   # GET /visitors/new
