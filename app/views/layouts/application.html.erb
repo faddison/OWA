@@ -1,35 +1,96 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Appbeta13</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <title>Options</title>
+<%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+  
+  <style>
+			body {
+				padding-top: 60px;
+			}
+			.hero-unit{
+				height:300px;
+			}	
+			.carousel{
+				width:500px;
+				float:right;
+			}	
+		</style>
+  
+  
+  <script>
+// Load this when the DOM is ready
+$(function(){
+  // You used .myCarousel here. 
+  // That's the class selector not the id selector,
+  // which is #myCarousel
+  $('#myCarousel').carousel();
+});
+</script>
+  
 </head>
 <body>
 
-
-<div id="user_nav">
-  <% if user_signed_in? %>
-    Signed in as <%= current_user.email %>. Not you?
-    <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
-  <% else %>
-   <%= link_to "sign in", new_user_session_path %>
-  <% end %>
+<div class="navbar navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container">
+			<a class="brand" href="#">Options</a>
+				<div class="navbar-form pull-right">
+  					<div class="btn btn-primary">
+						<div id="user_nav">
+							<% if user_signed_in? %>
+								Signed in as <%= current_user.email %>. Not you?
+								<%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+							<% else %>
+								<%= link_to "sign in", new_user_session_path %>
+							<% end %>
+						</div>
+					</div>
+				</div>
+			
+			<br>
+ 			
+ 			<div class="nav-collapse">
+            	<ul class="nav">
+    				<li><%= link_to "Visitors", visitors_path %></li>
+        			<li><%= link_to "Facility", facilities_path %></li>
+              
+              
+        			<li><%= link_to "Event", events_path %></li>
+        			<li><%= link_to "Event Type", eventtypes_path %></li>
+        			<li><%= link_to "Event Log", eventlogs_path %></li>
+              		
+              		<li><%= link_to "Program", programs_path %></li>
+    				<li><%= link_to "Brochure", brochures_path %></li>
+    				<li><%= link_to "Brochurelog", brochurelogs_path %></li>
+              
+					<li><%= link_to "Referral", referrals_path %></li>
+    				<li><%= link_to "Referral Log", referrallogs_path %></li>
+              	</ul> 
+    		</div>
+    		
+		</div>
+	</div>
 </div>
- 
-<% flash.each do |name, msg| %>
-  <%= content_tag :div, msg, :id => "flash_#{name}" %>
-<% end %>
+
+<div class="container">
+     		
+	<br>
+	<br>
+ 			
+	<% flash.each do |name, msg| %>
+		<%= content_tag :div, msg, :id => "flash_#{name}" %>
+	<% end %>
 
 <%= yield %>
- <p class="notice"><%= notice %></p>
- <p class="alert"><%= alert %></p>
+	<p class="notice"><%= notice %></p>
+	<p class="alert"><%= alert %></p>
  
- 
- 
- 
- 
+</div>
 
+<br>
+ 
 </body>
 </html>
