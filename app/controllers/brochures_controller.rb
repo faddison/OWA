@@ -4,7 +4,7 @@ class BrochuresController < ApplicationController
 
   def index
 		if user_signed_in? 
-			Brochure.connfinal
+			Brochure.conndeve
 			@brochures = Brochure.search(params[:search])
 			
 			respond_to do |format|

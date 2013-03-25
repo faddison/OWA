@@ -3,6 +3,7 @@ class FacilitiesController < ApplicationController
   # GET /facilities.json
   def index
 	if user_signed_in?
+		Facility.connfinal
 		@facilities = Facility.search(params[:search])
 
 		respond_to do |format|
@@ -140,7 +141,7 @@ class FacilitiesController < ApplicationController
 		@facility.destroy
 
 		respond_to do |format|
-		  format.html { redirect_to facilitys_url }
+		  format.html { redirect_to facilities_url }
 		  format.json { head :no_content }
 		end
 	else
