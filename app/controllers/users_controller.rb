@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 	load_and_authorize_resource :only => [:show,:new,:destroy,:edit,:update]
 	
 	def index
-		#if user_signed_in? && current_user.role_id == 1
+		if user_signed_in? && current_user.role_id == 1
 			@users = User.search(params[:search])
 			respond_to do |format|
 				format.json { render :json => @users }
@@ -11,21 +11,21 @@ class UsersController < ApplicationController
 				format.csv  {	export_csv(params)}
 				format.xls  { export_xls(params) }
 			end
-		#else
-			#redirect_to :controller=>'home', :action => 'index'
-		#end
+		else
+			redirect_to :controller=>'home', :action => 'index'
+		end
 	end
 	
 	def new
-		#@user = User.new
-		#if user_signed_in? && current_user.role_id == 1
+		@user = User.new
+		if user_signed_in? && current_user.role_id == 1
 			respond_to do |format|
 			  format.html # new.html.erb
 			  format.json { render json: @user }
 			end
-		#else
-			#redirect_to :controller=>'home', :action => 'index'
-		#end
+		else
+			redirect_to :controller=>'home', :action => 'index'
+		end
 
 	end
 	def show
@@ -37,7 +37,7 @@ class UsersController < ApplicationController
 		end
     end
 	def destroy
-		#if user_signed_in? && current_user.role_id == 1
+		if user_signed_in? && current_user.role_id == 1
 			@user.destroy
 			respond_to do |format|
 				#format.json { respond_to_destroy(:ajax) }
@@ -45,12 +45,12 @@ class UsersController < ApplicationController
 				#format.html { respond_to_destroy(:html) }
 				format.html { redirect_to :controller=>'adminboard', :action => 'index' }
 			end
-		#else
-			#redirect_to :controller=>'home', :action => 'index'
-		#end
+		else
+			redirect_to :controller=>'home', :action => 'index'
+		end
 	end
 	def create
-		#if user_signed_in? && current_user.role_id == 1
+		if user_signed_in? && current_user.role_id == 1
 			@user = User.new(params[:user])
 		 
 			if @user.save
@@ -62,9 +62,9 @@ class UsersController < ApplicationController
 					format.html { render :action => :new, :status => :unprocessable_entity }
 				end
 			end
-		#else
-			#redirect_to :controller=>'home', :action => 'index'
-		#end
+		else
+			redirect_to :controller=>'home', :action => 'index'
+		end
 	end
 	def edit
 		@user = User.find(params[:id])
