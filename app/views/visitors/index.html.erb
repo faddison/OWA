@@ -16,6 +16,7 @@
     <th>Phone</th>
     <th>Country</th>
 	<th>Postcode</th>
+	<th>DateFirstAttend</th>
 	<th></th>
     <th></th>
     <th></th>
@@ -30,6 +31,7 @@
     <td><%= visitor.phone %></td>
 	<td><%= visitor.country %></td>
 	<td><%= visitor.postcode %></td>
+	<td><%= visitor.ftime %></td>
     <td><%= link_to 'Show', visitor %></td>
     <td><%= link_to 'Edit', edit_visitor_path(visitor) %></td>
     <td><%= link_to 'Destroy', visitor, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -156,7 +156,7 @@ ActiveRecord::Schema.define(:version => 20130324132644) do
     t.string   "postcode"
     t.string   "husband"
     t.string   "notes"
-    t.string   "ftime"
+    t.date     "ftime"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

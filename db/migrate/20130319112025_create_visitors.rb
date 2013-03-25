@@ -11,7 +11,7 @@ class CreateVisitors < ActiveRecord::Migration
 	  t.string :postcode
 	  t.string :husband
 	  t.string :notes
-	  t.string :ftime
+	  t.date :ftime
 	  
       t.timestamps
     end

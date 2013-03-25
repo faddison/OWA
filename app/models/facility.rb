@@ -11,6 +11,7 @@ class Facility < ActiveRecord::Base
 	end
 	def self.to_csv(params)
 		@records = Facility.search(params[:search])
+			@records = Facility.search(params[:search])
 			CSV.generate(col_sep: "\t") do |csv|
 			csv << column_names
 			@records.each do |f|
