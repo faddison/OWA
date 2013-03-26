@@ -2,6 +2,7 @@ class ReferralsController < ApplicationController
   # GET /referrals
   # GET /referrals.json
   def index
+		Referral.connfinal
 		if user_signed_in?
 			@referrals = Referral.search(params[:search])
 
@@ -64,7 +65,7 @@ class ReferralsController < ApplicationController
   def create
 	if user_signed_in?
 		@referral = Referral.new(params[:referral])
-
+		@referral.status = "not approvaled"
 		respond_to do |format|
 		  if @referral.save
 			format.html { redirect_to @referral, notice: 'Referral was successfully created.' }
@@ -98,7 +99,7 @@ class ReferralsController < ApplicationController
 			end
 		else
 			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'dashboard', :action => 'index'
+			redirect_to :controller=>'referrals', :action => 'index'
 		end
 	else
 		flash[:notice] = "You don't have access to do that"
@@ -119,7 +120,7 @@ class ReferralsController < ApplicationController
 			  format.json { head :no_content }
 			end
 		else
-			redirect_to :controller=>'dashboard', :action => 'index'
+			redirect_to :controller=>'referrals', :action => 'index'
 		end
 	else
 		flash[:notice] = "You don't have access to do that"
@@ -129,13 +130,12 @@ class ReferralsController < ApplicationController
   def approve
 	if user_signed_in? &&  current_user.role_id == 1
 		@referral = Referral.find(params[:id])
+		@referral.status = 'approvaled'
+		@referral.save
 		Referral.conndeve
-		@newb = Referral.new
-		@newb.name = @referral.name
-		@newb.save
+		@newobj = @referral.dup
+		@newobj.save
 		Referral.connfinal
-		#Brochure.connfinal
-		@referral.destroy
 
 		respond_to do |format|
 		  format.html { redirect_to referrals_url }
@@ -143,7 +143,7 @@ class ReferralsController < ApplicationController
 		end
 	else
 		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'dashboard', :action => 'index'
+		redirect_to :controller=>'referrals', :action => 'index'
 	end
 	#Brochure
   end

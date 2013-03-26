@@ -96,7 +96,7 @@ class EventsController < ApplicationController
 			end
 		else
 			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'dashboard', :action => 'index'
+			redirect_to :controller=>'events', :action => 'index'
 		end
 	else
 		flash[:notice] = "You don't have access to do that"
@@ -118,7 +118,7 @@ class EventsController < ApplicationController
 			end
 		else
 			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'dashboard', :action => 'index'
+			redirect_to :controller=>'events', :action => 'index'
 		end
 	else
 		flash[:notice] = "You don't have access to do that"
@@ -129,21 +129,19 @@ class EventsController < ApplicationController
   def approve
 	if user_signed_in? &&  current_user.role_id == 1
 		@event = Brochurelog.find(params[:id])
+		@eventstatus = 'approvaled'
+		@event.save
 		Event.conndeve
-		@newb = Event.new
-		@newb.name = @event.name
-		@newb.save
+		@newobj = @event.dup
+		@newobj.save
 		Event.connfinal
-		#Brochure.connfinal
-		@event.destroy
-
 		respond_to do |format|
 		  format.html { redirect_to events_url }
 		  format.json { head :no_content }
 		end
 	else
 		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'dashboard', :action => 'index'
+		redirect_to :controller=>'events', :action => 'index'
 	end
   end
   

@@ -13,6 +13,7 @@
     <th>Facility</th>
     <th>Duration</th>
     <th>Date</th>
+	<th>Status</th>
     <th></th>
     <th></th>
     <th></th>
@@ -26,10 +27,11 @@
     <td><%= event.facility.name %></td>
     <td><%= event.duration %></td>
     <td><%= event.date %></td>
+	<td><%= event.status %></td>
     <td><%= link_to 'Show', event %></td>
     <td><%= link_to 'Edit', edit_event_path(event) %></td>
     <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-	<td><%= link_to 'approve', approve_event_path(evnet)%></td>
+	<td><%= link_to 'approve', approve_event_path(event)%></td>
   </tr>
 <% end %>
 </table>

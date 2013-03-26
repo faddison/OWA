@@ -12,6 +12,7 @@
   <tr>
     <th>Event</th>
     <th>Person</th>
+	<th>Status</th>
     <th></th>
     <th></th>
     <th></th>
@@ -21,6 +22,7 @@
   <tr>
     <td><%= eventlog.event.title %></td>
     <td><%= eventlog.visitor.fname %></td>
+	<td><%= eventlog.status %></td>
     <td><%= link_to 'Show', eventlog %></td>
     <td><%= link_to 'Edit', edit_eventlog_path(eventlog) %></td>
     <td><%= link_to 'Destroy', eventlog, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -64,7 +64,7 @@ class ProgramsController < ApplicationController
   def create
 	if user_signed_in?
 		@program = Program.new(params[:program])
-
+		@program.status = "not approvaled"
 		respond_to do |format|
 		  if @program.save
 			format.html { redirect_to @program, notice: 'Program was successfully created.' }
@@ -97,7 +97,7 @@ class ProgramsController < ApplicationController
 			  end
 			end
 		else
-			redirect_to :controller=>'dashboard', :action => 'index'
+			redirect_to :controller=>'programs', :action => 'index'
 		end
 	else
 		flash[:notice] = "You don't have access to do that"
@@ -119,7 +119,7 @@ class ProgramsController < ApplicationController
 			end
 		else
 			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'dashboard', :action => 'index'
+			redirect_to :controller=>'programs', :action => 'index'
 		end
 	else
 		flash[:notice] = "You don't have access to do that"
@@ -130,13 +130,12 @@ class ProgramsController < ApplicationController
   def approve
 	if user_signed_in? &&  current_user.role_id == 1
 		@program = Program.find(params[:id])
+		@program.status = 'approvaled'
+		@program.save
 		Program.conndeve
-		@newb = Program.new
-		@newb.name = @program.name
-		@newb.save
+		@newobj = @program.dup
+		@newobj.save
 		Program.connfinal
-		#Brochure.connfinal
-		@program.destroy
 
 		respond_to do |format|
 		  format.html { redirect_to programs_url }
@@ -144,7 +143,7 @@ class ProgramsController < ApplicationController
 		end
 	else
 		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'dashboard', :action => 'index'
+		redirect_to :controller=>'programs', :action => 'index'
 	end
   end
   

@@ -1,6 +1,7 @@
 class Referral < ActiveRecord::Base
-  attr_accessible :name
+  attr_accessible :name,:status
   validates :name,  :presence => true
+  has_many :referrallogs, :dependent => :destroy
    def self.search(search)
 		if search
 			return find(:all, :conditions => ['name LIKE ? ', "%#{search}%"])

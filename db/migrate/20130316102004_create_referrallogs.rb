@@ -9,6 +9,7 @@ class CreateReferrallogs < ActiveRecord::Migration
       t.references :facility
 	  t.string	:fname
 	  t.string	:rname
+	  t.string  :status
       t.timestamps
     end
     add_index :referrallogs, :referral_id

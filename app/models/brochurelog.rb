@@ -1,7 +1,7 @@
 class Brochurelog < ActiveRecord::Base
   belongs_to :facility	
   belongs_to :brochure
-  attr_accessible :brochure_id, :count, :date, :facility_id, :bname,:fname
+  attr_accessible :brochure_id, :count, :date, :facility_id, :bname,:fname,:status
   def self.to_csv(params)
 		@records = Brochurelog.search(params[:search])
 			CSV.generate(col_sep: "\t") do |csv|

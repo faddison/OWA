@@ -9,6 +9,7 @@ class CreateEvents < ActiveRecord::Migration
       t.references :facility
       t.integer :facility_id
       t.integer :duration
+	  t.string  :status
       t.date :date
 
       t.timestamps

@@ -12,7 +12,7 @@ class CreateVisitors < ActiveRecord::Migration
 	  t.string :husband
 	  t.string :notes
 	  t.date :ftime
-	  
+	  t.string :status
       t.timestamps
     end
   end

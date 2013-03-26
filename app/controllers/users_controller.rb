@@ -38,14 +38,20 @@ class UsersController < ApplicationController
     end
 	def destroy
 		if user_signed_in? && current_user.role_id == 1
-			@user.destroy
-			respond_to do |format|
-				#format.json { respond_to_destroy(:ajax) }
-				#format.xml  { head :ok }
-				#format.html { respond_to_destroy(:html) }
-				format.html { redirect_to :controller=>'adminboard', :action => 'index' }
+			if current_user.id != @user.id
+				@user.destroy
+				respond_to do |format|
+					#format.json { respond_to_destroy(:ajax) }
+					#format.xml  { head :ok }
+					#format.html { respond_to_destroy(:html) }
+					format.html { redirect_to :controller=>'users', :action => 'index' }
+				end
+			else
+				flash[:notice] = "You can not delete yourself"
+				redirect_to :controller=>'users', :action => 'index'
 			end
 		else
+			
 			redirect_to :controller=>'home', :action => 'index'
 		end
 	end
@@ -77,18 +83,17 @@ class UsersController < ApplicationController
 			  @user.errors[:base] << "The password you entered is incorrect" unless @user.valid_password?(params[:user][:current_password])
 			end
 	 
-			respond_to do |format|
+			
 			  if @user.errors[:base].empty? and @user.update_attributes(params[:user])
-				flash[:notice] = "Your account has been updated"
-				format.json { render :json => @user.to_json, :status => 200 }
-				format.xml  { head :ok }
-				format.html { render :action => :edit }
+				flash[:notice] = "User have been updated"
+				redirect_to :controller=>'users', :action => 'index'
 			  else
-				format.json { render :text => "Could not update user", :status => :unprocessable_entity } #placeholder
-				format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
-				format.html { render :action => :edit, :status => :unprocessable_entity }
+				respond_to do |format|
+					format.json { render :text => "Could not update user", :status => :unprocessable_entity } #placeholder
+					format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
+					format.html { render :action => :edit, :status => :unprocessable_entity }
+				end	
 			  end
-			end
 		else
 			redirect_to :controller=>'home', :action => 'index'
 		end

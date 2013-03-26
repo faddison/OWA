@@ -8,7 +8,7 @@
 <table>
   <tr>
     <th>Name</th>
-    <th></th>
+    <th>Status</th>
     <th></th>
     <th></th>
   </tr>
@@ -16,6 +16,7 @@
 <% @eventtypes.each do |eventtype| %>
   <tr>
     <td><%= eventtype.name %></td>
+	<td><%= eventtype.status %></td>
     <td><%= link_to 'Show', eventtype %></td>
     <td><%= link_to 'Edit', edit_eventtype_path(eventtype) %></td>
     <td><%= link_to 'Destroy', eventtype, method: :delete, data: { confirm: 'Are you sure?' } %></td>
