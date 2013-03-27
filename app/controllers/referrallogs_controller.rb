@@ -139,7 +139,7 @@ class ReferrallogsController < ApplicationController
   def approve
 	if user_signed_in? &&  current_user.role_id == 1
 		@referrallog = Referrallog.find(params[:id])
-		@referrallog.status = 'approvaled'
+		@referrallog.status = 'approved'
 		@referrallog.save
 		Referrallog.conndeve
 		@newobj = @referrallog.dup
