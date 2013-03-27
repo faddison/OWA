@@ -12,18 +12,18 @@
   <% end %>
 
   <div class="field">
-	<%= f.label "Event" %><br />
+	<%= f.label "Event" %>
   	<%= collection_select(:eventlog , :event_id, Event.all , :id, :title) %>
   </div>
   
   <div class="field">
-	<%= f.label "Visitor" %><br />
+	<%= f.label "Visitor" %>
   	<%= collection_select(:eventlog , :visitor_id, Visitor.all , :id, :fname) %>
   </div>
   
   
   
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Create Event Record"%>
   </div>
 <% end %>

@@ -9,6 +9,7 @@ class CreateBrochurelogs < ActiveRecord::Migration
       t.references :brochure
 	  t.string	:bname
 	  t.string	:fname
+	  t.string  :status
       t.timestamps
     end
     add_index :brochurelogs, :facility_id

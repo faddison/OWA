@@ -1,3 +1,4 @@
+
 class ReferrallogsController < ApplicationController
   # GET /referrallogs
   # GET /referrallogs.json
@@ -105,7 +106,7 @@ class ReferrallogsController < ApplicationController
 			end
 		else
 			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'dashboard', :action => 'index'
+			redirect_to :controller=>'referrallogs', :action => 'index'
 		end
 		
 	else
@@ -129,7 +130,7 @@ class ReferrallogsController < ApplicationController
 			end
 		else
 			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'dashboard', :action => 'index'
+			redirect_to :controller=>'referrallogs', :action => 'index'
 		end
 	else
 		flash[:notice] = "You don't have access to do that"
@@ -139,13 +140,12 @@ class ReferrallogsController < ApplicationController
   def approve
 	if user_signed_in? &&  current_user.role_id == 1
 		@referrallog = Referrallog.find(params[:id])
+		@referrallog.status = 'approvaled'
+		@referrallog.save
 		Referrallog.conndeve
-		@newb = Referrallog.new
-		@newb.name = @referrallog.name
-		@newb.save
+		@newobj = @referrallog.dup
+		@newobj.save
 		Referrallog.connfinal
-		#Brochure.connfinal
-		@referrallog.destroy
 
 		respond_to do |format|
 		  format.html { redirect_to referrallogs_url }

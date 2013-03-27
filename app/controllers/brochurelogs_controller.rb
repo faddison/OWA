@@ -1,3 +1,4 @@
+
 class BrochurelogsController < ApplicationController
   # GET /brochurelogs
   # GET /brochurelogs.json 
@@ -69,6 +70,7 @@ class BrochurelogsController < ApplicationController
 		@d = @brochurelog.date
 		@brochurelog.bname = @brochurelog.brochure.name
 		@brochurelog.fname = @brochurelog.facility.name
+		@brochurelog.status = 'Not Approved'
 		@check = duplicate(@rid,@fid,@d )
 		respond_to do |format|
 			if @check == -1 && @brochurelog.save 
@@ -107,7 +109,7 @@ class BrochurelogsController < ApplicationController
 			end
 		else
 			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'dashboard', :action => 'index'
+			redirect_to :controller=>'brochurelogs', :action => 'index'
 		end
 	else
 		flash[:notice] = "You don't have access to do that"
@@ -130,7 +132,7 @@ class BrochurelogsController < ApplicationController
 			end
 		else
 			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'dashboard', :action => 'index'
+			redirect_to :controller=>'brochurelogs', :action => 'index'
 		end
 	else
 		flash[:notice] = "You don't have access to do that"
@@ -141,21 +143,19 @@ class BrochurelogsController < ApplicationController
   def approve
 	if user_signed_in? &&  current_user.role_id == 1
 		@brochurelog = Brochurelog.find(params[:id])
+		@brochurelog.status = 'Approved'
+		@brochurelog.save
 		Brochurelog.conndeve
-		@newb = Brochurelog.new
-		@newb.name = @brochurelog.name
-		@newb.save
+		@newobj = @Brochurelog.dup
+		@newobj.save
 		Brochurelog.connfinal
-		#Brochure.connfinal
-		@brochurelog.destroy
-
 		respond_to do |format|
 		  format.html { redirect_to brochurelogs_url }
 		  format.json { head :no_content }
 		end
 	else
 		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'dashboard', :action => 'index'
+		redirect_to :controller=>'brochureslogs', :action => 'index'
 	end
   end
   

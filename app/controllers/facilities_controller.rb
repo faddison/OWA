@@ -1,3 +1,4 @@
+
 class FacilitiesController < ApplicationController
   # GET /facilities
   # GET /facilities.json
@@ -64,7 +65,7 @@ class FacilitiesController < ApplicationController
   def create
 	if user_signed_in?
 		@facility = Facility.new(params[:facility])
-
+		@facility.status = "not approvaled"
 		respond_to do |format|
 		  if @facility.save
 			format.html { redirect_to @facility, notice: 'Facility was successfully created.' }
@@ -98,7 +99,7 @@ class FacilitiesController < ApplicationController
 			end
 		else
 			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'dashboard', :action => 'index'
+			redirect_to :controller=>'facilities', :action => 'index'
 		end
 	else
 		flash[:notice] = "You don't have access to do that"
@@ -120,7 +121,7 @@ class FacilitiesController < ApplicationController
 			end
 		else
 			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'dashboard', :action => 'index'
+			redirect_to :controller=>'facilities', :action => 'index'
 		end
 	else
 		flash[:notice] = "You don't have access to do that"
@@ -131,21 +132,20 @@ class FacilitiesController < ApplicationController
   def approve
 	if user_signed_in? &&  current_user.role_id == 1
 		@facility = Facility.find(params[:id])
+		@facility.status = 'approvaled'
+		@facility.save
 		Facility.conndeve
-		@newb = Facility.new
-		@newb.name = @facility.name
-		@newb.save
+		@newobj = @facility.dup
+		@newobj.save
 		Facility.connfinal
-		#Brochure.connfinal
-		@facility.destroy
 
 		respond_to do |format|
-		  format.html { redirect_to facilitys_url }
+		  format.html { redirect_to facilities_url }
 		  format.json { head :no_content }
 		end
 	else
 		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'dashboard', :action => 'index'
+		redirect_to :controller=>'facilities', :action => 'index'
 	end
   end
   

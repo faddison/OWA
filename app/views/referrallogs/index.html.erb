@@ -1,4 +1,4 @@
-<h1>Referral Logs</h1>
+<h1>Referral Records</h1>
 
 <%= form_tag referrallogs_path, :method => 'get' do %>
       <p>
@@ -7,12 +7,21 @@
       </p>
 <% end %>
 
-<table>
+<%= link_to 'New Referral Record', new_referrallog_path %>
+
+<p>
+  Download:
+ <%= link_to "CSV", referrallogs_path(:params => params, format: "csv") %>
+  <%= link_to "Excel", referrallogs_path(:params => params, format: "xls") %>
+</p>
+
+<table class="table">
   <tr>
     <th>Date</th>
     <th>Count</th>
     <th>Referral</th>
     <th>Facility</th>
+    	<th>Status</th>
     <th></th>
     <th></th>
     <th></th>
@@ -24,20 +33,13 @@
     <td><%= referrallog.count %></td>
     <td><%= referrallog.referral.name %></td>
     <td><%= referrallog.facility.name %></td>
+    	<td><%= referrallog.status %></td>
     <td><%= link_to 'Show', referrallog %></td>
     <td><%= link_to 'Edit', edit_referrallog_path(referrallog) %></td>
-    <td><%= link_to 'Destroy', referrallog, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-	<td><%= link_to 'approve', approve_referrallog_path(referrallog)%></td>
+    <td><%= link_to 'Remove', referrallog, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	<td><%= link_to 'Approve', approve_referrallog_path(referrallog)%></td>
   </tr>
 <% end %>
 </table>
 
 <br />
-
-<%= link_to 'New Referrallog', new_referrallog_path %>
-
-<p>
-  Download:
- <%= link_to "CSV", referrallogs_path(:params => params, format: "csv") %>
-  <%= link_to "Excel", referrallogs_path(:params => params, format: "xls") %>
-</p>

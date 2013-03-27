@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20130324132644) do
     t.integer  "brochure_id"
     t.string   "bname"
     t.string   "fname"
+    t.string   "status"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
@@ -29,6 +30,7 @@ ActiveRecord::Schema.define(:version => 20130324132644) do
 
   create_table "brochures", :force => true do |t|
     t.string   "name"
+    t.string   "status"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -59,6 +61,7 @@ ActiveRecord::Schema.define(:version => 20130324132644) do
     t.integer  "visitor_id"
     t.string   "ename"
     t.string   "vname"
+    t.string   "status"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -72,6 +75,7 @@ ActiveRecord::Schema.define(:version => 20130324132644) do
     t.integer  "eventtype_id"
     t.integer  "facility_id"
     t.integer  "duration"
+    t.string   "status"
     t.date     "date"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
@@ -83,6 +87,7 @@ ActiveRecord::Schema.define(:version => 20130324132644) do
 
   create_table "eventtypes", :force => true do |t|
     t.string   "name"
+    t.string   "status"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -90,12 +95,14 @@ ActiveRecord::Schema.define(:version => 20130324132644) do
   create_table "facilities", :force => true do |t|
     t.string   "name"
     t.string   "address"
+    t.string   "status"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
   create_table "programs", :force => true do |t|
     t.string   "name"
+    t.string   "status"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -107,6 +114,7 @@ ActiveRecord::Schema.define(:version => 20130324132644) do
     t.integer  "facility_id"
     t.string   "fname"
     t.string   "rname"
+    t.string   "status"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
@@ -116,6 +124,7 @@ ActiveRecord::Schema.define(:version => 20130324132644) do
 
   create_table "referrals", :force => true do |t|
     t.string   "name"
+    t.string   "status"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -156,7 +165,8 @@ ActiveRecord::Schema.define(:version => 20130324132644) do
     t.string   "postcode"
     t.string   "husband"
     t.string   "notes"
-    t.string   "ftime"
+    t.date     "ftime"
+    t.string   "status"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

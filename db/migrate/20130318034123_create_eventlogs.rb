@@ -7,6 +7,7 @@ class CreateEventlogs < ActiveRecord::Migration
       t.integer :visitor_id
 	  t.string :ename
 	  t.string :vname
+	  t.string  :status
       t.timestamps
     end
     add_index :eventlogs, :event_id

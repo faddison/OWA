@@ -1,7 +1,11 @@
+
 class Facility < ActiveRecord::Base
-  attr_accessible :address, :name
+  attr_accessible :address, :name, :status
   validates :name,  :presence => true
   validates :address, :presence => true
+  has_many :eventlogs, :dependent => :destroy
+  has_many :brochurelogs, :dependent => :destroy
+  has_many :referrallogs, :dependent => :destroy
 	def self.search(search)
 		if search
 			return find(:all, :conditions => ['name LIKE ? or address LIKE ?', "%#{search}%","%#{search}%"])
@@ -11,6 +15,7 @@ class Facility < ActiveRecord::Base
 	end
 	def self.to_csv(params)
 		@records = Facility.search(params[:search])
+			@records = Facility.search(params[:search])
 			CSV.generate(col_sep: "\t") do |csv|
 			csv << column_names
 			@records.each do |f|

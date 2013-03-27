@@ -7,11 +7,11 @@
   <p><%= f.label :password %></p>
   <p><%= f.password_field :password %></p>
  
-  <p><%= f.label :password_confirmation %></p>
+  <p><%= f.label "Re-enter Password" %></p>
   <p><%= f.password_field :password_confirmation %></p>
 	
   <div class="field">
-	<%= f.label "Roles" %><br />
+	<%= f.label "Roles" %>
   	<%= collection_select(:user , :role_id, Role.all , :id, :name) %>
   </div>
   

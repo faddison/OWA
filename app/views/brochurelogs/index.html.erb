@@ -1,4 +1,4 @@
-<h1>Brochure Logs</h1>
+<h1>Brochure Records</h1>
 
 <%= form_tag brochurelogs_path, :method => 'get' do %>
       <p>
@@ -7,13 +7,20 @@
       </p>
 <% end %>
 
+<%= link_to 'New Brochure Record', new_brochurelog_path %>
+<p>
+  Download:
+ <%= link_to "CSV", brochurelogs_path(:params => params, format: "csv") %>
+  <%= link_to "Excel", brochurelogs_path(:params => params, format: "xls") %>
+</p>
 
-<table>
+<table class="table">
   <tr>
     <th>Date</th>
-    <th>Count</th>
+    <th>Amount</th>
     <th>Facility</th>
     <th>Brochure</th>
+    	<th>Status</th>
     <th></th>
     <th></th>
     <th></th>
@@ -25,20 +32,14 @@
     <td><%= brochurelog.count %></td>
     <td><%= brochurelog.facility.name %></td>
     <td><%= brochurelog.brochure.name %></td>
+    	<td><%= brochurelog.status %></td>
     <td><%= link_to 'Show', brochurelog %></td>
     <td><%= link_to 'Edit', edit_brochurelog_path(brochurelog) %></td>
-    <td><%= link_to 'Destroy', brochurelog, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-	<td><%= link_to 'approve', approve_brochurelog_path(brochurelog)%></td>
+    <td><%= link_to 'Remove', brochurelog, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	<td><%= link_to 'Approve', approve_brochurelog_path(brochurelog)%></td>
   </tr>
 <% end %>
 </table>
 
 <br />
-
-<%= link_to 'New Brochurelog', new_brochurelog_path %>
-<p>
-  Download:
- <%= link_to "CSV", brochurelogs_path(:params => params, format: "csv") %>
-  <%= link_to "Excel", brochurelogs_path(:params => params, format: "xls") %>
-</p>
 

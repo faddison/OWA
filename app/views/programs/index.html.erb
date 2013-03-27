@@ -6,9 +6,17 @@
       </p>
 <% end %>
 
-<table>
+<%= link_to 'New Program', new_program_path %>
+<p>
+  Download:
+ <%= link_to "CSV", programs_path(:params => params, format: "csv") %>
+  <%= link_to "Excel", programs_path(:params => params, format: "xls") %>
+</p>
+
+<table class="table">
   <tr>
     <th>Name</th>
+    	<th>Status</th>
     <th></th>
     <th></th>
     <th></th>
@@ -17,19 +25,13 @@
 <% @programs.each do |program| %>
   <tr>
     <td><%= program.name %></td>
+    	<td><%= program.status %></td>
     <td><%= link_to 'Show', program %></td>
     <td><%= link_to 'Edit', edit_program_path(program) %></td>
-    <td><%= link_to 'Destroy', program, method: :delete, data: { confirm: 'Are you sure?' } %></td
-	<td><%= link_to 'approve', approve_program_path(program)%></td>
+    <td><%= link_to 'Remove', program, method: :delete, data: { confirm: 'Are you sure?' } %></td
+	<td><%= link_to 'Approve', approve_program_path(program)%></td>
   </tr>
 <% end %>
 </table>
 
 <br />
-
-<%= link_to 'New Program', new_program_path %>
-<p>
-  Download:
- <%= link_to "CSV", programs_path(:params => params, format: "csv") %>
-  <%= link_to "Excel", programs_path(:params => params, format: "xls") %>
-</p>

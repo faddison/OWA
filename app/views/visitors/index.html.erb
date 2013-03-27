@@ -7,7 +7,14 @@
       </p>
 <% end %>
 
-<table>
+<%= link_to 'New Visitor', new_visitor_path %>
+<p>
+  Download:
+ <%= link_to "CSV", visitors_path(:params => params, format: "csv") %>
+  <%= link_to "Excel", visitors_path(:params => params, format: "xls") %>
+</p>
+
+<table class="table">
   <tr>
     <th>First name</th>
     <th>Last name</th>
@@ -15,7 +22,9 @@
     <th>Email</th>
     <th>Phone</th>
     <th>Country</th>
-	<th>Postcode</th>
+		<th>Postal Code</th>
+		<th>Date First Attend</th>
+		<th>Status</th>
 	<th></th>
     <th></th>
     <th></th>
@@ -29,20 +38,15 @@
     <td><%= visitor.email %></td>
     <td><%= visitor.phone %></td>
 	<td><%= visitor.country %></td>
-	<td><%= visitor.postcode %></td>
+		<td><%= visitor.postcode %></td>
+		<td><%= visitor.ftime %></td>
+		<td><%= visitor.status %></td>
     <td><%= link_to 'Show', visitor %></td>
     <td><%= link_to 'Edit', edit_visitor_path(visitor) %></td>
-    <td><%= link_to 'Destroy', visitor, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-	<td><%= link_to 'approve', approve_visitor_path(visitor)%></td>
+    <td><%= link_to 'Remove', visitor, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	<td><%= link_to 'Approve', approve_visitor_path(visitor)%></td>
   </tr>
 <% end %>
 </table>
 
 <br />
-
-<%= link_to 'New Visitor', new_visitor_path %>
-<p>
-  Download:
- <%= link_to "CSV", visitors_path(:params => params, format: "csv") %>
-  <%= link_to "Excel", visitors_path(:params => params, format: "xls") %>
-</p>

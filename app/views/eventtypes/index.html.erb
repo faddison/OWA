@@ -5,10 +5,18 @@
         <%= submit_tag "search", :name => nil %><br/>
       </p>
 <% end %>
-<table>
+
+<%= link_to 'New Event Type', new_eventtype_path %>
+<p>
+  Download:
+ <%= link_to "CSV", eventtypes_path(:params => params, format: "csv") %>
+  <%= link_to "Excel", eventtypes_path(:params => params, format: "xls") %>
+</p>
+
+<table class="table">
   <tr>
     <th>Name</th>
-    <th></th>
+    	<th>Status</th>
     <th></th>
     <th></th>
   </tr>
@@ -16,19 +24,13 @@
 <% @eventtypes.each do |eventtype| %>
   <tr>
     <td><%= eventtype.name %></td>
+    	<td><%= eventtype.status %></td>
     <td><%= link_to 'Show', eventtype %></td>
     <td><%= link_to 'Edit', edit_eventtype_path(eventtype) %></td>
-    <td><%= link_to 'Destroy', eventtype, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-	<td><%= link_to 'approve', approve_eventtype_path(eventtype)%></td>
+    <td><%= link_to 'Remove', eventtype, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	<td><%= link_to 'Approve', approve_eventtype_path(eventtype)%></td>
   </tr>
 <% end %>
 </table>
 
 <br />
-
-<%= link_to 'New Eventtype', new_eventtype_path %>
-<p>
-  Download:
- <%= link_to "CSV", eventtypes_path(:params => params, format: "csv") %>
-  <%= link_to "Excel", eventtypes_path(:params => params, format: "xls") %>
-</p>

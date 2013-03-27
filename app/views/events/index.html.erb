@@ -5,14 +5,26 @@
         <%= submit_tag "search", :name => nil %><br/>
       </p>
 <% end %>
-<table>
+
+
+<%= link_to 'New Event', new_event_path %>
+
+<p>
+  Download:
+ <%= link_to "CSV", events_path(:params => params, format: "csv") %>
+  <%= link_to "Excel", events_path(:params => params, format: "xls") %>
+</p>
+
+
+<table class="table">
   <tr>
     <th>Title</th>
     <th>Program</th>
-    <th>Eventtype</th>
+    <th>Event Type</th>
     <th>Facility</th>
-    <th>Duration</th>
+    <th>Duration (hrs)</th>
     <th>Date</th>
+    	<th>Status</th>
     <th></th>
     <th></th>
     <th></th>
@@ -26,20 +38,13 @@
     <td><%= event.facility.name %></td>
     <td><%= event.duration %></td>
     <td><%= event.date %></td>
+    	<td><%= event.status %></td>
     <td><%= link_to 'Show', event %></td>
     <td><%= link_to 'Edit', edit_event_path(event) %></td>
-    <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-	<td><%= link_to 'approve', approve_event_path(evnet)%></td>
+    <td><%= link_to 'Remove', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	<td><%= link_to 'Approve', approve_event_path(event)%></td>
   </tr>
 <% end %>
 </table>
 
 <br />
-
-<%= link_to 'New Event', new_event_path %>
-
-<p>
-  Download:
- <%= link_to "CSV", events_path(:params => params, format: "csv") %>
-  <%= link_to "Excel", events_path(:params => params, format: "xls") %>
-</p>

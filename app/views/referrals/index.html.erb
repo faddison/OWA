@@ -5,9 +5,19 @@
         <%= submit_tag "search", :name => nil %><br/>
       </p>
 <% end %>
-<table>
+
+<%= link_to 'New Referral', new_referral_path %>
+<p>
+  Download:
+ <%= link_to "CSV", referrals_path(:params => params, format: "csv") %>
+  <%= link_to "Excel", referrals_path(:params => params, format: "xls") %>
+</p>
+
+
+<table class="table">
   <tr>
     <th>Name</th>
+    	<th>Status</th>
     <th></th>
     <th></th>
     <th></th>
@@ -16,19 +26,13 @@
 <% @referrals.each do |referral| %>
   <tr>
     <td><%= referral.name %></td>
+    	<td><%= referral.status %></td>
     <td><%= link_to 'Show', referral %></td>
     <td><%= link_to 'Edit', edit_referral_path(referral) %></td>
-    <td><%= link_to 'Destroy', referral, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-	<td><%= link_to 'approve', approve_referral_path(referral)%></td>
+    <td><%= link_to 'Remove', referral, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	<td><%= link_to 'Approve', approve_referral_path(referral)%></td>
   </tr>
 <% end %>
 </table>
 
 <br />
-
-<%= link_to 'New Referral', new_referral_path %>
-<p>
-  Download:
- <%= link_to "CSV", referrals_path(:params => params, format: "csv") %>
-  <%= link_to "Excel", referrals_path(:params => params, format: "xls") %>
-</p>

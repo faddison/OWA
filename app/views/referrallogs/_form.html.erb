@@ -12,22 +12,22 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :date %><br />
+    <%= f.label :date %>
     <%= f.date_select :date %>
   </div>
   <div class="field">
-    <%= f.label :count %><br />
+    <%= f.label "Amount referred" %>
     <%= f.number_field :count %>
   </div>
   <div class="field">
-	<%= f.label "Facility" %><br />
+	<%= f.label "Facility" %>
   	<%= collection_select(:referrallog , :facility_id, Facility.all , :id, :name) %>
   </div>
   <div class="field">
-	<%= f.label "Referral" %><br />
+	<%= f.label "Referral" %>
   	<%= collection_select(:referrallog , :referral_id, Referral.all , :id, :name) %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Create Referral Record"%>
   </div>
 <% end %>

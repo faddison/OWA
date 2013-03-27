@@ -5,6 +5,7 @@ Appbeta13::Application.routes.draw do
 
 
   devise_for :users, :skip => [:registrations]
+
   
 	resources :users, :controller => "users"
   resources :events do

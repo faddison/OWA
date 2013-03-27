@@ -1,3 +1,4 @@
+
 class EventlogsController < ApplicationController
   # GET /eventlogs
   # GET /eventlogs.json
@@ -66,6 +67,7 @@ class EventlogsController < ApplicationController
 		@eventlog = Eventlog.new(params[:eventlog])
 		@eventlog.ename = @eventlog.event.title
 		@eventlog.vname = @eventlog.visitor.fname
+		@eventlog.status = "not Approvaled"
 		respond_to do |format|
 		  if @eventlog.save
 			format.html { redirect_to @eventlog, notice: 'Eventlog was successfully created.' }
@@ -77,7 +79,7 @@ class EventlogsController < ApplicationController
 		end
 	else
 		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
+		redirect_to :controller=>'eventlogs', :action => 'index'
 	end
   end
 
@@ -99,7 +101,7 @@ class EventlogsController < ApplicationController
 			end
 		else
 			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'dashboard', :action => 'index'
+			redirect_to :controller=>'eventlogs', :action => 'index'
 		end
 	else
 		redirect_to :controller=>'home', :action => 'index'
@@ -109,13 +111,12 @@ class EventlogsController < ApplicationController
   def approve
 	if user_signed_in? &&  current_user.role_id == 1
 		@eventlog = Eventlog.find(params[:id])
+		@eventlog.status = 'approvaled'
+		@eventlog.save
 		Eventlog.conndeve
-		@newb = Eventlog.new
-		@newb.name = @Eventlog.name
-		@newb.save
+		@newobj = @eventlog.dup
+		@newobj.save
 		Eventlog.connfinal
-		#Brochure.connfinal
-		@Eventlog.destroy
 
 		respond_to do |format|
 		  format.html { redirect_to eventlogs_url }
@@ -123,7 +124,11 @@ class EventlogsController < ApplicationController
 		end
 	else
 		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'dashboard', :action => 'index'
+		if  user_signed_in?
+			redirect_to :controller=>'dashboard', :action => 'index'
+		else
+			redirect_to :controller=>'home', :action => 'index'
+		end
 	end
   end
 
@@ -141,7 +146,7 @@ class EventlogsController < ApplicationController
 			end
 		else
 			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'dashboard', :action => 'index'
+			redirect_to :controller=>'eventlogs', :action => 'index'
 		end
 	else
 		redirect_to :controller=>'home', :action => 'index'

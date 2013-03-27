@@ -49,7 +49,7 @@
 <h2>Add a Child:</h2>
 <%= render "children/form" %>
 
-<h2>contacts</h2>
+<h2>Contact</h2>
 <%= render @visitor.econtacts %>
 
 <h2>Add a Contact:</h2>
@@ -57,4 +57,4 @@
 
 
 <%= link_to 'Edit', edit_visitor_path(@visitor) %>
-<%= link_to 'Finish', home_index_path %>
+<%= link_to 'Finish', visitors_path %>

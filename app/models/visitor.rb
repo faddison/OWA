@@ -1,8 +1,10 @@
+
 class Visitor < ActiveRecord::Base
-  attr_accessible :email, :fname, :language, :lname, :phone, :fullname, :postcode, :country, :husband, :notes, :ftime
+  attr_accessible :email, :fname, :language, :lname, :phone, :fullname, :postcode, :country, :husband, :notes, :ftime,:status
   validates :fname,  :presence => true
   has_many :children,	:dependent => :destroy
   has_many :econtacts,   :dependent => :destroy
+  has_many :eventlogs, :dependent => :destroy
 	def self.full_name(fname,lname)
 		[fname, lname].join(" ")
 	end

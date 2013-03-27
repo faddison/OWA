@@ -12,23 +12,23 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :date %><br />
+    <%= f.label :date %>
     <%= f.date_select :date %>
   </div>
   <div class="field">
-    <%= f.label :count %><br />
+    <%= f.label "Amount handed" %>
     <%= f.number_field :count %>
   </div>
   <div class="field">
-	<%= f.label "Facility" %><br />
+	<%= f.label "Facility" %>
   	<%= collection_select(:brochurelog , :facility_id, Facility.all , :id, :name) %>
   </div>
   
   <div class="field">
-	<%= f.label "Brochure" %><br />
+	<%= f.label "Brochure" %>
   	<%= collection_select(:brochurelog , :brochure_id, Brochure.all , :id, :name) %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Create Brochure Record"%>
   </div>
 <% end %>

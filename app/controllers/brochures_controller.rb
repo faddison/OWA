@@ -1,10 +1,11 @@
+
 class BrochuresController < ApplicationController
   # GET /brochures
   # GET /brochures.json
 
   def index
 		if user_signed_in? 
-			Brochure.connfinal
+			Brochure.conndeve
 			@brochures = Brochure.search(params[:search])
 			
 			respond_to do |format|
@@ -66,7 +67,7 @@ class BrochuresController < ApplicationController
   def create
 	if user_signed_in?
 		@brochure = Brochure.new(params[:brochure])
-
+		@brochure.status = 'not approvaled'
 		respond_to do |format|
 		  if @brochure.save
 			format.html { redirect_to @brochure, notice: 'Brochure was successfully created.' }
@@ -100,7 +101,7 @@ class BrochuresController < ApplicationController
 			end
 		else
 			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'dashboard', :action => 'index'
+			redirect_to :controller=>'brochures', :action => 'index'
 		end
 	else
 		flash[:notice] = "You don't have access to do that"
@@ -121,7 +122,7 @@ class BrochuresController < ApplicationController
 			end
 		else
 			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'dashboard', :action => 'index'
+			redirect_to :controller=>'brochures', :action => 'index'
 		end
 	else
 		flash[:notice] = "You don't have access to do that"
@@ -131,13 +132,13 @@ class BrochuresController < ApplicationController
   def approve
 	if user_signed_in? &&  current_user.role_id == 1
 		@brochure = Brochure.find(params[:id])
+		@brochure.status = 'approvaled'
+		@brochure.save
 		Brochure.conndeve
-		@newb = Brochure.new
-		@newb.name = @brochure.name
-		@newb.save
+		@newobj = @brochurelog.dup
+		@newobj.save
 		Brochure.connfinal
 		#Brochure.connfinal
-		@brochure.destroy
 
 		respond_to do |format|
 		  format.html { redirect_to brochures_url }
@@ -145,7 +146,7 @@ class BrochuresController < ApplicationController
 		end
 	else
 		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'dashboard', :action => 'index'
+		redirect_to :controller=>'brochures', :action => 'index'
 	end
 	#Brochure.conndeve
   end

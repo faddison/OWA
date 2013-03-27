@@ -1,8 +1,9 @@
+
 class UsersController < ApplicationController
 	load_and_authorize_resource :only => [:show,:new,:destroy,:edit,:update]
 	
 	def index
-		#if user_signed_in? && current_user.role_id == 1
+		if user_signed_in? && current_user.role_id == 1
 			@users = User.search(params[:search])
 			respond_to do |format|
 				format.json { render :json => @users }
@@ -11,21 +12,21 @@ class UsersController < ApplicationController
 				format.csv  {	export_csv(params)}
 				format.xls  { export_xls(params) }
 			end
-		#else
-			#redirect_to :controller=>'home', :action => 'index'
-		#end
+		else
+			redirect_to :controller=>'home', :action => 'index'
+		end
 	end
 	
 	def new
-		#@user = User.new
-		#if user_signed_in? && current_user.role_id == 1
+		@user = User.new
+		if user_signed_in? && current_user.role_id == 1
 			respond_to do |format|
 			  format.html # new.html.erb
 			  format.json { render json: @user }
 			end
-		#else
-			#redirect_to :controller=>'home', :action => 'index'
-		#end
+		else
+			redirect_to :controller=>'home', :action => 'index'
+		end
 
 	end
 	def show
@@ -37,20 +38,26 @@ class UsersController < ApplicationController
 		end
     end
 	def destroy
-		#if user_signed_in? && current_user.role_id == 1
-			@user.destroy
-			respond_to do |format|
-				#format.json { respond_to_destroy(:ajax) }
-				#format.xml  { head :ok }
-				#format.html { respond_to_destroy(:html) }
-				format.html { redirect_to :controller=>'adminboard', :action => 'index' }
+		if user_signed_in? && current_user.role_id == 1
+			if current_user.id != @user.id
+				@user.destroy
+				respond_to do |format|
+					#format.json { respond_to_destroy(:ajax) }
+					#format.xml  { head :ok }
+					#format.html { respond_to_destroy(:html) }
+					format.html { redirect_to :controller=>'users', :action => 'index' }
+				end
+			else
+				flash[:notice] = "You can not delete yourself"
+				redirect_to :controller=>'users', :action => 'index'
 			end
-		#else
-			#redirect_to :controller=>'home', :action => 'index'
-		#end
+		else
+			
+			redirect_to :controller=>'home', :action => 'index'
+		end
 	end
 	def create
-		#if user_signed_in? && current_user.role_id == 1
+		if user_signed_in? && current_user.role_id == 1
 			@user = User.new(params[:user])
 		 
 			if @user.save
@@ -62,9 +69,9 @@ class UsersController < ApplicationController
 					format.html { render :action => :new, :status => :unprocessable_entity }
 				end
 			end
-		#else
-			#redirect_to :controller=>'home', :action => 'index'
-		#end
+		else
+			redirect_to :controller=>'home', :action => 'index'
+		end
 	end
 	def edit
 		@user = User.find(params[:id])
@@ -77,18 +84,17 @@ class UsersController < ApplicationController
 			  @user.errors[:base] << "The password you entered is incorrect" unless @user.valid_password?(params[:user][:current_password])
 			end
 	 
-			respond_to do |format|
+			
 			  if @user.errors[:base].empty? and @user.update_attributes(params[:user])
-				flash[:notice] = "Your account has been updated"
-				format.json { render :json => @user.to_json, :status => 200 }
-				format.xml  { head :ok }
-				format.html { render :action => :edit }
+				flash[:notice] = "User have been updated"
+				redirect_to :controller=>'users', :action => 'index'
 			  else
-				format.json { render :text => "Could not update user", :status => :unprocessable_entity } #placeholder
-				format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
-				format.html { render :action => :edit, :status => :unprocessable_entity }
+				respond_to do |format|
+					format.json { render :text => "Could not update user", :status => :unprocessable_entity } #placeholder
+					format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
+					format.html { render :action => :edit, :status => :unprocessable_entity }
+				end	
 			  end
-			end
 		else
 			redirect_to :controller=>'home', :action => 'index'
 		end

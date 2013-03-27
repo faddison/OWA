@@ -1,3 +1,4 @@
+
 class EventtypesController < ApplicationController
   # GET /eventtypes
   # GET /eventtypes.json
@@ -63,7 +64,7 @@ class EventtypesController < ApplicationController
   def create
 	if user_signed_in?
 		@eventtype = Eventtype.new(params[:eventtype])
-
+		@eventtype.status = "not approvaled"
 		respond_to do |format|
 		  if @eventtype.save
 			format.html { redirect_to @eventtype, notice: 'Eventtype was successfully created.' }
@@ -97,7 +98,7 @@ class EventtypesController < ApplicationController
 			end
 		else
 			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'home', :action => 'index'
+			redirect_to :controller=>'eventtypes', :action => 'index'
 		end
 	else
 		flash[:notice] = "You don't have access to do that"
@@ -119,7 +120,7 @@ class EventtypesController < ApplicationController
 			end
 		else
 			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'home', :action => 'index'
+			redirect_to :controller=>'eventtypes', :action => 'index'
 		end
 	else
 		flash[:notice] = "You don't have access to do that"
@@ -135,13 +136,12 @@ class EventtypesController < ApplicationController
   def approve
 	if user_signed_in? &&  current_user.role_id == 1
 		@eventtype = Eventtype.find(params[:id])
+		@eventtype.status = 'approvaled'
+		@eventtype.save
 		Eventtype.conndeve
-		@newb = Eventtype.new
-		@newb.name = @eventtype.name
-		@newb.save
+		@newobj = @eventtype.dup
+		@newobj.save
 		Eventtype.connfinal
-		#Brochure.connfinal
-		@Eventtype.destroy
 
 		respond_to do |format|
 		  format.html { redirect_to eventtypes_url }
@@ -149,7 +149,7 @@ class EventtypesController < ApplicationController
 		end
 	else
 		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'dashboard', :action => 'index'
+		redirect_to :controller=>'eventtype', :action => 'index'
 	end
   end
   

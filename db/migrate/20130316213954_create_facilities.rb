@@ -3,7 +3,7 @@ class CreateFacilities < ActiveRecord::Migration
     create_table :facilities do |t|
       t.string :name
       t.string :address
-
+	  t.string  :status
       t.timestamps
     end
   end

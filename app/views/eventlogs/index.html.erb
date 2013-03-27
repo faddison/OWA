@@ -1,4 +1,4 @@
-<h1>Event Logs</h1>
+<h1>Event Record</h1>
 
 <%= form_tag eventlogs_path, :method => 'get' do %>
       <p>
@@ -8,10 +8,19 @@
       </p>
 <% end %>
 
-<table>
+<%= link_to 'New Event Record', new_eventlog_path %>
+<p>
+  Download:
+ <%= link_to "CSV", eventlogs_path(:params => params, format: "csv") %>
+  <%= link_to "Excel", eventlogs_path(:params => params, format: "xls") %>
+</p>
+
+
+<table class="table">
   <tr>
     <th>Event</th>
-    <th>Person</th>
+    <th>Visitor</th>
+    	<th>Status</th>
     <th></th>
     <th></th>
     <th></th>
@@ -20,20 +29,14 @@
 <% @eventlogs.each do |eventlog| %>
   <tr>
     <td><%= eventlog.event.title %></td>
-    <td><%= eventlog.visitor.fname %></td>
+	<td><%= eventlog.visitor.fname %></td>
+		<td><%= eventlog.status %></td>
     <td><%= link_to 'Show', eventlog %></td>
     <td><%= link_to 'Edit', edit_eventlog_path(eventlog) %></td>
-    <td><%= link_to 'Destroy', eventlog, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-	<td><%= link_to 'approve', approve_eventlog_path(eventlog)%></td>
+    <td><%= link_to 'Remove', eventlog, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	<td><%= link_to 'Approve', approve_eventlog_path(eventlog)%></td>
   </tr>
 <% end %>
 </table>
 
 <br />
-
-<%= link_to 'New Eventlog', new_eventlog_path %>
-<p>
-  Download:
- <%= link_to "CSV", eventlogs_path(:params => params, format: "csv") %>
-  <%= link_to "Excel", eventlogs_path(:params => params, format: "xls") %>
-</p>

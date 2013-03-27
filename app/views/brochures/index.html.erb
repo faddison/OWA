@@ -5,9 +5,18 @@
         <%= submit_tag "search", :name => nil %><br/>
       </p>
 <% end %>
-<table>
+
+<%= link_to 'New Brochure', new_brochure_path %>
+<p>
+  Download:
+ <%= link_to "CSV", brochures_path(:params => params, format: "csv") %>
+  <%= link_to "Excel", brochures_path(:params => params, format: "xls") %>
+</p>
+
+<table class="table">
   <tr>
     <th>Name</th>
+    	<th>Status</th>
     <th></th>
     <th></th>
     <th></th>
@@ -16,6 +25,7 @@
 <% @brochures.each do |brochure| %>
   <tr>
     <td><%= brochure.name %></td>
+    	<td><%= brochure.status %></td>
     <td><%= link_to 'Show', brochure %></td>
     <td><%= link_to 'Edit', edit_brochure_path(brochure) %></td>
 	 <td><%= link_to 'Destory', brochure, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -27,9 +37,3 @@
 
 <br />
 
-<%= link_to 'New Brochure', new_brochure_path %>
-<p>
-  Download:
- <%= link_to "CSV", brochures_path(:params => params, format: "csv") %>
-  <%= link_to "Excel", brochures_path(:params => params, format: "xls") %>
-</p>

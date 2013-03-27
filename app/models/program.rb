@@ -1,5 +1,6 @@
+
 class Program < ActiveRecord::Base
-  attr_accessible :name
+  attr_accessible :name,:status
   validates :name,  :presence => true
   def self.to_csv(params)
 		@records = Program.search(params[:search])

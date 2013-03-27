@@ -1,6 +1,7 @@
+
 class Brochure < ActiveRecord::Base
-  attr_accessible :name
- 
+  attr_accessible :name,:status
+  has_many :brochurelogs, :dependent => :destroy
   def self.search(search)
 		if search
 			return find(:all, :conditions => ['name LIKE ? ', "%#{search}%"])

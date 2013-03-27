@@ -1,3 +1,4 @@
+
 class VisitorsController < ApplicationController
   # GET /visitors
   # GET /visitors.json
@@ -5,7 +6,8 @@ class VisitorsController < ApplicationController
   #http_basic_authenticate_with :name => "ccunandy@yahoo.com", :password => "ccandy881103", :only => :destroy
   
   def index
-		if user_signed_in? 
+		if user_signed_in?
+			Visitor.connfinal
 			@visitors = Visitor.search(params[:search])
 			Appbeta13::Application.config.current_user_id = -1
 			#@visitors.fullname = Visitor.full_name(@visitors.fname,@visitors.lname)
@@ -15,59 +17,39 @@ class VisitorsController < ApplicationController
 			  format.json { render json: @visitors }
 			  format.xls  { export_xls(params) }
 			end
-		else
-			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'home', :action => 'index'
 		end
   end
 
   # GET /visitors/1
   # GET /visitors/1.json
   def show
-	if user_signed_in? 
-		@visitor = Visitor.find(params[:id])
-		if Appbeta13::Application.config.current_user_id != @visitor.id 
-			if user_signed_in?
-				Appbeta13::Application.config.current_user_id = -1
-				respond_to do |format|
-					format.html # show.html.erb
-					format.json { render json: @visitor }
-				end
+			@visitor = Visitor.find(params[:id])
+			if Appbeta13::Application.config.current_user_id != @visitor.id 
+					Appbeta13::Application.config.current_user_id = -1
+					respond_to do |format|
+						format.html # show.html.erb
+						format.json { render json: @visitor }
+					end
 			else
-				flash[:notice] = "You don't have access to this page!"
-				@i = Appbeta13::Application.config.current_user_id
-				#redirect_to action => "show", :id => 17
-				@visitor.id = @i
-				#@visitor = Visitor.find(session[:@i
-				redirect_to visitors_path(session[:visitor_id])
-				return
-			end		
-		else
-			respond_to do |format|
-				format.html # show.html.erb
-				format.json { render json: @visitor }
-			end
-		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
+					flash[:notice] = "You don't have access to this page!"
+					@i = Appbeta13::Application.config.current_user_id
+					#redirect_to action => "show", :id => 17
+					@visitor.id = @i
+					#@visitor = Visitor.find(session[:@i
+					redirect_to visitors_path(session[:visitor_id])
+					return
+			end	
+			
 	end
-	
-  end
 
   # GET /visitors/new
   # GET /visitors/new.json
   def new
-	if user_signed_in? 
-		@visitor = Visitor.new
+	@visitor = Visitor.new
 
-		respond_to do |format|
-		  format.html # new.html.erb
-		  format.json { render json: @visitor }
-		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
+	respond_to do |format|
+		 format.html # new.html.erb
+		 format.json { render json: @visitor }
 	end
   end
 
@@ -83,9 +65,9 @@ class VisitorsController < ApplicationController
   # POST /visitors
   # POST /visitors.json
   def create
-	if user_signed_in? 
 		@visitor = Visitor.new(params[:visitor])
 		@visitor.fullname = Visitor.full_name(@visitor.fname,@visitor.lname)
+		@visitor.status = "Not Approved"
 		respond_to do |format|
 				if @visitor.save
 					format.html { redirect_to @visitor, notice: 'Visitor was successfully created.' }
@@ -99,10 +81,6 @@ class VisitorsController < ApplicationController
 					format.json { render json: @visitor.errors, status: :unprocessable_entity }
 				end
 			end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
-	end
   end
 
   # PUT /visitors/1
@@ -123,7 +101,7 @@ class VisitorsController < ApplicationController
 			end
 		else
 			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'dashboard', :action => 'index'
+			redirect_to :controller=>'visitors', :action => 'index'
 		end
 	else
 		flash[:notice] = "You don't have access to do that"
@@ -145,7 +123,7 @@ class VisitorsController < ApplicationController
 			end
 		else
 			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'dashboard', :action => 'index'
+			redirect_to :controller=>'visitors', :action => 'index'
 		end
 		
 	else
@@ -157,13 +135,14 @@ class VisitorsController < ApplicationController
   def approve
 	if user_signed_in? &&  current_user.role_id == 1
 		@visitor = Visitor.find(params[:id])
+		@visitor.status = 'Approved'
+		@visitor.save
 		Visitor.conndeve
-		@newb = Visitor.new
-		@newb.name = @visitor.name
-		@newb.save
+		@newobj = @visitor.dup
+		@newobj.save
 		Visitor.connfinal
 		#Brochure.connfinal
-		@visitor.destroy
+		
 
 		respond_to do |format|
 		  format.html { redirect_to visitors_url }
