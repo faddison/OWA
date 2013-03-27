@@ -66,7 +66,7 @@ class EventlogsController < ApplicationController
 		@eventlog = Eventlog.new(params[:eventlog])
 		@eventlog.ename = @eventlog.event.title
 		@eventlog.vname = @eventlog.visitor.fname
-		@eventlog.status = "not Approvaled"
+		@eventlog.status = "not approved"
 		respond_to do |format|
 		  if @eventlog.save
 			format.html { redirect_to @eventlog, notice: 'Eventlog was successfully created.' }
@@ -110,7 +110,7 @@ class EventlogsController < ApplicationController
   def approve
 	if user_signed_in? &&  current_user.role_id == 1
 		@eventlog = Eventlog.find(params[:id])
-		@eventlog.status = 'approvaled'
+		@eventlog.status = 'approved'
 		@eventlog.save
 		Eventlog.conndeve
 		@newobj = @eventlog.dup

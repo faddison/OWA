@@ -66,7 +66,7 @@ class BrochuresController < ApplicationController
   def create
 	if user_signed_in?
 		@brochure = Brochure.new(params[:brochure])
-		@brochure.status = 'not approvaled'
+		@brochure.status = 'not approved'
 		respond_to do |format|
 		  if @brochure.save
 			format.html { redirect_to @brochure, notice: 'Brochure was successfully created.' }
@@ -131,7 +131,7 @@ class BrochuresController < ApplicationController
   def approve
 	if user_signed_in? &&  current_user.role_id == 1
 		@brochure = Brochure.find(params[:id])
-		@brochure.status = 'approvaled'
+		@brochure.status = 'approved'
 		@brochure.save
 		Brochure.conndeve
 		@newobj = @brochurelog.dup

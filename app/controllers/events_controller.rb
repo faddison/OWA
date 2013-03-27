@@ -63,7 +63,7 @@ class EventsController < ApplicationController
   def create
 	if user_signed_in?
 		@event = Event.new(params[:event])
-
+		@event.status = "not approved"
 		respond_to do |format|
 		  if @event.save
 			format.html { redirect_to @event, notice: 'Event was successfully created.' }
@@ -129,7 +129,7 @@ class EventsController < ApplicationController
   def approve
 	if user_signed_in? &&  current_user.role_id == 1
 		@event = Brochurelog.find(params[:id])
-		@eventstatus = 'approvaled'
+		@eventstatus = 'approved'
 		@event.save
 		Event.conndeve
 		@newobj = @event.dup

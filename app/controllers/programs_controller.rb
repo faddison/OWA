@@ -64,7 +64,7 @@ class ProgramsController < ApplicationController
   def create
 	if user_signed_in?
 		@program = Program.new(params[:program])
-		@program.status = "not approvaled"
+		@program.status = "not approved"
 		respond_to do |format|
 		  if @program.save
 			format.html { redirect_to @program, notice: 'Program was successfully created.' }
@@ -130,7 +130,7 @@ class ProgramsController < ApplicationController
   def approve
 	if user_signed_in? &&  current_user.role_id == 1
 		@program = Program.find(params[:id])
-		@program.status = 'approvaled'
+		@program.status = 'approved'
 		@program.save
 		Program.conndeve
 		@newobj = @program.dup
