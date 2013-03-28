@@ -23,10 +23,7 @@ class VisitorsController < ApplicationController
   # GET /visitors/1
   # GET /visitors/1.json
   def show
-<<<<<<< HEAD
-=======
 		if user_signed_in?
->>>>>>> 9204ade065c8a421ef7cf6fa07520f5095dd036f
 			@visitor = Visitor.find(params[:id])
 			if Appbeta13::Application.config.current_user_id != @visitor.id 
 					Appbeta13::Application.config.current_user_id = -1
@@ -43,10 +40,7 @@ class VisitorsController < ApplicationController
 					redirect_to visitors_path(session[:visitor_id])
 					return
 			end	
-<<<<<<< HEAD
-=======
 		end
->>>>>>> 9204ade065c8a421ef7cf6fa07520f5095dd036f
 			
 	end
 
@@ -73,24 +67,6 @@ class VisitorsController < ApplicationController
   # POST /visitors
   # POST /visitors.json
   def create
-<<<<<<< HEAD
-		@visitor = Visitor.new(params[:visitor])
-		@visitor.fullname = Visitor.full_name(@visitor.fname,@visitor.lname)
-		@visitor.status = "not approved"
-		respond_to do |format|
-				if @visitor.save
-					format.html { redirect_to @visitor, notice: 'Visitor was successfully created.' }
-					format.json { render json: @visitor, status: :created, location: @visitor }
-					format.json { render json: @visitor}
-					Appbeta13::Application.config.current_user_id = @visitor.id
-					@i = Appbeta13::Application.config.current_user_id
-					session[:@i] = @visitor.id
-				else
-					format.html { render action: "new" }
-					format.json { render json: @visitor.errors, status: :unprocessable_entity }
-				end
-			end
-=======
 		if user_signed_in?
 			@visitor = Visitor.new(params[:visitor])
 			@visitor.fullname = Visitor.full_name(@visitor.fname,@visitor.lname)
@@ -109,7 +85,6 @@ class VisitorsController < ApplicationController
 					end
 				end
 		end
->>>>>>> 9204ade065c8a421ef7cf6fa07520f5095dd036f
   end
 
   # PUT /visitors/1
@@ -170,12 +145,6 @@ class VisitorsController < ApplicationController
 		@newobj = @visitor.dup
 		@newobj.save
 		Visitor.connfinal
-<<<<<<< HEAD
-		#Brochure.connfinal
-		
-
-=======
->>>>>>> 9204ade065c8a421ef7cf6fa07520f5095dd036f
 		respond_to do |format|
 		  format.html { redirect_to visitors_url }
 		  format.json { head :no_content }
