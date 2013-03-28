@@ -16,7 +16,7 @@
 <table class="table">
   <tr>
     <th>Name</th>
-    	<th>Status</th>
+	<th>Status</th>
     <th></th>
     <th></th>
     <th></th>
@@ -25,11 +25,12 @@
 <% @programs.each do |program| %>
   <tr>
     <td><%= program.name %></td>
-    	<td><%= program.status %></td>
+	<td><%= program.status %></td>
     <td><%= link_to 'Show', program %></td>
     <td><%= link_to 'Edit', edit_program_path(program) %></td>
     <td><%= link_to 'Remove', program, method: :delete, data: { confirm: 'Are you sure?' } %></td
 	<td><%= link_to 'Approve', approve_program_path(program)%></td>
+
   </tr>
 <% end %>
 </table>

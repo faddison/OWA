@@ -121,7 +121,7 @@ class BrochurelogsController < ApplicationController
   # DELETE /brochurelogs/1.json
   def destroy
 	if user_signed_in? 
-		if current_user.role_id == 2 || current_usr.role_id == 1
+		if current_user.role_id == 2 || current_user.role_id == 1
 			@brochurelog = Brochurelog.find(params[:id])
 			@brochurelog.destroy
 			
@@ -145,7 +145,7 @@ class BrochurelogsController < ApplicationController
 		@brochurelog.status = 'approved'
 		@brochurelog.save
 		Brochurelog.conndeve
-		@newobj = @Brochurelog.dup
+		@newobj = @brochurelog.dup
 		@newobj.save
 		Brochurelog.connfinal
 		respond_to do |format|

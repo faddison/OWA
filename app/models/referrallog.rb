@@ -19,7 +19,7 @@ class Referrallog < ActiveRecord::Base
 	end
 	def self.search(search)
 		if search
-			return find(:all, :conditions => ['count LIKE ? or rname LIKE ? or fname LIKE ?', "%#{search}%","#{search}","#{search}"])
+			return find(:all, :conditions => ['count LIKE ? or rname LIKE ? or fname LIKE ? or status LIKE ?', "%#{search}%","#{search}","#{search}","%#{search}%"])
 		else
 			return Referrallog.all
 		end

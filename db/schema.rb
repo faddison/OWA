@@ -147,6 +147,7 @@ ActiveRecord::Schema.define(:version => 20130324132644) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.integer  "role_id"
+    t.integer  "db_id"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
   end

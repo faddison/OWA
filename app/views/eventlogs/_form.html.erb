@@ -17,8 +17,13 @@
   </div>
   
   <div class="field">
+<<<<<<< HEAD
 	<%= f.label "Visitor" %>
   	<%= collection_select(:eventlog , :visitor_id, Visitor.all , :id, :fname) %>
+=======
+	<%= f.label "Visitor" %><br />
+  	<%= collection_select(:eventlog , :visitor_id, Visitor.all , :id, :fullname) %>
+>>>>>>> 9204ade065c8a421ef7cf6fa07520f5095dd036f
   </div>
   
   

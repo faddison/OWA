@@ -1,3 +1,4 @@
+
 class CreateBrochures < ActiveRecord::Migration
   def change
     create_table :brochures do |t|

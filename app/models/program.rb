@@ -13,7 +13,7 @@ class Program < ActiveRecord::Base
 	end
   def self.search(search)
 		if search
-			return find(:all, :conditions => ['name LIKE ?', "%#{search}%"])
+			return find(:all, :conditions => ['name LIKE ? or status LIKE ?', "%#{search}%","%#{search}%"])
 		else
 			return Program.all
 		end

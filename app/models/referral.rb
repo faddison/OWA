@@ -5,7 +5,7 @@ class Referral < ActiveRecord::Base
   has_many :referrallogs, :dependent => :destroy
    def self.search(search)
 		if search
-			return find(:all, :conditions => ['name LIKE ? ', "%#{search}%"])
+			return find(:all, :conditions => ['name LIKE ? status LIKE ', "%#{search}%","%#{search}%"])
 		else
 			return find(:all)
 		end

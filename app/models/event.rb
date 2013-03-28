@@ -16,17 +16,24 @@ class Event < ActiveRecord::Base
   def self.to_csv(params)
 		@records = Event.search(params[:search])
 			CSV.generate(col_sep: "\t") do |csv|
-			csv << ['event name']
+			csv << column_names
 			@records.each do |f|
-				csv << [f.name]
+				csv << f.attributes.values_at(*column_names)
 			end
 		end
 	end
 	def self.search(search)
 		if search
-			return find(:all, :conditions => ['title LIKE ? or duration LIKE ? or date LIKE ?', "%#{search}%","#{search}","#{search}"])
+			return find(:all, :conditions => ['title LIKE ? or duration LIKE ? or date LIKE ? or status LIKE ?', "%#{search}%","#{search}","#{search}","#{search}"])
 		else
 			return find(:all)
 		end
+	end
+	
+	def self.connfinal
+		establish_connection('finaldb')
+	end
+	def self.conndeve
+		establish_connection('development')
 	end
 end

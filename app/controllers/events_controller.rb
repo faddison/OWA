@@ -128,8 +128,8 @@ class EventsController < ApplicationController
   
   def approve
 	if user_signed_in? &&  current_user.role_id == 1
-		@event = Brochurelog.find(params[:id])
-		@eventstatus = 'approved'
+		@event = Event.find(params[:id])
+		@event.status = 'approved'
 		@event.save
 		Event.conndeve
 		@newobj = @event.dup

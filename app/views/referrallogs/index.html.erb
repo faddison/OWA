@@ -21,7 +21,7 @@
     <th>Count</th>
     <th>Referral</th>
     <th>Facility</th>
-    	<th>Status</th>
+	<th>Status</th>
     <th></th>
     <th></th>
     <th></th>
@@ -33,7 +33,7 @@
     <td><%= referrallog.count %></td>
     <td><%= referrallog.referral.name %></td>
     <td><%= referrallog.facility.name %></td>
-    	<td><%= referrallog.status %></td>
+	<td><%= referrallog.status %></td>
     <td><%= link_to 'Show', referrallog %></td>
     <td><%= link_to 'Edit', edit_referrallog_path(referrallog) %></td>
     <td><%= link_to 'Remove', referrallog, method: :delete, data: { confirm: 'Are you sure?' } %></td>

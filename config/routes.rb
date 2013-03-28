@@ -6,6 +6,7 @@ Appbeta13::Application.routes.draw do
 
   devise_for :users, :skip => [:registrations]
 
+
   
 	resources :users, :controller => "users"
   resources :events do
@@ -152,3 +153,4 @@ root :to => 'home#index'
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
 end
+>>>>>>> 9204ade065c8a421ef7cf6fa07520f5095dd036f

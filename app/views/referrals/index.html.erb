@@ -17,7 +17,7 @@
 <table class="table">
   <tr>
     <th>Name</th>
-    	<th>Status</th>
+	<th>Status</th>
     <th></th>
     <th></th>
     <th></th>
@@ -26,7 +26,7 @@
 <% @referrals.each do |referral| %>
   <tr>
     <td><%= referral.name %></td>
-    	<td><%= referral.status %></td>
+	<td><%= referral.status %></td>
     <td><%= link_to 'Show', referral %></td>
     <td><%= link_to 'Edit', edit_referral_path(referral) %></td>
     <td><%= link_to 'Remove', referral, method: :delete, data: { confirm: 'Are you sure?' } %></td>

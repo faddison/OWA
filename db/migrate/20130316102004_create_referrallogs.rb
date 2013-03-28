@@ -1,3 +1,4 @@
+
 class CreateReferrallogs < ActiveRecord::Migration
   def change
     create_table :referrallogs do |t|

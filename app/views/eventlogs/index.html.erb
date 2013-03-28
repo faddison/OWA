@@ -20,7 +20,7 @@
   <tr>
     <th>Event</th>
     <th>Visitor</th>
-    	<th>Status</th>
+    <th>Status</th>
     <th></th>
     <th></th>
     <th></th>
@@ -29,8 +29,8 @@
 <% @eventlogs.each do |eventlog| %>
   <tr>
     <td><%= eventlog.event.title %></td>
-	<td><%= eventlog.visitor.fname %></td>
-		<td><%= eventlog.status %></td>
+    <td><%= eventlog.visitor.fname %></td>
+	<td><%= eventlog.status %></td>
     <td><%= link_to 'Show', eventlog %></td>
     <td><%= link_to 'Edit', edit_eventlog_path(eventlog) %></td>
     <td><%= link_to 'Remove', eventlog, method: :delete, data: { confirm: 'Are you sure?' } %></td>

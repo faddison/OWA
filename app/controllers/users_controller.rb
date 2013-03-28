@@ -58,7 +58,7 @@ class UsersController < ApplicationController
 	def create
 		if user_signed_in? && current_user.role_id == 1
 			@user = User.new(params[:user])
-		 
+			@user.db_id = 1
 			if @user.save
 					redirect_to users_url, :notice => "User created."
 			else
@@ -77,12 +77,11 @@ class UsersController < ApplicationController
 	end
 	def update
 		if user_signed_in? && current_user.role_id == 1
-			if params[:user][:password].blank?
-			  [:password,:password_confirmation,:current_password].collect{|p| params[:user].delete(p) }
+			 if params[:user][:password].blank?
+				[:password,:password_confirmation,:current_password].collect{|p| params[:user].delete(p) }
 			else
-			  @user.errors[:base] << "The password you entered is incorrect" unless @user.valid_password?(params[:user][:current_password])
+				@user.errors[:base] << "The password you entered is incorrect" unless @user.valid_password?(params[:user][:current_password])
 			end
-	 
 			
 			  if @user.errors[:base].empty? and @user.update_attributes(params[:user])
 				flash[:notice] = "User have been updated"
@@ -95,6 +94,7 @@ class UsersController < ApplicationController
 				end	
 			  end
 		else
+			flash[:notice] = "can not update user"
 			redirect_to :controller=>'home', :action => 'index'
 		end
 	end

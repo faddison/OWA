@@ -7,7 +7,7 @@ class Eventlog < ActiveRecord::Base
   validates :visitor_id, :presence => true
   def self.search(search)
 		if search
-			return find(:all, :conditions => ['ename LIKE ? or vname LIKE ?', "%#{search}%","#{search}"])
+			return find(:all, :conditions => ['ename LIKE ? or vname LIKE ? or status LIKE ?', "%#{search}%","#{search}","#{search}"])
 		else
 			return find(:all)
 		end
@@ -27,6 +27,7 @@ class Eventlog < ActiveRecord::Base
 	def self.conndeve
 		establish_connection('development')
 	end
+	
 	def approval
 		establish_connection('development')
 		self.save
