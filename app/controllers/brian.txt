@@ -1,0 +1,23 @@
+STAFF
+1. Staff logs in
+2. Creates event
+3. Helps new visitor create profile "Juan"
+4. Edit an error in the new visitor's profile (add another child)
+5. Sign in new customer to previously created event
+6. Records brochures given
+7. Records referrals given
+
+COORDINATOR
+1. Log in with coordinator
+2. Approve "Juan" profile
+3. Search visitor list -> "Lucas"
+4. Search event records -> "Lucas"
+5. Export EXCEL doc under Referral Records
+6. Create new program (mention: same for facility)
+
+ADMIN
+1. Create new user
+2. Change new user's password
+3. Show admin cannot delete himself
+4. Delete newly created user
+
