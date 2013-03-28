@@ -1,4 +1,3 @@
-
 class EventtypesController < ApplicationController
   # GET /eventtypes
   # GET /eventtypes.json
@@ -64,7 +63,7 @@ class EventtypesController < ApplicationController
   def create
 	if user_signed_in?
 		@eventtype = Eventtype.new(params[:eventtype])
-		@eventtype.status = "not approvaled"
+		@eventtype.status = "not approved"
 		respond_to do |format|
 		  if @eventtype.save
 			format.html { redirect_to @eventtype, notice: 'Eventtype was successfully created.' }
@@ -136,7 +135,7 @@ class EventtypesController < ApplicationController
   def approve
 	if user_signed_in? &&  current_user.role_id == 1
 		@eventtype = Eventtype.find(params[:id])
-		@eventtype.status = 'approvaled'
+		@eventtype.status = 'approved'
 		@eventtype.save
 		Eventtype.conndeve
 		@newobj = @eventtype.dup

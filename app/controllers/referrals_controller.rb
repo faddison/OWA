@@ -1,4 +1,3 @@
-
 class ReferralsController < ApplicationController
   # GET /referrals
   # GET /referrals.json
@@ -66,7 +65,7 @@ class ReferralsController < ApplicationController
   def create
 	if user_signed_in?
 		@referral = Referral.new(params[:referral])
-		@referral.status = "not approvaled"
+		@referral.status = "not approved"
 		respond_to do |format|
 		  if @referral.save
 			format.html { redirect_to @referral, notice: 'Referral was successfully created.' }
@@ -131,7 +130,7 @@ class ReferralsController < ApplicationController
   def approve
 	if user_signed_in? &&  current_user.role_id == 1
 		@referral = Referral.find(params[:id])
-		@referral.status = 'approvaled'
+		@referral.status = 'approved'
 		@referral.save
 		Referral.conndeve
 		@newobj = @referral.dup

@@ -1,4 +1,3 @@
-
 class ReferrallogsController < ApplicationController
   # GET /referrallogs
   # GET /referrallogs.json
@@ -65,6 +64,7 @@ class ReferrallogsController < ApplicationController
   def create
 	if user_signed_in?
 		@referrallog = Referrallog.new(params[:referrallog])
+		@referrallog.status = "not approved"
 		@rid = @referrallog.referral_id
 		@fid = @referrallog.facility_id
 		@d = @referrallog.date
@@ -140,7 +140,7 @@ class ReferrallogsController < ApplicationController
   def approve
 	if user_signed_in? &&  current_user.role_id == 1
 		@referrallog = Referrallog.find(params[:id])
-		@referrallog.status = 'approvaled'
+		@referrallog.status = 'approved'
 		@referrallog.save
 		Referrallog.conndeve
 		@newobj = @referrallog.dup

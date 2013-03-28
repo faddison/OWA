@@ -1,4 +1,3 @@
-
 class FacilitiesController < ApplicationController
   # GET /facilities
   # GET /facilities.json
@@ -65,7 +64,7 @@ class FacilitiesController < ApplicationController
   def create
 	if user_signed_in?
 		@facility = Facility.new(params[:facility])
-		@facility.status = "not approvaled"
+		@facility.status = "not approved"
 		respond_to do |format|
 		  if @facility.save
 			format.html { redirect_to @facility, notice: 'Facility was successfully created.' }
@@ -132,7 +131,7 @@ class FacilitiesController < ApplicationController
   def approve
 	if user_signed_in? &&  current_user.role_id == 1
 		@facility = Facility.find(params[:id])
-		@facility.status = 'approvaled'
+		@facility.status = 'approved'
 		@facility.save
 		Facility.conndeve
 		@newobj = @facility.dup

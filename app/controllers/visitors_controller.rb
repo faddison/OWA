@@ -1,4 +1,3 @@
-
 class VisitorsController < ApplicationController
   # GET /visitors
   # GET /visitors.json
@@ -67,7 +66,7 @@ class VisitorsController < ApplicationController
   def create
 		@visitor = Visitor.new(params[:visitor])
 		@visitor.fullname = Visitor.full_name(@visitor.fname,@visitor.lname)
-		@visitor.status = "Not Approved"
+		@visitor.status = "not approved"
 		respond_to do |format|
 				if @visitor.save
 					format.html { redirect_to @visitor, notice: 'Visitor was successfully created.' }
@@ -135,7 +134,7 @@ class VisitorsController < ApplicationController
   def approve
 	if user_signed_in? &&  current_user.role_id == 1
 		@visitor = Visitor.find(params[:id])
-		@visitor.status = 'Approved'
+		@visitor.status = 'approved'
 		@visitor.save
 		Visitor.conndeve
 		@newobj = @visitor.dup

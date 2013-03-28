@@ -1,4 +1,3 @@
-
 class BrochurelogsController < ApplicationController
   # GET /brochurelogs
   # GET /brochurelogs.json 
@@ -70,7 +69,7 @@ class BrochurelogsController < ApplicationController
 		@d = @brochurelog.date
 		@brochurelog.bname = @brochurelog.brochure.name
 		@brochurelog.fname = @brochurelog.facility.name
-		@brochurelog.status = 'Not Approved'
+		@brochurelog.status = 'not approved'
 		@check = duplicate(@rid,@fid,@d )
 		respond_to do |format|
 			if @check == -1 && @brochurelog.save 
@@ -143,7 +142,7 @@ class BrochurelogsController < ApplicationController
   def approve
 	if user_signed_in? &&  current_user.role_id == 1
 		@brochurelog = Brochurelog.find(params[:id])
-		@brochurelog.status = 'Approved'
+		@brochurelog.status = 'approved'
 		@brochurelog.save
 		Brochurelog.conndeve
 		@newobj = @Brochurelog.dup
