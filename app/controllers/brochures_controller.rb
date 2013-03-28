@@ -134,7 +134,7 @@ class BrochuresController < ApplicationController
 		@brochure.status = 'approved'
 		@brochure.save
 		Brochure.conndeve
-		@newobj = @brochurelog.dup
+		@newobj = @brochure.dup
 		@newobj.save
 		Brochure.connfinal
 		#Brochure.connfinal
