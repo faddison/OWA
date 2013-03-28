@@ -60,6 +60,7 @@ module Appbeta13
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 	config.current_user_id = -1
+	config.current_db = 0
 	
 	
 	

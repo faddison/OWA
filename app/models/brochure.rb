@@ -3,7 +3,7 @@ class Brochure < ActiveRecord::Base
   has_many :brochurelogs, :dependent => :destroy
   def self.search(search)
 		if search
-			return find(:all, :conditions => ['name LIKE ? ', "%#{search}%"])
+			return find(:all, :conditions => ['name LIKE ? or status LIKE ?', "%#{search}%","%#{search}%"])
 		else
 			return find(:all)
 		end

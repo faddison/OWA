@@ -18,7 +18,7 @@
   
   <div class="field">
 	<%= f.label "Visitor" %><br />
-  	<%= collection_select(:eventlog , :visitor_id, Visitor.all , :id, :fname) %>
+  	<%= collection_select(:eventlog , :visitor_id, Visitor.all , :id, :fullname) %>
   </div>
   
   

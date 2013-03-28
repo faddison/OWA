@@ -13,7 +13,7 @@ class Brochurelog < ActiveRecord::Base
 	end
 	def self.search(search)
 		if search
-			return find(:all, :conditions => ['count LIKE ? or bname LIKE ? or fname LIKE ?', "%#{search}%","#{search}","#{search}"])
+			return find(:all, :conditions => ['count LIKE ? or bname LIKE ? or fname LIKE ? or status LIKE ?', "%#{search}%","#{search}","#{search}","#{search}"])
 		else
 			return Brochurelog.all
 		end
@@ -23,11 +23,6 @@ class Brochurelog < ActiveRecord::Base
 	end
 	def self.conndeve
 		establish_connection('development')
-	end
-	def approval
-		establish_connection('development')
-		self.save
-		establish_connection('finaldb')
 	end
   
 end

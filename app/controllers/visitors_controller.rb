@@ -4,10 +4,10 @@ class VisitorsController < ApplicationController
   
   #http_basic_authenticate_with :name => "ccunandy@yahoo.com", :password => "ccandy881103", :only => :destroy
   
+  
   def index
 		if user_signed_in?
-			Visitor.connfinal
-			@visitors = Visitor.search(params[:search])
+			@visitors = Visitor.all
 			Appbeta13::Application.config.current_user_id = -1
 			#@visitors.fullname = Visitor.full_name(@visitors.fname,@visitors.lname)
 			respond_to do |format|
@@ -22,6 +22,7 @@ class VisitorsController < ApplicationController
   # GET /visitors/1
   # GET /visitors/1.json
   def show
+		if user_signed_in?
 			@visitor = Visitor.find(params[:id])
 			if Appbeta13::Application.config.current_user_id != @visitor.id 
 					Appbeta13::Application.config.current_user_id = -1
@@ -38,6 +39,7 @@ class VisitorsController < ApplicationController
 					redirect_to visitors_path(session[:visitor_id])
 					return
 			end	
+		end
 			
 	end
 
@@ -64,22 +66,24 @@ class VisitorsController < ApplicationController
   # POST /visitors
   # POST /visitors.json
   def create
-		@visitor = Visitor.new(params[:visitor])
-		@visitor.fullname = Visitor.full_name(@visitor.fname,@visitor.lname)
-		@visitor.status = "not approved"
-		respond_to do |format|
-				if @visitor.save
-					format.html { redirect_to @visitor, notice: 'Visitor was successfully created.' }
-					format.json { render json: @visitor, status: :created, location: @visitor }
-					format.json { render json: @visitor}
-					Appbeta13::Application.config.current_user_id = @visitor.id
-					@i = Appbeta13::Application.config.current_user_id
-					session[:@i] = @visitor.id
-				else
-					format.html { render action: "new" }
-					format.json { render json: @visitor.errors, status: :unprocessable_entity }
+		if user_signed_in?
+			@visitor = Visitor.new(params[:visitor])
+			@visitor.fullname = Visitor.full_name(@visitor.fname,@visitor.lname)
+			@visitor.status = "not approved"
+			respond_to do |format|
+					if @visitor.save
+						format.html { redirect_to @visitor, notice: 'Visitor was successfully created.' }
+						format.json { render json: @visitor, status: :created, location: @visitor }
+						format.json { render json: @visitor}
+						Appbeta13::Application.config.current_user_id = @visitor.id
+						@i = Appbeta13::Application.config.current_user_id
+						session[:@i] = @visitor.id
+					else
+						format.html { render action: "new" }
+						format.json { render json: @visitor.errors, status: :unprocessable_entity }
+					end
 				end
-			end
+		end
   end
 
   # PUT /visitors/1
@@ -140,9 +144,6 @@ class VisitorsController < ApplicationController
 		@newobj = @visitor.dup
 		@newobj.save
 		Visitor.connfinal
-		#Brochure.connfinal
-		
-
 		respond_to do |format|
 		  format.html { redirect_to visitors_url }
 		  format.json { head :no_content }
