@@ -63,14 +63,25 @@ class EventlogsController < ApplicationController
   # POST /eventlogs.json
   def create
 	if user_signed_in?
-		@eventlog = Eventlog.new(params[:eventlog])
-		@eventlog.ename = @eventlog.event.title
-		@eventlog.vname = @eventlog.visitor.fname
-		@eventlog.status = "not approved"
+		if (params.has_key?(:visitors))
+			(params[:visitors]).each do |v|
+				@eventlog = Eventlog.new((params[:eventlog].merge(:visitor_id => v)))
+				@eventlog.ename = @eventlog.event.title
+				@eventlog.vname = @eventlog.visitor.fullname
+				@eventlog.status = "not approved"
+				@eventlog.save
+			end
+		else 
+			@eventlog = Eventlog.new(params[:eventlog])
+			@eventlog.ename = @eventlog.event.title
+			@eventlog.vname = @eventlog.visitor.fullname
+			@eventlog.status = "not approved"
+			@eventlog.save
+		end
 		respond_to do |format|
 		  if @eventlog.save
 			format.html { redirect_to @eventlog, notice: 'Eventlog was successfully created.' }
-			format.json { render json: @eventlog, status: :created, location: @eventlog }
+			format.json { render json: @eventlog, status: :created, location: eventlog }
 		  else
 			format.html { render action: "new" }
 			format.json { render json: @eventlog.errors, status: :unprocessable_entity }

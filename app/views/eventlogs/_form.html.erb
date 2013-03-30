@@ -20,13 +20,13 @@
 		<div class="field">
 		<%= f.label "Visitors" %>
 		<% for v in Visitor.all %>
-			<%= check_box_tag "visitors[]", v.id %> <%= v.fname %>
+			<%= check_box_tag "visitors[]", v.id %> <%= v.fullname %>
 		<% end %>
 		</div>
 	<% else %>
 		<div class="field">
 		<%= f.label "Visitor" %>
-		<%= collection_select(:eventlog , :visitor_id, Visitor.all , :id, :fname) %>
+		<%= collection_select(:eventlog , :visitor_id, Visitor.all , :id, :fullname) %>
 		</div>
 	<% end %>
   
