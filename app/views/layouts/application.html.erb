@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+	
   <title>Options</title>
+	<%= javascript_include_tag "application" %>
   	<%= stylesheet_link_tag    "application", :media => "all" %>
   	<%= javascript_include_tag "https://js.stripe.com/v1/" %>
-  	<%= javascript_include_tag "application" %>
 	<%= csrf_meta_tags %>
+	<link href="css/datepicker.css" rel="stylesheet" type="text/css"/> 
   
   <style>
 			body {
@@ -122,4 +124,7 @@ $(function(){
 <br>
  
 </body>
+<footer>
+
+</footer>
 </html>

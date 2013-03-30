@@ -1,11 +1,7 @@
 <h1>Brochure Records</h1>
 
-<%= form_tag brochurelogs_path, :method => 'get' do %>
-      <p>
-        <%= text_field_tag :search, params[:search] %><br/>
-        <%= submit_tag "search", :name => nil %><br/>
-      </p>
-<% end %>
+<%= render 'search' %>
+
 
 <%= link_to 'New Brochure Record', new_brochurelog_path %>
 <p>
