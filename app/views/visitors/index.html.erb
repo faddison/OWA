@@ -30,6 +30,7 @@
     <th></th>
   </tr>
 
+
 <% @visitors.each do |visitor| %>
   <tr>
     <td><%= visitor.fname %></td>
@@ -46,6 +47,15 @@
     <td><%= link_to 'Remove', visitor, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 	<td><%= link_to 'Approve', approve_visitor_path(visitor)%></td>
   </tr>
+  
+	<% if visitor.children.size > 0 %>
+		<tr>
+			<td> Children <td>
+			<% visitor.children.each do |child| %>
+			<td><% child.name %><td>
+			<% end %>
+		</tr>
+	<% end %>	
 <% end %>
 </table>
 

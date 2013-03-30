@@ -2,4 +2,7 @@
 
 <%= render 'form' %>
 
+<h2>Add a Child:</h2>
+<%= render :partial => "/children/form", :locals => {:visitor => @visitor} %>
+
 <%= link_to 'Back', home_index_path %>

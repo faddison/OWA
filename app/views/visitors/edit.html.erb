@@ -2,5 +2,11 @@
 
 <%= render 'form' %>
 
+<h2>Children</h2>
+<%= render @visitor.children %>
+
+<h2>Add a Child:</h2>
+<%= render "children/form" %>
+
 <%= link_to 'Show', @visitor %> |
 <%= link_to 'Back', home_index_path %>

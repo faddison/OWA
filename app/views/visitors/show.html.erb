@@ -42,18 +42,11 @@
   <%= @visitor.ftime %>
 </p>
 
+<% if @visitor.children.size > 0 %>
 
-<h2>Children</h2>
-<%= render @visitor.children %>
-
-<h2>Add a Child:</h2>
-<%= render "children/form" %>
-
-<h2>Contact</h2>
-<%= render @visitor.econtacts %>
-
-<h2>Add a Contact:</h2>
-<%= render "econtacts/form" %>
+	<h2>Children</h2>
+	<% render @visitor.children %>
+<% end %>
 
 
 <%= link_to 'Edit', edit_visitor_path(@visitor) %>

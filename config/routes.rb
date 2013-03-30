@@ -16,6 +16,7 @@ Appbeta13::Application.routes.draw do
   end
 
 
+
   resources :visitors do
 	resources :children
 	resources :econtacts
