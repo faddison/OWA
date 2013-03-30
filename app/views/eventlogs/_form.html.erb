@@ -16,13 +16,19 @@
   	<%= collection_select(:eventlog , :event_id, Event.all , :id, :title) %>
   </div>
   
-  <div class="field">
-
-	<%= f.label "Visitor" %>
-  	<%= collection_select(:eventlog , :visitor_id, Visitor.all , :id, :fname) %>
-  </div>
-  
-  
+	<% if current_user.role_id < 3 %>
+		<div class="field">
+		<%= f.label "Visitors" %>
+		<% for v in Visitor.all %>
+			<%= check_box_tag "visitors[]", v.id %> <%= v.fname %>
+		<% end %>
+		</div>
+	<% else %>
+		<div class="field">
+		<%= f.label "Visitor" %>
+		<%= collection_select(:eventlog , :visitor_id, Visitor.all , :id, :fname) %>
+		</div>
+	<% end %>
   
   <div class="actions">
     <%= f.submit "Create Event Record"%>
