@@ -1,17 +1,31 @@
 
 <h3>Search</h3>
 
-<%= form_for @search, :url => brochurelogs_path, :html => {:method => :get} do |f| %>
-<tr>
-	<%= f.label :Brochure %>
-	<%= f.collection_select :bname_contains, Brochure.all, :id, :name, :include_blank => true %>
-	
-	<%= f.label :Facility %>
-	<%= f.collection_select :fname_contains, Facility.all, :id, :name, :include_blank => true %>
-	
-	<%= f.label :date %>
-	<%= f.text_field :date_equals, :class => :datepicker  %>
-	
+<%= form_for @search, :url => brochurelogs_path, :class => "form-horizontal", :html => {:method => :get} do |f| %>
+	<div class="form-inputs row">
+		<div class="span">
+			<%= f.label :Brochure %>
+			<%= f.collection_select :brochure_id_equals, Brochure.all, :id, :name, :include_blank => true %>
+		</div>	
+		<div class="span">
+			<%= f.label :Facility %>
+			<%= f.collection_select :facility_id_equals, Facility.all, :id, :name, :include_blank => true %>
+		</div>
+		<div class="span">
+			<%= f.label :Status %>
+			<%= f.text_field :status_equals %>
+		</div>	
+	</div>	
+	<div class="form-inputs row">
+		<div class="span">
+			<%= f.label :After %>
+			<%= f.text_field :date_greater_than_or_equal_to, :class => :datepicker  %>
+		</div>
+		<div class="span">
+			<%= f.label :Before %>
+			<%= f.text_field :date_less_than_or_equal_to, :class => :datepicker  %>
+		</div>
+	</div>
 	</br>
 	<%= f.submit %>
 <% end %>

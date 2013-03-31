@@ -10,7 +10,7 @@
   <%= link_to "Excel", brochurelogs_path(:params => params, format: "xls") %>
 </p>
 
-<p> <%= @brochurelogs.count %> Records Found </p>
+<p> <%= @brochurelogs.count %>/<%= Brochurelog.count %> Records Found </p>
 
 <table class="table">
   <tr>

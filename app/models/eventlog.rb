@@ -22,7 +22,7 @@ class Eventlog < ActiveRecord::Base
 		end
 	end
 	def self.connfinal
-		establish_connection('finaldb')
+		establish_connection('development')
 	end
 	def self.conndeve
 		establish_connection('development')
@@ -31,6 +31,6 @@ class Eventlog < ActiveRecord::Base
 	def approval
 		establish_connection('development')
 		self.save
-		establish_connection('finaldb')
+		establish_connection('development')
 	end
 end

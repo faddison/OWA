@@ -6,11 +6,7 @@ class BrochurelogsController < ApplicationController
   def index
 		if user_signed_in?
 		@search = Brochurelog.metasearch(params[:search])
-		if @search.nil?
-			@brochurelogs = Brochurelog.all
-		else
-			@brochurelogs = @search.all
-		end
+		@brochurelogs = @search.all
 			respond_to do |format|
 			  format.html # index.html.erb
 			  format.csv  {	export_csv(params)}
