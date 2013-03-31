@@ -1,0 +1,23 @@
+<script type="text/javascript">
+ $(function() {
+$('#test').datepicker();
+});
+</script>
+
+<h3>Search</h3>
+
+<%= form_for @search, :url => brochurelogs_path, :html => {:method => :get} do |f| %>
+<tr>
+	<input id="test" type="text">
+	<%= f.label :Brochure %>
+	<%= f.collection_select :bname_equals, Brochure.all, :id, :name, :include_blank => true %>
+	
+	<%= f.label :Facility %>
+	<%= f.collection_select :fname_equals, Facility.all, :id, :name, :include_blank => true %>
+	
+	<%= f.label :date %>
+	<%= f.text_field :date_equals, :id => :datepicker  %>
+	
+	</br>
+	<%= f.submit %>
+<% end %>
