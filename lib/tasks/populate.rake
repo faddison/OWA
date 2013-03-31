@@ -11,52 +11,18 @@ namespace :db do
     require 'faker'
     
 
-    Rake::Task['db:reset'].invoke 
-    
-    Visitor.populate 10 do |visitor|
-      visitor.fname = Faker::Name.first_name
-      visitor.lname = Faker::Name.last_name
-      visitor.language = Populator.words(1).titleize
-      visitor.email = Faker::Internet.email
-      visitor.phone = Faker::PhoneNumber.phone_number
-    end
-    
-    Facility.populate 5 do |facility|
-      facility.name = Faker::Name.title
-      facility.name = Faker::Company.name
-      facility.address = Faker::Address.street_address
-    end
-    
-    Brochure.populate 10 do |brochure|
-     brochure.name = Faker::Name.name
-    end
-    
-    Brochurelog.populate 6 do |brochurelog|
-      Brochure.populate 3 do |brochure|
-        brochure.name = Faker::Name.name
-        brochurelog.brochure_id = brochure.id
-        brochurelog.count = 1..50
+    Rake::Task['db:reset'].invoke
+	Rake::Task['db:seed'].invoke 
+       
+    Brochurelog.populate 5 do |brochurelog, b_index, f_index|
+		b_index = 1..Brochure.count
+		f_index = 1..Facility.count
+		brochurelog.brochure_id = b_index
+		brochurelog.bname = Brochure.find_by_id(b_index).name
+		brochurelog.facility_id = f_index
+		brochurelog.fname = Brochure.find_by_id(f_index).name
+        brochurelog.count = 1..20
         brochurelog.date = Time.now
-        Facility.populate 1 do |facility|
-          brochurelog.facility_id = facility.id
-          facility.name = Faker::Company.name
-          facility.address = Faker::Address.street_address
-        end
-      end
     end
-    
-    Program.populate 5 do |program|
-      program.name = Populator.words(1).titleize
-     end
-    
-    Referral.populate 10 do |referral|
-      referral.name = Populator.words(1)
-    end
-    
-    Eventtype.populate 10 do |eventtype|
-      eventtype.name = Populator.words(1).titleize
-    end
-
-    
   end
 end
