@@ -21,7 +21,7 @@
   </div>
   <div class="field">
     <%= f.label :language %>
-    <%= f.text_field :language %>
+    <%= f.collection_select :language, Language::LANGUAGES, :to_s, :humanize %>
   </div>
   <div class="field">
     <%= f.label :email %>

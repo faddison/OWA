@@ -5,6 +5,7 @@ class Visitor < ActiveRecord::Base
   has_many :children,	:dependent => :destroy
   has_many :econtacts,   :dependent => :destroy
   has_many :eventlogs, :dependent => :destroy
+  
 	def self.full_name(fname,lname)
 		[fname, lname].join(" ")
 	end
