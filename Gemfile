@@ -12,7 +12,6 @@ gem 'devise'
 gem 'cancan'
 #gem 'rd_searchlogic', :require => 'searchlogic', :git => 'git://github.com/railsdog/searchlogic.git'
 gem 'meta_search'
-gem 'jquery_datepicker'
 
 gem 'bootstrap-sass'
 gem 'bootswatch-rails'

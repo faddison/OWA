@@ -15,4 +15,7 @@
 //= require bootstrap
 //= require jquery_ujs
 //= require_tree .
-//= brochurelogs
+
+ $(function() {
+$('.datepicker').datepicker();
+});
