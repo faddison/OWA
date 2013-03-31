@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130324132644) do
+ActiveRecord::Schema.define(:version => 20130331054840) do
 
   create_table "brochurelogs", :force => true do |t|
     t.date     "date"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(:version => 20130324132644) do
   end
 
   add_index "brochurelogs", ["brochure_id"], :name => "index_brochurelogs_on_brochure_id"
+  add_index "brochurelogs", ["date", "facility_id", "brochure_id"], :name => "index_brochurelogs_on_date_and_facility_id_and_brochure_id", :unique => true
   add_index "brochurelogs", ["facility_id"], :name => "index_brochurelogs_on_facility_id"
 
   create_table "brochures", :force => true do |t|
@@ -96,6 +97,11 @@ ActiveRecord::Schema.define(:version => 20130324132644) do
     t.string   "name"
     t.string   "address"
     t.string   "status"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "languages", :force => true do |t|
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
