@@ -12,6 +12,7 @@
  <%= link_to "CSV", brochures_path(:params => params, format: "csv") %>
   <%= link_to "Excel", brochures_path(:params => params, format: "xls") %>
 </p>
+<p> <%= @brochures.count %> Records Found </p>
 
 <table class="table">
   <tr>

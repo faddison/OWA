@@ -13,6 +13,7 @@
  <%= link_to "CSV", visitors_path(:params => params, format: "csv") %>
   <%= link_to "Excel", visitors_path(:params => params, format: "xls") %>
 </p>
+<p> <%= @visitors.count %> Records Found </p>
 
 <table class="table">
   <tr>
