@@ -2,7 +2,7 @@
 class Eventlog < ActiveRecord::Base
   belongs_to :event
   belongs_to :visitor
-  attr_accessible :event_id, :visitor_id, :ename, :vname, :status
+  attr_accessible :event_id, :visitor_id, :ename, :vname, :status, :edate
   validates :event_id,  :presence => true
   validates :visitor_id, :presence => true
   def self.search(search)

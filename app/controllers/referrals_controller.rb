@@ -127,26 +127,12 @@ class ReferralsController < ApplicationController
 		redirect_to :controller=>'home', :action => 'index'
 	end
   end
+	
+	
   def approve
-	if user_signed_in? &&  current_user.role_id == 1
-		@referral = Referral.find(params[:id])
-		@referral.status = 'approved'
-		@referral.save
-		Referral.conndeve
-		@newobj = @referral.dup
-		@newobj.save
-		Referral.connfinal
-
-		respond_to do |format|
-		  format.html { redirect_to referrals_url }
-		  format.json { head :no_content }
-		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'referrals', :action => 'index'
+		_approve(Referral.find(params[:id]))
 	end
-	#Brochure
-  end
+	
   
   def export_csv(params)
     filename = I18n.l(Time.now, :format => :short) + "- referrals.csv"

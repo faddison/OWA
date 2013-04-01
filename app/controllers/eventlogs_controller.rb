@@ -67,6 +67,7 @@ class EventlogsController < ApplicationController
 			(params[:visitors]).each do |v|
 				@eventlog = Eventlog.new((params[:eventlog].merge(:visitor_id => v)))
 				@eventlog.ename = @eventlog.event.title
+				@eventlog.edate = @eventlog.event.date
 				@eventlog.vname = @eventlog.visitor.fullname
 				@eventlog.status = "not approved"
 				@eventlog.save
@@ -74,6 +75,7 @@ class EventlogsController < ApplicationController
 		else 
 			@eventlog = Eventlog.new(params[:eventlog])
 			@eventlog.ename = @eventlog.event.title
+			@eventlog.edate = @eventlog.event.date
 			@eventlog.vname = @eventlog.visitor.fullname
 			@eventlog.status = "not approved"
 			@eventlog.save
@@ -99,7 +101,6 @@ class EventlogsController < ApplicationController
 	if user_signed_in?
 		if current_user.role_id == 1 || current_user.role_id == 2
 			@eventlog = Eventlog.find(params[:id])
-
 			respond_to do |format|
 			  if @eventlog.update_attributes(params[:eventlog])
 				format.html { redirect_to @eventlog, notice: 'Eventlog was successfully updated.' }
@@ -119,27 +120,21 @@ class EventlogsController < ApplicationController
   end
   
   def approve
-	if user_signed_in? &&  current_user.role_id == 1
-		@eventlog = Eventlog.find(params[:id])
-		@eventlog.status = 'approved'
-		@eventlog.save
-		Eventlog.conndeve
-		@newobj = @eventlog.dup
-		@newobj.save
-		Eventlog.connfinal
-
-		respond_to do |format|
-		  format.html { redirect_to eventlogs_url }
-		  format.json { head :no_content }
-		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		if  user_signed_in?
-			redirect_to :controller=>'dashboard', :action => 'index'
+		if user_signed_in? &&  current_user.role_id == 1
+			@eventlog = Eventlog.find(params[:id])
+			@eventlog.status = 'approved'
+			@eventlog.save
+			Eventlog.conndeve
+			@newobj = @eventlog.dup
+			@newobj.save
+			Eventlog.connfinal
+			respond_to do |format|
+				format.html { redirect_to eventlogs_url }
+				format.json { head :no_content }
+			end
 		else
-			redirect_to :controller=>'home', :action => 'index'
+			auth_redirect
 		end
-	end
   end
 
   # DELETE /eventlogs/1

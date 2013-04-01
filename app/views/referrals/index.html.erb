@@ -26,11 +26,11 @@
 <% @referrals.each do |referral| %>
   <tr>
     <td><%= referral.name %></td>
-	<td><%= referral.status %></td>
+	<td><%= referral.status.titlecase %></td>
     <td><%= link_to 'Show', referral %></td>
     <td><%= link_to 'Edit', edit_referral_path(referral) %></td>
     <td><%= link_to 'Remove', referral, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-	<td><%= link_to 'Approve', approve_referral_path(referral)%></td>
+		<td><%= link_to approve_link_text(referral), approve_referral_path(referral)%></td>
   </tr>
 <% end %>
 </table>
