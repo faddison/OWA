@@ -1,9 +1,11 @@
 class EventlogsController < ApplicationController
   # GET /eventlogs
   # GET /eventlogs.json
+	load_and_authorize_resource
+	
   def index
-	if user_signed_in?
-			@eventlogs = Eventlog.search(params[:search])
+	
+			@eventlogs = Eventlog.metasearch(params[:search])
 			respond_to do |format|
 			  format.html # index.html.erb
 			  format.csv  {	export_csv(params)}
@@ -11,58 +13,46 @@ class EventlogsController < ApplicationController
 			  format.xls  { export_xls(params) }
 			  
 			end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
-	end
+	
   end
 
   # GET /eventlogs/1
   # GET /eventlogs/1.json
   def show
-	if user_signed_in?
+	
 		@eventlog = Eventlog.find(params[:id])
 
 		respond_to do |format|
 		  format.html # show.html.erb
 		  format.json { render json: @eventlog }
 		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
-	end
+	
   end
 
   # GET /eventlogs/new
   # GET /eventlogs/new.json
   def new
-	if user_signed_in?
+	
 		@eventlog = Eventlog.new
 
 		respond_to do |format|
 		  format.html # new.html.erb
 		  format.json { render json: @eventlog }
 		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
-	end
+	
   end
 
   # GET /eventlogs/1/edit
   def edit
-	if user_signed_in?
+	
 		@eventlog = Eventlog.find(params[:id])
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
-	end
+	
   end
 
   # POST /eventlogs
   # POST /eventlogs.json
   def create
-	if user_signed_in?
+	
 		if (params.has_key?(:visitors))
 			(params[:visitors]).each do |v|
 				@eventlog = Eventlog.new((params[:eventlog].merge(:visitor_id => v)))
@@ -89,17 +79,13 @@ class EventlogsController < ApplicationController
 			format.json { render json: @eventlog.errors, status: :unprocessable_entity }
 		  end
 		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'eventlogs', :action => 'index'
-	end
   end
 
   # PUT /eventlogs/1
   # PUT /eventlogs/1.json
   def update
-	if user_signed_in?
-		if current_user.role_id == 1 || current_user.role_id == 2
+	
+		
 			@eventlog = Eventlog.find(params[:id])
 			respond_to do |format|
 			  if @eventlog.update_attributes(params[:eventlog])
@@ -110,38 +96,17 @@ class EventlogsController < ApplicationController
 				format.json { render json: @eventlog.errors, status: :unprocessable_entity }
 			  end
 			end
-		else
-			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'eventlogs', :action => 'index'
-		end
-	else
-		redirect_to :controller=>'home', :action => 'index'
-	end
   end
   
   def approve
-		if user_signed_in? &&  current_user.role_id == 1
-			@eventlog = Eventlog.find(params[:id])
-			@eventlog.status = 'approved'
-			@eventlog.save
-			Eventlog.conndeve
-			@newobj = @eventlog.dup
-			@newobj.save
-			Eventlog.connfinal
-			respond_to do |format|
-				format.html { redirect_to eventlogs_url }
-				format.json { head :no_content }
-			end
-		else
-			auth_redirect
-		end
-  end
+		_approve(Eventlog.find(params[:id]))
+	end
 
   # DELETE /eventlogs/1
   # DELETE /eventlogs/1.json
   def destroy
-	if user_signed_in?
-		if current_user.role_id == 1 || current_user.role_id == 2
+	
+		
 			@eventlog = Eventlog.find(params[:id])
 			@eventlog.destroy
 
@@ -149,14 +114,8 @@ class EventlogsController < ApplicationController
 			  format.html { redirect_to eventlogs_url }
 			  format.json { head :no_content }
 			end
-		else
-			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'eventlogs', :action => 'index'
-		end
-	else
-		redirect_to :controller=>'home', :action => 'index'
-	end
   end
+	
   def export_csv(params)
     filename = I18n.l(Time.now, :format => :short) + "- eventlogs.csv"
     content = Event.to_csv(params)

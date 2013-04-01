@@ -95,8 +95,10 @@ $(function(){
     						<li><%= link_to "Referral Records", referrallogs_path %></li>
     					</ul>
   					</li>
+    				<% if can? :manage, User %>
+						<li><%= link_to "Users", users_path %>
+					<% end %>
     				
-    				<li><%= link_to "Users", users_path %>
               	</ul> 
     		</div>
     		

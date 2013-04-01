@@ -1,14 +1,13 @@
 class VisitorsController < ApplicationController
   # GET /visitors
   # GET /visitors.json
-  
+  load_and_authorize_resource
   #http_basic_authenticate_with :name => "ccunandy@yahoo.com", :password => "ccandy881103", :only => :destroy
   
   
   def index
-		if user_signed_in?
-			Visitor.connfinal
-			@visitors = Visitor.search(params[:search])
+		
+			@visitors = Visitor.metasearch(params[:search])
 			Appbeta13::Application.config.current_user_id = -1
 			#@visitors.fullname = Visitor.full_name(@visitors.fname,@visitors.lname)
 			respond_to do |format|
@@ -18,12 +17,11 @@ class VisitorsController < ApplicationController
 			  format.xls  { export_xls(params) }
 			end
 		end
-  end
 
   # GET /visitors/1
   # GET /visitors/1.json
   def show
-		if user_signed_in?
+		
 			@visitor = Visitor.find(params[:id])
 			if Appbeta13::Application.config.current_user_id != @visitor.id 
 					Appbeta13::Application.config.current_user_id = -1
@@ -41,8 +39,6 @@ class VisitorsController < ApplicationController
 					return
 			end	
 		end
-			
-	end
 
   # GET /visitors/new
   # GET /visitors/new.json
@@ -57,17 +53,14 @@ class VisitorsController < ApplicationController
 
   # GET /visitors/1/edit
   def edit
-	if user_signed_in? 
+	 
 		@visitor = Visitor.find(params[:id])
-	else
-		redirect_to :controller=>'home', :action => 'index'
 	end
-  end
 
   # POST /visitors
   # POST /visitors.json
   def create
-		if user_signed_in?
+		
 			@visitor = Visitor.new(params[:visitor])
 			@visitor.fullname = Visitor.full_name(@visitor.fname,@visitor.lname)
 			@visitor.status = "not approved"
@@ -85,13 +78,12 @@ class VisitorsController < ApplicationController
 					end
 				end
 		end
-  end
 
   # PUT /visitors/1
   # PUT /visitors/1.json
   def update
-	if user_signed_in? 
-		if current_user.role_id == 1 || current_user.role_id == 2
+	 
+		
 			@visitor = Visitor.find(params[:id])
 
 			respond_to do |format|
@@ -103,21 +95,14 @@ class VisitorsController < ApplicationController
 				format.json { render json: @visitor.errors, status: :unprocessable_entity }
 			  end
 			end
-		else
-			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'visitors', :action => 'index'
-		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
-	end
+	
   end
 
   # DELETE /visitors/1
   # DELETE /visitors/1.json
   def destroy
-	if user_signed_in? 
-		if current_user.role_id == 1 || current_user.role_id == 2
+	 
+		
 			@visitor = Visitor.find(params[:id])
 			@visitor.destroy
 
@@ -125,37 +110,13 @@ class VisitorsController < ApplicationController
 			  format.html { redirect_to visitors_url }
 			  format.json { head :no_content }
 			end
-		else
-			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'visitors', :action => 'index'
-		end
 		
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
-	end
+	
   end
   
   def approve
-	if user_signed_in? &&  current_user.role_id == 1
-		@visitor = Visitor.find(params[:id])
-		@visitor.status = 'approved'
-		@visitor.save
-		Visitor.conndeve
-		@newobj = @visitor.dup
-		@newobj.save
-		Visitor.connfinal
-		respond_to do |format|
-		  format.html { redirect_to visitors_url }
-		  format.json { head :no_content }
-		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'dashboard', :action => 'index'
+		_approve(Visitor.find(params[:id]))
 	end
-  end
-  
-  protected
  
   def export_csv(params)
     filename = I18n.l(Time.now, :format => :short) + "- visitors.csv"

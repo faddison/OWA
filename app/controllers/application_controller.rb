@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   #protect_from_forgery
   @database_id = 1
   helper :all
+	include ApplicationHelper
 	
 	def auth_redirect(url)
 		auth_msg
@@ -44,4 +45,10 @@ class ApplicationController < ActionController::Base
 			end
 		end
 	end
+	
+	def _export_csv(params)
+    filename = I18n.l(Time.now, :format => :short) + "- referrals.csv"
+    content = Referral.to_csv(params)
+    send_data content, :filename => filename
+  end
 end

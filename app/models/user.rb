@@ -5,20 +5,15 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+	ROLES = %w[admin coordinator staff guest]
+	
   # Setup accessible (or protected) attributes for your model
   attr_accessor :current_password
   attr_accessible :email, :password, :password_confirmation, :remember_me,:current_password
-  attr_accessible :role_id, :db_id
+  attr_accessible :role_id, :db_id, :role
   
-  def self.search(search)
-		if search
-			return find(:all, :conditions => ['email LIKE ? or role_id LIKE ?', "%#{search}%","%#{search}%"])
-		else
-			return find(:all)
-		end
-	end
 	def self.to_csv(params)
-		@records = User.search(params[:search])
+		@records = User.metasearch(params[:search])
 			CSV.generate(col_sep: "\t") do |csv|
 			csv << column_names
 			@records.each do |f|

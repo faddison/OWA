@@ -54,7 +54,7 @@ namespace :db do
 		event.status = 'approved'
     end
 	
-	Visitor.populate 100 do |visitor|
+	Visitor.populate 50 do |visitor|
 		first = Faker::Name.first_name
 		last = Faker::Name.last_name
 		visitor.fname = first
@@ -70,7 +70,7 @@ namespace :db do
 	end
 		
 	
-	Eventlog.populate 1000 do |eventlog, e_index, v_index|
+	Eventlog.populate 100 do |eventlog, e_index, v_index|
 		
 		e_index = 1..Event.count
 		eventlog.event_id = e_index

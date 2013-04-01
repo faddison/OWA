@@ -1,9 +1,10 @@
 class ProgramsController < ApplicationController
   # GET /programs
   # GET /programs.json
+	load_and_authorize_resource
   def index
-	if user_signed_in?
-		@programs = Program.search(params[:search])
+	
+		@programs = Program.metasearch(params[:search])
 
 		respond_to do |format|
 		 format.html # index.html.erb
@@ -11,58 +12,46 @@ class ProgramsController < ApplicationController
 		  format.json { render json: @programs }
 		  format.xls  { export_xls(@params) }	
 		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
-	end
+	
   end
 
   # GET /programs/1
   # GET /programs/1.json
   def show
-	if user_signed_in?
+	
 		@program = Program.find(params[:id])
 
 		respond_to do |format|
 		  format.html # show.html.erb
 		  format.json { render json: @program }
 		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
-	end
+	
   end
 
   # GET /programs/new
   # GET /programs/new.json
   def new
-	if user_signed_in?
+	
 		@program = Program.new
 
 		respond_to do |format|
 		  format.html # new.html.erb
 		  format.json { render json: @program }
 		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
-	end
+	
   end
 
   # GET /programs/1/edit
   def edit
-	if user_signed_in?
+	
 		@program = Program.find(params[:id])
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
-	end
+	
   end
 
   # POST /programs
   # POST /programs.json
   def create
-	if user_signed_in?
+	
 		@program = Program.new(params[:program])
 		@program.status = "not approved"
 		respond_to do |format|
@@ -74,17 +63,14 @@ class ProgramsController < ApplicationController
 			format.json { render json: @program.errors, status: :unprocessable_entity }
 		  end
 		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
-	end
+	
   end
 
   # PUT /programs/1
   # PUT /programs/1.json
   def update
-	if user_signed_in?
-		if current_user.role_id == 1 || current_user.role_id == 2
+	
+		
 			@program = Program.find(params[:id])
 
 			respond_to do |format|
@@ -96,20 +82,14 @@ class ProgramsController < ApplicationController
 				format.json { render json: @program.errors, status: :unprocessable_entity }
 			  end
 			end
-		else
-			redirect_to :controller=>'programs', :action => 'index'
-		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
-	end
+	
   end
 
   # DELETE /programs/1
   # DELETE /programs/1.json
   def destroy
-	if user_signed_in?
-		if current_user.role_id == 1 || current_user.role_id == 2
+	
+		
 			@program = Program.find(params[:id])
 			@program.destroy
 
@@ -117,35 +97,12 @@ class ProgramsController < ApplicationController
 			  format.html { redirect_to programs_url }
 			  format.json { head :no_content }
 			end
-		else
-			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'programs', :action => 'index'
-		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
-	end
+	
   end
   
   def approve
-	if user_signed_in? &&  current_user.role_id == 1
-		@program = Program.find(params[:id])
-		@program.status = 'approved'
-		@program.save
-		Program.conndeve
-		@newobj = @program.dup
-		@newobj.save
-		Program.connfinal
-
-		respond_to do |format|
-		  format.html { redirect_to programs_url }
-		  format.json { head :no_content }
-		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'programs', :action => 'index'
+		_approve(Program.find(params[:id]))
 	end
-  end
   
    def export_csv(params)
     filename = I18n.l(Time.now, :format => :short) + "- eventtypes.csv"

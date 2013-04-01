@@ -14,11 +14,6 @@ class Brochurelog < ActiveRecord::Base
 		end
 	end
 	
-	def self.connfinal
-		establish_connection('development')
-	end
-	def self.conndeve
-		establish_connection('development')
-	end
+	
   
 end

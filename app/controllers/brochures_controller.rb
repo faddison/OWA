@@ -1,11 +1,10 @@
 class BrochuresController < ApplicationController
   # GET /brochures
   # GET /brochures.json
+	load_and_authorize_resource
 
   def index
-		if user_signed_in? 
-			Brochure.conndeve
-			@brochures = Brochure.search(params[:search])
+			@brochures = Brochure.metasearch(params[:search])
 			
 			respond_to do |format|
 				format.html # index.html.erb
@@ -13,58 +12,42 @@ class BrochuresController < ApplicationController
 				format.json { render json: @brochures }
 				format.xls  { export_xls(params) }
 			end
-		else
-			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'home', :action => 'index'
-		end
   end
 
   # GET /brochures/1
   # GET /brochures/1.json
   def show
-	if user_signed_in?
 		@brochure = Brochure.find(params[:id])
 
 		respond_to do |format|
 		  format.html # show.html.erb
 		  format.json { render json: @brochure }
 		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
-	end
   end
 
   # GET /brochures/new
   # GET /brochures/new.json
   def new
-	if user_signed_in?
 		@brochure = Brochure.new
 
 		respond_to do |format|
 		  format.html # new.html.erb
 		  format.json { render json: @brochure }
 		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
-	end
+	
   end
 
   # GET /brochures/1/edit
   def edit
-	if user_signed_in?
+	
 		@brochure = Brochure.find(params[:id])
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
-	end
+	
   end
 
   # POST /brochures
   # POST /brochures.json
   def create
-	if user_signed_in?
+	
 		@brochure = Brochure.new(params[:brochure])
 		@brochure.status = 'not approved'
 		respond_to do |format|
@@ -76,17 +59,14 @@ class BrochuresController < ApplicationController
 			format.json { render json: @brochure.errors, status: :unprocessable_entity }
 		  end
 		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
-	end
+	
   end
 
   # PUT /brochures/1
   # PUT /brochures/1.json
   def update
-	if user_signed_in?
-		if current_user.role_id == 1 || current_user.role_id == 2 
+	
+		
 			@brochure = Brochure.find(params[:id])
 
 			respond_to do |format|
@@ -98,57 +78,26 @@ class BrochuresController < ApplicationController
 				format.json { render json: @brochure.errors, status: :unprocessable_entity }
 			  end
 			end
-		else
-			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'brochures', :action => 'index'
-		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
-	end
+	
   end
 
   # DELETE /brochures/1
   # DELETE /brochures/1.json
   def destroy
-	if user_signed_in?
-		if current_user.role_id == 1 || current_user.role_id == 2 
+	
+		
 			@brochure = Brochure.find(params[:id])
 			@brochure.destroy
 			respond_to do |format|
 			  format.html { redirect_to brochures_url }
 			  format.json { head :no_content }
 			end
-		else
-			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'brochures', :action => 'index'
-		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
-	end
+	
   end
+  
   def approve
-	if user_signed_in? &&  current_user.role_id == 1
-		@brochure = Brochure.find(params[:id])
-		@brochure.status = 'approved'
-		@brochure.save
-		Brochure.conndeve
-		@newobj = @brochure.dup
-		@newobj.save
-		Brochure.connfinal
-		#Brochure.connfinal
-
-		respond_to do |format|
-		  format.html { redirect_to brochures_url }
-		  format.json { head :no_content }
-		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'brochures', :action => 'index'
+		_approve(Brochure.find(params[:id]))
 	end
-	#Brochure.conndeve
-  end
   
   def export_csv(params)
     filename = I18n.l(Time.now, :format => :short) + "- brochures.csv"

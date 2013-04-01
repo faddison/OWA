@@ -1,0 +1,13 @@
+
+		<% if can? :read, object.class.name %>
+			<td><%= link_to 'Show', object %></td>
+		<% end %>
+		<% if can? :modify, object.class.name %>
+			<td><%= link_to 'Edit', send_edit(object) %></td>
+		<% end %>
+		<% if can? :destroy, object.class.name %>
+			<td><%= link_to 'Remove', object, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		<% end %>
+		<% if can? :approve, object.class.name %>
+			<td><%= link_to approve_link_text(object), send_approve(object)%></td>
+		<% end %>

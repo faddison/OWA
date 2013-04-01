@@ -14,7 +14,7 @@ class Event < ActiveRecord::Base
   has_many :eventlogs, :dependent => :destroy
   
   def self.to_csv(params)
-		@records = Event.search(params[:search])
+		@records = Event.metasearch(params[:search])
 			CSV.generate(col_sep: "\t") do |csv|
 			csv << column_names
 			@records.each do |f|
@@ -22,18 +22,5 @@ class Event < ActiveRecord::Base
 			end
 		end
 	end
-	def self.search(search)
-		if search
-			return find(:all, :conditions => ['title LIKE ? or duration LIKE ? or date LIKE ? or status LIKE ?', "%#{search}%","#{search}","#{search}","#{search}"])
-		else
-			return find(:all)
-		end
-	end
 	
-	def self.connfinal
-		establish_connection('development')
-	end
-	def self.conndeve
-		establish_connection('development')
-	end
 end

@@ -1,10 +1,10 @@
 class ReferralsController < ApplicationController
   # GET /referrals
   # GET /referrals.json
+	load_and_authorize_resource
   def index
-		Referral.connfinal
-		if user_signed_in?
-			@referrals = Referral.search(params[:search])
+		
+			@referrals = Referral.metasearch(params[:search])
 
 			respond_to do |format|
 			  format.html # index.html.erb
@@ -12,58 +12,45 @@ class ReferralsController < ApplicationController
 			  format.json { render json: @referrals }
 			  format.xls  { export_xls(params) }
 			end
-		else
-			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'home', :action => 'index'
-		end
   end
 
   # GET /referrals/1
   # GET /referrals/1.json
   def show
-	if user_signed_in?
+	
 		@referral = Referral.find(params[:id])
 
 		respond_to do |format|
 		  format.html # show.html.erb
 		  format.json { render json: @referral }
 		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
-	end
+	
   end
 
   # GET /referrals/new
   # GET /referrals/new.json
   def new
-	if user_signed_in?
+	
 		@referral = Referral.new
 
 		respond_to do |format|
 		  format.html # new.html.erb
 		  format.json { render json: @referral }
 		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
-	end
+	
   end
 
   # GET /referrals/1/edit
   def edit
-	if user_signed_in?
+	
 		@referral = Referral.find(params[:id])
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
-	end
+	
   end
 
   # POST /referrals
   # POST /referrals.json
   def create
-	if user_signed_in?
+	
 		@referral = Referral.new(params[:referral])
 		@referral.status = "not approved"
 		respond_to do |format|
@@ -75,17 +62,14 @@ class ReferralsController < ApplicationController
 			format.json { render json: @referral.errors, status: :unprocessable_entity }
 		  end
 		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
-	end
+	
   end
 
   # PUT /referrals/1
   # PUT /referrals/1.json
   def update
-	if user_signed_in?
-		if current_user.role_id == 1 || current_user.role_id == 2
+	
+		
 			@referral = Referral.find(params[:id])
 
 			respond_to do |format|
@@ -97,21 +81,14 @@ class ReferralsController < ApplicationController
 				format.json { render json: @referral.errors, status: :unprocessable_entity }
 			  end
 			end
-		else
-			flash[:notice] = "You don't have access to do that"
-			redirect_to :controller=>'referrals', :action => 'index'
-		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
-	end
+	
   end
 
   # DELETE /referrals/1
   # DELETE /referrals/1.json
   def destroy
-	if user_signed_in?
-		if current_user.role_id == 1 || current_user.role_id == 2
+	
+		
 			@referral = Referral.find(params[:id])
 			@referral.destroy
 
@@ -119,13 +96,7 @@ class ReferralsController < ApplicationController
 			  format.html { redirect_to referrals_url }
 			  format.json { head :no_content }
 			end
-		else
-			redirect_to :controller=>'referrals', :action => 'index'
-		end
-	else
-		flash[:notice] = "You don't have access to do that"
-		redirect_to :controller=>'home', :action => 'index'
-	end
+	
   end
 	
 	

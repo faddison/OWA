@@ -7,10 +7,10 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # Users
-User.create(email: 'admin@options.bc.ca', password: 'admin123', role_id: '1')
-User.create(email: 'coord@options.bc.ca', password: 'coord123', role_id: '2')
-User.create(email: 'staff@options.bc.ca', password: 'staff123', role_id: '3')
-User.create(email: 'guest@options.bc.ca', password: 'guest123', role_id: '4')
+User.create(email: 'admin@options.bc.ca', password: 'admin123', role: 'admin')
+User.create(email: 'coord@options.bc.ca', password: 'coord123', role: 'coordinator')
+User.create(email: 'staff@options.bc.ca', password: 'staff123', role: 'staff')
+User.create(email: 'guest@options.bc.ca', password: 'guest123', role: 'guest')
 
 # Roles
 Role.create(name: 'Admin')

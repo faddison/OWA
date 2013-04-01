@@ -10,7 +10,7 @@ class Visitor < ActiveRecord::Base
 		[fname, lname].join(" ")
 	end
 	def self.to_csv(params)
-		@records = Visitor.search(params[:search])
+		@records = Visitor.metasearch(params[:search])
 		CSV.generate(col_sep: "\t") do |csv|
 			csv << column_names
 			@records.each do |visitor|
@@ -24,24 +24,8 @@ class Visitor < ActiveRecord::Base
 			end
 		end
 	end
-	def self.search(search)
-		if search
-			return find(:all, :conditions => ['fullname LIKE ? or email LIKE ? or fname LIKE ? or phone LIKE ? or language LIKE ? or status LIKE ?', "%#{search}%","#{search}","#{search}","#{search}","#{search}","#{search}"])
-		else
-			return find(:all)
-		end
-	end
-	def self.connfinal
-		establish_connection('development')
-	end
-	def self.conndeve
-		establish_connection('development')
-	end
-	def approval
-		establish_connection('development')
-		self.save
-		establish_connection('development')
-	end
+	
+	
   
   
 end
