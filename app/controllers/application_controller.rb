@@ -4,6 +4,10 @@ class ApplicationController < ActionController::Base
   helper :all
 	include ApplicationHelper
 	
+	rescue_from CanCan::AccessDenied do |exception|
+    redirect_home
+  end
+	
 	def auth_redirect(url)
 		auth_msg
 		redirect_to url
