@@ -9,7 +9,6 @@ class VisitorsController < ApplicationController
 		
 			@visitors = Visitor.metasearch(params[:search])
 			Appbeta13::Application.config.current_user_id = -1
-			#@visitors.fullname = Visitor.full_name(@visitors.fname,@visitors.lname)
 			respond_to do |format|
 			  format.html # index.html.erb
 			  format.csv  {	export_csv(params)}
@@ -62,7 +61,7 @@ class VisitorsController < ApplicationController
   def create
 		
 			@visitor = Visitor.new(params[:visitor])
-			@visitor.fullname = Visitor.full_name(@visitor.fname,@visitor.lname)
+			@visitor.name = Visitor.full_name(@visitor.fname,@visitor.lname)
 			@visitor.status = "not approved"
 			respond_to do |format|
 					if @visitor.save

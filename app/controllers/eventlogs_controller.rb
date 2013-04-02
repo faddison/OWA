@@ -59,16 +59,16 @@ class EventlogsController < ApplicationController
 			(params[:visitors]).each do |v|
 				@eventlog = Eventlog.new((params[:eventlog].merge(:visitor_id => v)))
 				@eventlog.ename = Event.find(@eventlog.event_id).name
-				@eventlog.edate = Event.find(@eventlog.event_id).date
-				@eventlog.vname = Visitor.find(@eventlog.visitor_id).fullname
+				@eventlog.date = Event.find(@eventlog.event_id).date
+				@eventlog.vname = Visitor.find(@eventlog.visitor_id).name
 				@eventlog.status = "not approved"
 				@eventlog.save
 			end
 		else 
 			@eventlog = Eventlog.new(params[:eventlog])
 			@eventlog.ename = Event.find(@eventlog.event_id).name
-			@eventlog.edate = Event.find(@eventlog.event_id).date
-			@eventlog.vname = Visitor.find(@eventlog.visitor_id).fullname
+			@eventlog.date = Event.find(@eventlog.event_id).date
+			@eventlog.vname = Visitor.find(@eventlog.visitor_id).name
 			@eventlog.status = "not approved"
 			@eventlog.save
 		end
@@ -107,8 +107,6 @@ class EventlogsController < ApplicationController
   # DELETE /eventlogs/1
   # DELETE /eventlogs/1.json
   def destroy
-	
-		
 			@eventlog = Eventlog.find(params[:id])
 			@eventlog.destroy
 

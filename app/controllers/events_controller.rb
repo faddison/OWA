@@ -4,7 +4,7 @@ class EventsController < ApplicationController
 	load_and_authorize_resource
   def index
 		
-			search = Event.metasearch(params[:search])
+			@search = Event.metasearch(params[:search])
 			@events = @search.paginate(:page => params[:page])
 
 			respond_to do |format|

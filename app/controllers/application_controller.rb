@@ -33,16 +33,12 @@ class ApplicationController < ActionController::Base
 	end
 	
 	def _approve(object)
-		if !(user_signed_in? && current_user.role_id == 1) 
-			auth_back
-		else
-			@object = object
-			@object.status = (@object.status.downcase == 'approved')? 'not approved':'approved'
-			@object.save
-			respond_to do |format|
-				format.html { redirect_to :back }
-				format.json { head :no_content }
-			end
+		@object = object
+		@object.status = (@object.status.downcase == 'approved')? 'not approved':'approved'
+		@object.save
+		respond_to do |format|
+			format.html { redirect_to :back }
+			format.json { head :no_content }
 		end
 	end
 	

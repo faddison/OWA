@@ -3,13 +3,12 @@ class Event < ActiveRecord::Base
   belongs_to :program
   belongs_to :eventtype
   belongs_to :facility
-  attr_accessible :etname, :fname, :pname, :date, :duration, :eventtype_id, :facility_id, :program_id, :title,:status
+  attr_accessible :etname, :fname, :pname, :date, :duration, :eventtype_id, :facility_id, :program_id, :name ,:status
   validates :date,  :presence => true
   validates :duration, :presence => true
   validates :eventtype_id,  :presence => true
   validates :facility_id, :presence => true
   validates :program_id,  :presence => true
-  validates :title,  :presence => true
   
   has_many :eventlogs, :dependent => :destroy
   

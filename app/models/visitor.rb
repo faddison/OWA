@@ -1,6 +1,6 @@
 
 class Visitor < ActiveRecord::Base
-  attr_accessible :email, :fname, :language, :lname, :phone, :fullname, :postcode, :country, :husband, :notes, :ftime,:status
+  attr_accessible :email, :fname, :language, :lname, :phone, :name, :postcode, :country, :husband, :notes, :ftime,:status
   validates :fname,  :presence => true
   has_many :children,	:dependent => :destroy
   has_many :econtacts,   :dependent => :destroy
@@ -19,7 +19,7 @@ class Visitor < ActiveRecord::Base
 			csv << ["child ID","child name","allergies","parents name","parents id"]
 			@records.each do |visitor|
 				visitor.children.each do |child|
-					csv << [child.id,child.name,child.allergies,child.visitor.fullname,child.visitor.id]
+					csv << [child.id,child.name,child.allergies,child.visitor.name,child.visitor.id]
 				end
 			end
 		end

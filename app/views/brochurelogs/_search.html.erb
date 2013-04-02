@@ -1,30 +1,13 @@
-
 <h3>Search</h3>
-
 <%= form_for @search, :url => brochurelogs_path, :class => "form-horizontal", :html => {:method => :get} do |f| %>
 	<div class="form-inputs row">
-		<div class="span">
-			<%= f.label :Brochure %>
-			<%= f.collection_select :brochure_id_equals, Brochure.all, :id, :name, :include_blank => true %>
-		</div>	
-		<div class="span">
-			<%= f.label :Facility %>
-			<%= f.collection_select :facility_id_equals, Facility.all, :id, :name, :include_blank => true %>
-		</div>
-		<div class="span">
-			<%= f.label :Status %>
-			<%= f.text_field :status_equals %>
-		</div>	
+		<%= render :partial => 'shared/search/dropdown', :locals => { :f => f, :object => Brochure } %>	
+		<%= render :partial => 'shared/search/dropdown', :locals => { :f => f, :object => Facility } %>	
+		<%= render :partial => 'shared/search/status', :locals => { :f => f } %>	
 	</div>	
 	<div class="form-inputs row">
-		<div class="span">
-			<%= f.label :After %>
-			<%= f.text_field :date_greater_than_or_equal_to, :class => :datepicker  %>
-		</div>
-		<div class="span">
-			<%= f.label :Before %>
-			<%= f.text_field :date_less_than_or_equal_to, :class => :datepicker  %>
-		</div>
+		<%= render :partial => 'shared/search/date', :locals => { :f => f } %>
+		<%= render :partial => 'shared/search/count', :locals => { :f => f, :attr_name => 'count' } %>
 	</div>
 	</br>
 	<%= f.submit %>

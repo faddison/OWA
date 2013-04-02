@@ -1,4 +1,5 @@
 <% objects = @referrals %>
 <% object = Referral %>
+<%= render :partial => 'search' %>
 <%= render :partial => 'shared/index', :locals => { :objects => objects, :object => object } %>
 

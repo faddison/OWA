@@ -1,0 +1,1 @@
+<h3>Search</h3><%= form_for @search, :url => referrals_path, :class => "form-horizontal", :html => {:method => :get} do |f| %>	<div class="form-inputs row">		<%= render :partial => 'shared/search/like', :locals => { :f => f } %>		<%= render :partial => 'shared/search/status', :locals => { :f => f } %>		</div>		</br>	<%= f.submit %><% end %>

@@ -19,13 +19,13 @@
 	<% if current_user.role == 'guest' %>
 		<div class="field">
 		<%= f.label "Visitor" %>
-		<%= collection_select(:eventlog , :visitor_id, Visitor.all , :id, :fullname) %>
+		<%= collection_select(:eventlog , :visitor_id, Visitor.all , :id, :name) %>
 		
 		</div>
 	<% else %>
 		<div class="field">
 		<%= f.label "Visitors" %>
-		<%= select_tag 'visitors[]', options_from_collection_for_select(Visitor.order('fname ASC'), "id", "fullname"), { :multiple => true, :size =>10 } %>
+		<%= select_tag 'visitors[]', options_from_collection_for_select(Visitor.order('fname ASC'), "id", "name"), { :multiple => true, :size =>10 } %>
 		</div>
 	<% end %>
   

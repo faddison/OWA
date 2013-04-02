@@ -1,0 +1,4 @@
+<div class="span">
+	<%= f.label :Status %>
+	<%= f.select(:status_equals, options_for_select([['approved','approved'], ['not approved','not approved']]), {:include_blank => true}) %>
+</div>
