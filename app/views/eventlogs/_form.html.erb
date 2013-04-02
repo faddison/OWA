@@ -13,7 +13,7 @@
 
   <div class="field">
 	<%= f.label "Event" %>
-  	<%= collection_select(:eventlog , :event_id, Event.all , :id, :title) %>
+  	<%= collection_select(:eventlog , :event_id, Event.all , :id, :name) %>
   </div>
   
 	<% if current_user.role == 'guest' %>
