@@ -56,52 +56,61 @@ $(function(){
 			<br>
  			
  			<div class="nav-collapse">
-            	<ul class="nav">
-    				<li><%= link_to "Visitors", visitors_path %></li>
-        			<li><%= link_to "Facilities", facilities_path %></li>
-              
-              		<li class="dropdown">
-    					<a class="dropdown-toggle" data-toggle="dropdown">
-      						<%= "Events" %>
-      						<b class="caret"></b>
-    					</a>
-    					<ul class="dropdown-menu">
-      						<li><%= link_to "Events", events_path %></li>
-        					<li><%= link_to "Event Type", eventtypes_path %></li>
-        					<li><%= link_to "Event Records", eventlogs_path %></li>
-    					</ul>
-  					</li>
-              
-              		<li><%= link_to "Programs", programs_path %></li>
-              		
-              		<li class="dropdown">
-    					<a class="dropdown-toggle" data-toggle="dropdown">
-      						<%= "Brochures" %>
-      						<b class="caret"></b>
-    					</a>
-    					<ul class="dropdown-menu">
-      						<li><%= link_to "Brochures", brochures_path %></li>
-    						<li><%= link_to "Brochure Records", brochurelogs_path %></li>
-    					</ul>
-  					</li>
-    				
-    				<li class="dropdown">
-    					<a class="dropdown-toggle" data-toggle="dropdown">
-      						<%= "Referrals" %>
-      						<b class="caret"></b>
-    					</a>
-    					<ul class="dropdown-menu">
-      						<li><%= link_to "Referrals", referrals_path %></li>
-    						<li><%= link_to "Referral Records", referrallogs_path %></li>
-    					</ul>
-  					</li>
-    				<% if can? :manage, User %>
+				<ul class="nav">
+					<% if can? :create, Eventlog %>
+						<li><%= link_to 'Attend Event', new_eventlog_path %></li>
+					<% end %>
+					<% if can? :update, Visitor %>
+						<li><%= link_to "Visitors", visitors_path %></li>
+					<% end %>
+					<% if can? :update, Facility %>
+						<li><%= link_to "Facilities", facilities_path %></li>
+					<% end %>
+					<% if can? :update, Event %>
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown">
+								<%= "Events" %>
+								<b class="caret"></b>
+							</a>
+							<ul class="dropdown-menu">
+								<li><%= link_to "Events", events_path %></li>
+								<li><%= link_to "Event Type", eventtypes_path %></li>
+								<li><%= link_to "Event Records", eventlogs_path %></li>
+							</ul>
+						</li>
+					<% end %>
+					<% if can? :update, Program %>
+						<li><%= link_to "Programs", programs_path %></li>
+					<% end %>
+					<% if can? :update, Brochure %>
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown">
+								<%= "Brochures" %>
+								<b class="caret"></b>
+							</a>
+							<ul class="dropdown-menu">
+								<li><%= link_to "Brochures", brochures_path %></li>
+								<li><%= link_to "Brochure Records", brochurelogs_path %></li>
+							</ul>
+						</li>
+					<% end %>
+					<% if can? :update, Referral %>
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown">
+								<%= "Referrals" %>
+								<b class="caret"></b>
+							</a>
+							<ul class="dropdown-menu">
+								<li><%= link_to "Referrals", referrals_path %></li>
+								<li><%= link_to "Referral Records", referrallogs_path %></li>
+							</ul>
+						</li>
+					<% end %>
+					<% if can? :manage, User %>
 						<li><%= link_to "Users", users_path %>
 					<% end %>
-    				
-              	</ul> 
-    		</div>
-    		
+				</ul> 
+			</div>
 		</div>
 	</div>
 </div>
