@@ -16,4 +16,8 @@
 </p>
 
 <%= link_to 'Edit', edit_eventlog_path(@eventlog) %> |
-<%= link_to 'Back', eventlogs_path %>
+<% if can? :update, Eventlog %>
+	<%= link_to 'Back', eventlogs_path %>
+<% else %>
+	<%= link_to 'Back', home_path %>
+<% end %>

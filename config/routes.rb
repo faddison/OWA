@@ -6,7 +6,7 @@ Appbeta13::Application.routes.draw do
 
   devise_for :users, :skip => [:registrations]
 
-
+	match '/' => "home#index", :as => :home
   
 	resources :users, :controller => "users"
   resources :events do
