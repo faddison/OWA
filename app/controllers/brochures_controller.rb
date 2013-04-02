@@ -4,7 +4,8 @@ class BrochuresController < ApplicationController
 	load_and_authorize_resource
 
   def index
-			@brochures = Brochure.metasearch(params[:search])
+			@search = Brochure.metasearch(params[:search])
+			@brochures = @search.paginate(:page => params[:page])
 			
 			respond_to do |format|
 				format.html # index.html.erb

@@ -1,0 +1,3 @@
+<% if can? :modify, object.class.name %>
+<td><%= link_to 'Edit', send_edit(object) %></td>
+<% end %>

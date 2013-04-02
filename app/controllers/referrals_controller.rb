@@ -4,7 +4,8 @@ class ReferralsController < ApplicationController
 	load_and_authorize_resource
   def index
 		
-			@referrals = Referral.metasearch(params[:search])
+			@search = Referral.metasearch(params[:search])
+			@referrals = @search.paginate(:page => params[:page])
 
 			respond_to do |format|
 			  format.html # index.html.erb

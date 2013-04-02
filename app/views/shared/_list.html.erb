@@ -1,0 +1,31 @@
+<% @attr_list ||= Array.new %>
+<% object.attribute_names.each do |attr_name| %>
+	<% if Fielddisplay.exists?(:model => object.name.downcase, :field => attr_name.downcase) %>
+		<% @attr_list.push(attr_name.downcase) %>
+	<% end %>
+<% end %>
+
+<table class="table">
+  <tr>
+	<% @attr_list.each do |attr_name| %>
+		<% if Abbreviation.exists?(:word => attr_name.downcase) %>
+			<th><%= Abbreviation.find(:first, :conditions => { :word => attr_name.downcase }).abbv.titlecase %></th>
+		<% else %>
+			<th><%= attr_name.titlecase %></th>
+		<% end %>
+	<% end %>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+	
+
+<% objects.each do |o| %>
+  <tr>
+		<% @attr_list.each do |attr_name| %>
+			<td><%= o.read_attribute(attr_name) %></td>
+		<% end %>
+		<%= render :partial => 'shared/actions',  :locals => { :object => o } %>
+  </tr>
+<% end %>
+</table>

@@ -4,7 +4,8 @@ class FacilitiesController < ApplicationController
 	load_and_authorize_resource
   def index
 	
-		@facilities = Facility.metasearch(params[:search])
+		@search = Facility.metasearch(params[:search])
+			@facilities = @search.paginate(:page => params[:page])
 
 		respond_to do |format|
 		  format.html # index.html.erb

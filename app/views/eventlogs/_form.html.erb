@@ -16,17 +16,16 @@
   	<%= collection_select(:eventlog , :event_id, Event.all , :id, :title) %>
   </div>
   
-	<% if current_user.role_id < 3 %>
-		<div class="field">
-		<%= f.label "Visitors" %>
-		<% for v in Visitor.all %>
-			<%= check_box_tag "visitors[]", v.id %> <%= v.fullname %>
-		<% end %>
-		</div>
-	<% else %>
+	<% if current_user.role == 'guest' %>
 		<div class="field">
 		<%= f.label "Visitor" %>
 		<%= collection_select(:eventlog , :visitor_id, Visitor.all , :id, :fullname) %>
+		
+		</div>
+	<% else %>
+		<div class="field">
+		<%= f.label "Visitors" %>
+		<%= select_tag 'visitors[]', options_from_collection_for_select(Visitor.order('fname ASC'), "id", "fullname"), { :multiple => true, :size =>10 } %>
 		</div>
 	<% end %>
   

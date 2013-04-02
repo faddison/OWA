@@ -1,0 +1,3 @@
+<% if can? :destroy, object.class.name %>
+<td><%= link_to 'Remove', object, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+<% end %>

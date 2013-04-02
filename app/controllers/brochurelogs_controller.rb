@@ -4,8 +4,10 @@ class BrochurelogsController < ApplicationController
   load_and_authorize_resource
   
   def index
+	
 		@search = Brochurelog.metasearch(params[:search])
-		@brochurelogs = @search.all
+		@brochurelogs = @search.paginate(:page => params[:page])
+		
 			respond_to do |format|
 			  format.html # index.html.erb
 			  format.csv  {	export_csv(params)}
@@ -44,27 +46,16 @@ class BrochurelogsController < ApplicationController
   # POST /brochurelogs.json
   def create
 		@brochurelog = Brochurelog.new(params[:brochurelog])
-		@rid = @brochurelog.brochure_id
-		@fid = @brochurelog.facility_id
-		@d = @brochurelog.date
-		@brochurelog.bname = @brochurelog.brochure.name
-		@brochurelog.fname = @brochurelog.facility.name
+		@brochurelog.bname = Brochure.find(@brochurelog.brochure_id).name
+		@brochurelog.fname = Facility.find(@brochurelog.facility_id).name
 		@brochurelog.status = 'not approved'
-		@check = duplicate(@rid,@fid,@d )
 		respond_to do |format|
-			if @check == -1 && @brochurelog.save 
+			if @brochurelog.save 
 				format.html { redirect_to @brochurelog, notice: 'Brochurelog was successfully created.' }
 				format.json { render json: @brochurelog, status: :created, location: @brochurelog }
-			else
-				@brotemp = Brochurelog.find(@check)
-				@brotemp.count = @brotemp.count + @brochurelog.count
-				@brotemp.save
-				format.html { render action: "new" }
-				format.json { render json: @brochurelog.errors, status: :unprocessable_entity }
-			end
-		  
 		end
   end
+	end
 
   # PUT /brochurelogs/1
   # PUT /brochurelogs/1.json

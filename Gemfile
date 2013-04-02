@@ -12,6 +12,8 @@ gem 'devise'
 gem 'cancan'
 #gem 'rd_searchlogic', :require => 'searchlogic', :git => 'git://github.com/railsdog/searchlogic.git'
 gem 'meta_search'
+gem 'will_paginate'
+gem 'bootstrap-will_paginate'
 
 gem 'bootstrap-sass'
 gem 'bootswatch-rails'

@@ -4,7 +4,9 @@ class EventtypesController < ApplicationController
 	load_and_authorize_resource
   def index
 	
-		@eventtypes = Eventtype.metasearch(params[:search])
+		@search = Eventtype.metasearch(params[:search])
+		@eventtypes = @search.paginate(:page => params[:page])
+			
 		respond_to do |format|
 		  format.html # index.html.erb
 		  format.csv  {	export_csv(params)}

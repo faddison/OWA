@@ -1,0 +1,32 @@
+
+<% form_for @search do |f| %>
+  <p>
+    <%= f.label :name_like, "Name" %><br />
+    <%= f.text_field :name_like %>
+  </p>
+  <p>
+    <%= f.label :facility_like, "Facility" %><br />
+    <%= f.text_field :facility_like %>
+  </p>
+  <p>
+    <%= f.label :brochure_like, "Brochure" %><br />
+    <%= f.text_field :brochure_like %>
+  </p>
+  <p>
+    <%= f.label :facility_like, "Category" %><br />
+    <%= f.collection_select :category_id_equals, Category.all, :id, :name, :include_blank => true %>
+  </p>
+  <p>
+    <%= f.label :price_gte, "Price Range" %><br />
+    <%= f.text_field :price_gte, :size => 8 %> - <%= f.text_field :price_lte, :size => 8 %>
+  </p>
+  <p>
+    <%= f.submit "Submit" %>
+  </p>
+<% end %>
+
+<p>
+  Sort by:
+  <%= order @search, :by => :name %> |
+  <%= order @search, :by => :price %>
+</p>

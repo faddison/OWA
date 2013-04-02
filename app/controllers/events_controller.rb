@@ -4,7 +4,8 @@ class EventsController < ApplicationController
 	load_and_authorize_resource
   def index
 		
-			@events = Event.metasearch(params[:search])
+			search = Event.metasearch(params[:search])
+			@events = @search.paginate(:page => params[:page])
 
 			respond_to do |format|
 			  format.html # index.html.erb
@@ -51,6 +52,9 @@ class EventsController < ApplicationController
   def create
 	
 		@event = Event.new(params[:event])
+		@event.pname = Program.find(@event.program_id).name
+		@event.fname = Facility.find(@event.facility_id).name
+		@event.etname = Eventtype.find(@event.eventtype_id).name
 		@event.status = "not approved"
 		respond_to do |format|
 		  if @event.save

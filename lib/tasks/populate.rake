@@ -10,10 +10,12 @@ namespace :db do
     require 'populator'
     require 'faker'
 	
-    Rake::Task['db:reset'].invoke
-	Rake::Task['db:seed'].invoke 
+    #Rake::Task['db:reset'].invoke
+		#Rake::Task['db:seed'].invoke 
+		#Rake::Task['db:fielddisplay'].invoke 
+		#Rake::Task['db:abbreviation'].invoke 
        
-    Brochurelog.populate 50 do |brochurelog, b_index, f_index|
+    Brochurelog.populate 50 do |brochurelog|
 	
 		b_index = 1..Brochure.count
 		brochurelog.brochure_id = b_index
@@ -23,36 +25,44 @@ namespace :db do
 		brochurelog.facility_id = f_index
 		brochurelog.fname = Facility.find_by_id(f_index).name
 		
-        brochurelog.count = 1..20
-        brochurelog.date = 1.years.ago..Time.now
+		brochurelog.count = 1..20
+		brochurelog.date = 1.years.ago..Time.now
 		brochurelog.status = 'approved'
     end
 	
-	Referrallog.populate 50 do |referrallog, r_index, f_index|
-		
-		r_index = 1..Referral.count
-		referrallog.referral_id = r_index
-		referrallog.rname = Referral.find_by_id(r_index).name
-		
-		f_index = 1..Facility.count
-		referrallog.facility_id = f_index
-		referrallog.fname = Facility.find_by_id(f_index).name
-		
-        referrallog.count = 1..20
-        referrallog.date = 1.years.ago..Time.now
-		referrallog.status = 'approved'
+		puts 'Creating Referrallogs...'
+		num = 0
+    while (num < 50)  do
+			num = num + 1
+			rid = rand(Referral.count)
+			fid = rand(Facility.count)
+			count = rand(20)
+      Referrallog.create(:referral_id => rid,:facility_id => fid,:count => count,:date => 1.years.ago..Time.now,:status => ['approved', 'not approved'])
     end
 	
-	Event.populate 50 do |event|
+	Event.populate 50 do |event, p_index, f_index, et_index|
 	
 		event.title = Populator.words(3)
-		event.program_id = 1..Program.count
-		event.facility_id = 1..Facility.count
-		event.eventtype_id = 1..Eventtype.count
-        event.duration = 1..8
-        event.date = 1.years.ago..Time.now
+		
+		p_index = 1..Program.count
+		program = Program.find_by_id(p_index)
+		event.program_id = p_index
+		event.pname = program.name
+		
+		f_index = 1..Facility.count
+		facility = Facility.find_by_id(f_index)
+		event.facility_id = f_index
+		event.fname = facility.name
+		
+		et_index = 1..Eventtype.count
+		eventtype = Eventtype.find_by_id(et_index)
+		event.eventtype_id = et_index
+		event.etname = eventtype.name
+		
+		event.duration = 1..8
+		event.date = 1.years.ago..Time.now
 		event.status = 'approved'
-    end
+   end
 	
 	Visitor.populate 50 do |visitor|
 		first = Faker::Name.first_name
@@ -74,7 +84,9 @@ namespace :db do
 		
 		e_index = 1..Event.count
 		eventlog.event_id = e_index
-		eventlog.ename = Event.find_by_id(e_index).title
+		event = Event.find_by_id(e_index)
+		eventlog.ename = event.title
+		eventlog.edate = event.date
 		
 		v_index = 1..Visitor.count
 		eventlog.visitor_id = v_index

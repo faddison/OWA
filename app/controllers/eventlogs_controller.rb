@@ -5,7 +5,9 @@ class EventlogsController < ApplicationController
 	
   def index
 	
-			@eventlogs = Eventlog.metasearch(params[:search])
+			@search = Eventlog.metasearch(params[:search])
+			@eventlogs = @search.paginate(:page => params[:page])
+			
 			respond_to do |format|
 			  format.html # index.html.erb
 			  format.csv  {	export_csv(params)}
@@ -56,17 +58,17 @@ class EventlogsController < ApplicationController
 		if (params.has_key?(:visitors))
 			(params[:visitors]).each do |v|
 				@eventlog = Eventlog.new((params[:eventlog].merge(:visitor_id => v)))
-				@eventlog.ename = @eventlog.event.title
-				@eventlog.edate = @eventlog.event.date
-				@eventlog.vname = @eventlog.visitor.fullname
+				@eventlog.ename = Event.find(@eventlog.event_id).name
+				@eventlog.edate = Event.find(@eventlog.event_id).date
+				@eventlog.vname = Visitor.find(@eventlog.visitor_id).fullname
 				@eventlog.status = "not approved"
 				@eventlog.save
 			end
 		else 
 			@eventlog = Eventlog.new(params[:eventlog])
-			@eventlog.ename = @eventlog.event.title
-			@eventlog.edate = @eventlog.event.date
-			@eventlog.vname = @eventlog.visitor.fullname
+			@eventlog.ename = Event.find(@eventlog.event_id).name
+			@eventlog.edate = Event.find(@eventlog.event_id).date
+			@eventlog.vname = Visitor.find(@eventlog.visitor_id).fullname
 			@eventlog.status = "not approved"
 			@eventlog.save
 		end

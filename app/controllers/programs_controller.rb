@@ -4,7 +4,8 @@ class ProgramsController < ApplicationController
 	load_and_authorize_resource
   def index
 	
-		@programs = Program.metasearch(params[:search])
+		@search = Program.metasearch(params[:search])
+			@programs = @search.paginate(:page => params[:page])
 
 		respond_to do |format|
 		 format.html # index.html.erb

@@ -1,37 +1,4 @@
-<h1>Referrals</h1>
-<%= form_tag referrals_path, :method => 'get' do %>
-      <p>
-        <%= text_field_tag :search, params[:search] %><br/>
-        <%= submit_tag "search", :name => nil %><br/>
-      </p>
-<% end %>
+<% objects = @referrals %>
+<% object = Referral %>
+<%= render :partial => 'shared/index', :locals => { :objects => objects, :object => object } %>
 
- 
-<%= link_to 'New Referral', new_referral_path %>
-<p>
-  Download:
- <%= link_to "CSV", referrals_path(:params => params, format: "csv") %>
-  <%= link_to "Excel", referrals_path(:params => params, format: "xls") %>
-</p>
-
-<p> <%= @referrals.count %> / <%= Referral.count %> Records Found </p>
-
-<table class="table">
-  <tr>
-  <th>Name</th>
-	<th>Status</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @referrals.each do |referral| %>
-  <tr>
-		<td><%= referral.name %></td>
-		<td><%= referral.status.titlecase %></td>
-		<%= render :partial => 'options',  :locals => { :object => referral } %>
-  </tr>
-<% end %>
-</table>
-
-<br />

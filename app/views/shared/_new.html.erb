@@ -1,0 +1,3 @@
+<% if can? :create, object.name %>
+<u><%= link_to 'New Record', polymorphic_url(object, :action => 'new') %></u>
+<% end %>

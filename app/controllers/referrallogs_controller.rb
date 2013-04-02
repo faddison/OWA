@@ -4,7 +4,8 @@ class ReferrallogsController < ApplicationController
 	load_and_authorize_resource
   def index
 		
-			@referrallogs = Referrallog.metasearch(params[:search])
+			@search = Referrallog.metasearch(params[:search])
+			@referrallogs = @search.paginate(:page => params[:page])
 
 			respond_to do |format|
 			  format.html # index.html.erb
@@ -53,21 +54,12 @@ class ReferrallogsController < ApplicationController
 	
 		@referrallog = Referrallog.new(params[:referrallog])
 		@referrallog.status = "not approved"
-		@rid = @referrallog.referral_id
-		@fid = @referrallog.facility_id
-		@d = @referrallog.date
-		@referrallog.fname = @referrallog.referral.name
-		@referrallog.rname = @referrallog.facility.name
-		@check = duplicate(@rid,@fid,@d )
+		@referrallog.fname = Facility.find(@referrallog.facility_id).name
+		@referrallog.rname = Referral.find(@referrallog.referral_id).name
 		respond_to do |format|
-			if @check == -1 && @referrallog.save
+			if @referrallog.save
 				format.html { redirect_to @referrallog, notice: 'Referrallog was successfully created.' }
 				format.json { render json: @referrallog, status: :created, location: @referrallog }
-			else
-				@reftemp = Referrallog.find(@check)
-				@reftemp.count = @reftemp.count + @referrallog.count
-				@reftemp.save
-				format.html { redirect_to @referrallog, notice: 'Referrallog was not successfully created.' }
 			end
 		end
 	

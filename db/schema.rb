@@ -11,7 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130401113941) do
+ActiveRecord::Schema.define(:version => 20130402045348) do
+
+  create_table "abbreviations", :force => true do |t|
+    t.string   "word"
+    t.string   "abbv"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "brochurelogs", :force => true do |t|
     t.date     "date"
@@ -81,6 +88,9 @@ ActiveRecord::Schema.define(:version => 20130401113941) do
     t.date     "date"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.string   "pname"
+    t.string   "fname"
+    t.string   "etname"
   end
 
   add_index "events", ["eventtype_id"], :name => "index_events_on_eventtype_id"
@@ -98,6 +108,13 @@ ActiveRecord::Schema.define(:version => 20130401113941) do
     t.string   "name"
     t.string   "address"
     t.string   "status"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "fielddisplays", :force => true do |t|
+    t.string   "model"
+    t.string   "field"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

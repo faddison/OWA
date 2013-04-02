@@ -15,6 +15,7 @@ class Ability
 			cannot :destroy, :all
 		elsif user.role == 'guest' # guest
 			can :create, Eventlog
+			can :read, Eventlog
 		else
 			cannot :manage, :all
 		end
