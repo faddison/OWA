@@ -1,5 +1,5 @@
 <div class="span">
 			<%= f.label object.name %>
 			<% key = object.name.downcase+'_id_equals' %>
-			<%= f.collection_select key, object.all, :id, :name, :include_blank => true %>
+			<%= f.collection_select key, object.order('name ASC'), :id, :name, :include_blank => true %>
 </div>	

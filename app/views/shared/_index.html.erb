@@ -1,6 +1,7 @@
 <h1><%= object.name.pluralize.titlecase %></h1>
 <%= render :partial => 'shared/new',  :locals => { :object => object } %>
-<%= render :partial => 'shared/export' %>
+<br>
+<%= render :partial => 'shared/export', :locals => { :object => object } %>
 <%= render :partial => 'shared/pagination', :locals => { :objects => objects } %>
 <%= render :partial => 'shared/list', :locals => { :objects => objects, :object => object } %>
 

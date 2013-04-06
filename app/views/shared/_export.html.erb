@@ -1,0 +1,4 @@
+Download:
+<% url = object.name.pluralize.downcase+'_path' %>
+ <%= link_to "CSV", send(url, {:params => params, format: "csv"}) %>
+ <%= link_to "XLS", send(url, {:params => params, format: "xls"}) %>
